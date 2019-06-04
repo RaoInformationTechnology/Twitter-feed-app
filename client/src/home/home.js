@@ -216,7 +216,7 @@ class Home extends React.Component {
     handleClickhashtag(event){
 
 
-        if(this.state.value.length==0){    
+        if(this.state.value1.length==0){    
             Swal.fire("Please AddHashtag First!","", "warning");
             this.handleClose1();
         }else{   
