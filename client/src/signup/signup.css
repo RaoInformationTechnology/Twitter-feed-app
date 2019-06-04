@@ -1,0 +1,88 @@
+.centerForm{
+
+	margin-top: 40px;
+}
+.centerbtn{
+
+	margin-left: 350px;
+}
+.App{
+
+	margin-top: 40px;
+}
+button {
+	background-color: #00aced;
+	border: none;
+	padding: 9px;
+	font-size: 14px;
+	color: white;
+	border-radius: 41px;
+	outline: none;
+	/* margin: 210px; */
+	/* margin-left: 110px; */
+	width: 247px;
+	margin-left: 180px !important;
+	margin-top: 290px;
+	cursor: pointer;
+	/* position: initial; */
+}
+.no-margin{
+
+	margin: 0px;
+}
+svg{
+	color: white!important;
+}
+
+@media (min-width: 960px){
+	.MuiGrid-grid-md-6 {
+		flex-grow: 0;
+		max-width: 50%;
+		flex-basis: 50%;
+		background-color: #1da1f2;
+		/* margin: 15px; */
+	}
+}
+path {
+	color: #fff !important;
+}
+
+.signup_bg{
+
+	background-color: #fff;
+	height: 608px;
+	
+
+}
+.MuiButton-textPrimary {
+	color: #fff !important;
+	background-color: cornflowerblue !important;
+	margin-left: 15px !important;
+}
+.twitter-signup {
+	margin: 150px;
+	padding: 60px;
+	color: #fff;
+}
+.MuiGrid-container {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	box-sizing: border-box;
+	margin: 0px !important;
+}
+
+h3{
+
+	margin-top: 35px;
+}
+
+i.fas.fa-search {
+	margin-right: 10px !important;
+}
+i.fas.fa-address-card {
+	margin-right: 10px !important;
+}
+i.fas.fa-hashtag {
+	margin-right: 10px !important;
+}

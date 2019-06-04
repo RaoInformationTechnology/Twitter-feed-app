@@ -1,0 +1,75 @@
+.App {
+    text-align: center;
+    margin-top: 90px;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.left{
+
+  margin-left: 40px;
+}
+.flex{
+
+  display: flex;
+  list-style-type: none;
+  
+}
+.header{
+
+  background-color: wheat;
+  padding: 12px;
+}
+
+.navigation_bar{
+  background-color: #ffffff;
+  border-bottom: 1px solid lightgray;
+  display: table;
+  width: 100%;
+  padding: 10px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 999;
+}
+.link_left{
+  float: left;
+}
+.link_right{
+  float: right;
+}
+.mdc-button--outlined{
+  border-color: #1da1f2!important;
+  color: #1da1f2!important;
+}
+.twitt{
+
+  color: #3998c5; margin: 7px;
+}
+.top{
+
+  margin-top: 0px;
+}
+.bottom{
+
+  margin-left: -190px;
+}

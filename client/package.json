@@ -1,0 +1,35 @@
+{
+  
+  "name": "twitter-feed-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "auth0-js": "^9.10.2",
+    "axios": "^0.18.0",
+    "history": "^4.9.0",
+    "jquery": "^3.4.1",
+    "material-ui": "^1.0.0-beta.47",
+    "react": "^16.8.6",
+    "react-burger-menu": "^2.6.10",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "^0.9.5",
+    "react-slick": "^0.24.0",
+    "react-social-login": "^3.4.4",
+    "react-styleguidist": "^9.0.9",
+    "react-twitter-auth": "0.0.13",
+    "redux": "^4.0.1",
+    "slick-carousel": "^1.8.1",
+    "video-react": "^0.13.7",
+    "vue-axios": "^2.1.4"
+  },
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "^1.6.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
