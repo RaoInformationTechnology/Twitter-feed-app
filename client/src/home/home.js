@@ -107,7 +107,8 @@ class Home extends React.Component {
             fireRedirect: false,
             isLoaded: false,
             isAuthenticated: true,
-            value1:''
+            value1:'',
+            hash:'#'
 
             
         };
@@ -706,7 +707,8 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
                 style={{ margin: 8 , width: 500}}
                 fullWidth
                 margin="normal"
-                value={this.state.value1} 
+                defaultValue={this.state.hash}
+              
                 onChange={this.handleChange1}
                 />
                 </DialogContentText>
