@@ -13,9 +13,9 @@ ReactDOM.render(
 	<Route exact path='/' component={App} />
 	<Route  path="/signup" component={SignUp} />
 	<Route  path="/home" render={() =>(
-          localStorage.getItem('email') ? ( <Route  component={Home} />)
-          : (<Route component={SignUp} />)
-        )} />
+		localStorage.getItem('email') ? ( <Route  component={Home} />)
+		: (<Route component={SignUp} />)
+		)} />
 	</Router>
 	</div>,
 	document.getElementById('root')

@@ -44,8 +44,6 @@ import Swal from 'sweetalert2';
 import Slider from "react-slick";
 
 const drawerWidth = 240;
-
-
 const classes = theme => ({
 
     root: {
@@ -86,7 +84,6 @@ class Home extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             data:[],tweet:[], query: '',
             isFetching:true,
@@ -108,44 +105,27 @@ class Home extends React.Component {
             isLoaded: false,
             isAuthenticated: true,
             value1:'',
-            hash:'#'
-
-            
+            hash:'#'           
         };
-
-
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleChange1 = this.handleChange1.bind(this);
+        this.handleChangeEvent = this.handleChangeEvent.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleClickhashtag = this.handleClickhashtag.bind(this);
-        this.handleClick2 = this.handleClick2.bind(this);
-        // this.handleClickhashtagdelete = this.handleClickhashtagdelete.bind(this);
-
-        // const [mobileOpen, setMobileOpen] = React.useState(false);
-        // const [open, setOpen] = React.useState(false);
+        this.handleClickSearch = this.handleClickSearch.bind(this);
         this.handleClickOpen = this.handleClickOpen.bind(this);
         this.handleClickLogout = this.handleClickLogout.bind(this);
-        this.handleClose1 = this.handleClose1.bind(this);
+        this.handleCloseModel = this.handleCloseModel.bind(this);
         this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
-
         this.name = localStorage.getItem('name');
         this.username = localStorage.getItem('username');
         this.photo = localStorage.getItem('photo');
-        console.log("photo======",this.photo);
-
-
     }
 
     componentDidMount(){
-
-
-
         if(this.state.isAuthenticated == true) {
-
-
             fetch('http://132.140.160.62:4000/twitter-trends').
             then((Response)=>Response.json()).
             then((findresponse,err)=>
@@ -157,7 +137,6 @@ class Home extends React.Component {
 
                 }))
                 console.log('trendsdata: ', this.state.data[0].trends);
-
             })
 
             fetch('http://132.140.160.62:4000/twitter-tweets').
@@ -168,11 +147,9 @@ class Home extends React.Component {
                 this.state.isFetching = false;
                 this.state.isTweetDisplay = true;
                 this.state.isSearchTweetDisplay = false;
-
                 this.setState(prevState =>({
                     tweet: [...prevState.tweet, findresponse],
-                    
-                    
+                                       
                 }))
                 console.log('tweetdata ', this.state.tweet[0]);
             })    
@@ -187,7 +164,7 @@ class Home extends React.Component {
         console.log("valueeee====",this.state.value);
     }
 
-    handleChange1(event) {
+    handleChangeEvent(event) {
         console.log("event=========",event);
         this.setState({value1: event.target.value});
         console.log("valueeee====",this.state.value1);
@@ -199,12 +176,10 @@ class Home extends React.Component {
         this.getData();
     }
 
-    handleClick2(event){
-
-
+    handleClickSearch(event){
         if(this.state.value.length==0){    
             Swal.fire("Search Data Missing!","", "warning");
-          
+
         }else{   
             console.log("name:",this.state.value);
             event.preventDefault() ;
@@ -215,16 +190,14 @@ class Home extends React.Component {
     }
 
     handleClickhashtag(event){
-
-
         if(this.state.value1.length==0){    
             Swal.fire("Please AddHashtag First!","", "warning");
-            this.handleClose1();
+            this.handleCloseModel();
         }else{   
             console.log("hashtag:",this.state.value1);
             event.preventDefault();
             this.getHashTag();
-            this.handleClose1();
+            this.handleCloseModel();
             this.setState({value1: ''});
         }
     }
@@ -237,9 +210,7 @@ class Home extends React.Component {
         localStorage.removeItem("name");
         localStorage.removeItem("username");
         localStorage.removeItem('photo');
-
         this.setState({fireRedirect: true })
-
     }
 
 
@@ -279,6 +250,7 @@ class Home extends React.Component {
         axios.post("http://132.140.160.62:4000/user/addtag",{hashtag: this.state.value1 , email:localStorage.getItem('email')})
         .then(( data ) => {
             console.log("data",data);
+            Swal.fire("Successfully Added!","", "success");
             this.getHash();
         })
     }
@@ -286,11 +258,9 @@ class Home extends React.Component {
     getHash(){
         let hashTagArray = [];
         this.email = localStorage.getItem('email');
-        console.log("email=======",this.email);
-        var email = this.email;
+        const email = this.email;
         axios.get("http://132.140.160.62:4000/user/gethashtag/"+email)
         .then((res) => {
-            console.log("data========",res.data['0'].hashtag);
             for(let i=0;i<res.data['0'].hashtag.length;i++){
                 hashTagArray.push(res.data['0'].hashtag[i].hashtag);
             }
@@ -307,7 +277,6 @@ class Home extends React.Component {
         .then((res) => {
             console.log("data========",res);
             Swal.fire("Successfully deleted!","", "success");
-
             this.componentDidMount();
         })
 
@@ -327,7 +296,7 @@ class Home extends React.Component {
         this.setState({setOpen:true,open:true});
     }
 
-    handleClose1() {
+    handleCloseModel() {
         this.setState({open:false});
     }
 
@@ -335,12 +304,9 @@ class Home extends React.Component {
         this.setState({ mobileOpen: !this.state.mobileOpen });
     }
 
-
-
     render(){
 
         if(this.state.isAuthenticated == true) {
-
             const settings = {
                 dots: true,
                 infinite: true,
@@ -348,22 +314,18 @@ class Home extends React.Component {
                 slidesToShow: 1,
                 slidesToScroll: 1
             };
-
             const { isLoaded } = this.state;
             if(this.state.fireRedirect) {
 
                 window.location.href = '/'
             }
             const { classes } = this.props;
-
             const temp = {... this.state};
-
             const {isFetching} = this.state;
             let displaydata;
             let displaydate;
             let displayhashtag;
             let displaysearchtweetsview;
-
             if (!isFetching && this.state.data[0]) displaydata = this.state.data[0].trends.map(trends => 
 
                 <List key={trends.name}>
@@ -376,7 +338,7 @@ class Home extends React.Component {
                 </List>
                 )
                 if (!isFetching && this.state.displaysearchtweets.length == 0 ) displaydate = this.state.tweet.map(tweet => 
-                    <div>
+                    <div key={tweet}>
                     <div className="tweet_class1">
                     <Grid container spacing={12}>
                     <Grid item sm={2}>
@@ -523,9 +485,7 @@ class Home extends React.Component {
                     </Grid>
                     </div>
                     </div>
-
                     )
-
 if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data && this.state.displaysearchtweets[0].data.length)  displaysearchtweetsview = this.state.displaysearchtweets[0].data.map(searchelement => 
     <div className="tweet_class_search">
     <Grid container spacing={12}>
@@ -547,18 +507,15 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
     )
 
     if(this.state.hashtag[0] && this.state.hashtag[0].length) displayhashtag = this.state.hashtag.map(hashtagname =>
-        <List>
+        <List key={hashtagname}>
         {[hashtagname].map((text, index) => (
             <ListItem button key={text}>   
             <ListItemText primary={text} onClick={(e)=>this.handleClick(event)}/>
-            <Button onClick={this.deletehash.bind(this,text)}  color="primary" autoFocus>
-            delete
-            </Button>
+            <i className="fas fa-trash" onClick={this.deletehash.bind(this,text)} ></i>
             </ListItem>
             ))}
         </List>
         )
-
         if (!isLoaded) {
             return (
                 <center>
@@ -566,10 +523,7 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
                 </center>
                 )
         } else if(isLoaded){
-
-
             return (
-
                 <div className={classes.root}>
                 <CssBaseline />
                 <AppBar position="fixed" className={classes.appBar}>
@@ -594,10 +548,10 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
                 variant="outlined"
                 />
                 </Typography>
-                <Button id="search" onClick={this.handleClick2} color="primary" autoFocus>
+                <Button id="search" onClick={this.handleClickSearch} color="primary">
                 Search
                 </Button>
-                <Button style={{right:10, position:'absolute'}} onClick={this.handleClickLogout} color="primary" autoFocus>
+                <Button style={{right:10, position:'absolute'}} onClick={this.handleClickLogout} color="primary">
                 Logout
                 </Button>
                 </Toolbar>
@@ -695,7 +649,7 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
                 <Dialog
                 fullScreen={this.fullScreen}
                 open={this.state.open}
-                onClose={this.handleClose1}
+                onClose={this.handleCloseModel}
                 aria-labelledby="responsive-dialog-title"
                 >
                 <DialogTitle id="responsive-dialog-title">{"Add Tweet"}</DialogTitle>
@@ -708,8 +662,7 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
                 fullWidth
                 margin="normal"
                 defaultValue={this.state.hash}
-              
-                onChange={this.handleChange1}
+                onChange={this.handleChangeEvent}
                 />
                 </DialogContentText>
                 </DialogContent>
@@ -717,7 +670,7 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
                 <Button onClick={this.handleClickhashtag} color="primary" autoFocus>
                 Add
                 </Button>
-                <Button className="btn-left" onClick={this.handleClose1} color="primary">
+                <Button className="btn-left" onClick={this.handleCloseModel} color="primary">
                 close
                 </Button>
                 </DialogActions>

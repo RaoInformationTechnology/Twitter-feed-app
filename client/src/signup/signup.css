@@ -18,13 +18,10 @@ button {
 	color: white;
 	border-radius: 41px;
 	outline: none;
-	/* margin: 210px; */
-	/* margin-left: 110px; */
 	width: 247px;
 	margin-left: 180px !important;
 	margin-top: 290px;
 	cursor: pointer;
-	/* position: initial; */
 }
 .no-margin{
 
@@ -40,7 +37,6 @@ svg{
 		max-width: 50%;
 		flex-basis: 50%;
 		background-color: #1da1f2;
-		/* margin: 15px; */
 	}
 }
 path {
@@ -48,11 +44,8 @@ path {
 }
 
 .signup_bg{
-
 	background-color: #fff;
 	height: 608px;
-	
-
 }
 .MuiButton-textPrimary {
 	color: #fff !important;

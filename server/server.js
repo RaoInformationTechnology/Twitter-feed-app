@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const passport = require('passport');
+const Joi = require('joi');
 const express = require('express');
+const validator = require('express-joi-validation')({});
 const app     = express();
 const http = require('http').Server(app);
 const jwt = require('jsonwebtoken');
@@ -12,11 +14,15 @@ const https = require('https');
 const request = require('request');
 const twitterConfig = require('./config.js');
 const  userController = require('./controller/user.controller');
-var userModel = require('./model/user.model');
+const trendsvalidation = require('./validation/trendsvalidation.js');
+const tweetvalidation = require('./validation/tweetvalidation.js');
+const searchtweetsvalidation = require('./validation/searchtweetsvalidation.js');
+const hashtagvalidation = require('./validation/hashtagvalidation.js');
+const uservalidation = require('./validation/uservalidation.js');
+const userModel = require('./model/user.model');
 const Twit = require('twit');
 require('dotenv').config({ path: '../../.env' });
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
 const corsOption = {
   origin: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -24,11 +30,12 @@ const corsOption = {
   exposedHeaders: ['x-auth-token']
 };
 app.use(cors(corsOption));
-
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
+
+
 
 mongoose.connect('mongodb://localhost:27017/twitter-db',{ useNewUrlParser: true } );
 
@@ -39,11 +46,7 @@ const T = new Twit({
   access_token_secret:  'jIbogQP0R69uQLHxfMKXqoRmjDGViN1NVRjrLXASOwfUz'
 })
 
-// mongoose();
-
-
 const passportConfig = require('./passport');
-
 passportConfig();
 
 
@@ -67,8 +70,10 @@ const sendToken = function (req, res) {
   return res.status(200).send(JSON.stringify(req.user));
 };
 
+
+
 router.route('/auth/twitter/reverse')
-.post(function(req, res) {
+.post(uservalidation.reverseuserdata,function(req, res) {
   request.post({
     url: 'https://api.twitter.com/oauth/request_token',
     oauth: {
@@ -87,8 +92,10 @@ router.route('/auth/twitter/reverse')
   });
 });
 
+
+
 router.route('/auth/twitter')
-.post((req, res, next) => {
+.post(uservalidation.userdata,(req, res, next) => {
   console.log("twitter-1=========")
   request.post({
     url: `https://api.twitter.com/oauth/access_token?oauth_verifier`,
@@ -163,17 +170,11 @@ const getOne = function (req, res) {
   res.json(user);
 };
 
-app.get(
-  "/logout", 
-  function ( req, res ) {
-    req.logout();
-    res.redirect('/');
-  }
-  );
 
-app.get('/twitter-trends', (req, res) => {
-  console.log('home called');
-  T.get('/trends/place',{name:'#ChainedToTheRhythm', id:'1'},function(err,response){
+
+app.get('/twitter-trends',trendsvalidation.trends,(req, res) => {
+ 
+  T.get('/trends/place',{name:'#Cricket', id:'1'},function(err,response){
     if (err) {
       console.log('err: ', err);
     } else {
@@ -184,8 +185,8 @@ app.get('/twitter-trends', (req, res) => {
 
 });
 
-app.get('/twitter-tweets',(req,res) => {
-  console.log('home called');
+app.get('/twitter-tweets',tweetvalidation.tweets,(req,res) => {
+
   T.get('/statuses/home_timeline', {count:6},function(err,response){
     if (err) {
       console.log('err: ', err);
@@ -197,8 +198,7 @@ app.get('/twitter-tweets',(req,res) => {
   })
 })
 
-app.get('/search-tweets',(req,res) =>{
-
+app.get('/search-tweets',searchtweetsvalidation.searchtweets,(req,res) =>{
   console.log('tweets search car',req.query);
   const searchvalue = req.query.key;
   console.log("query===",searchvalue);
@@ -213,15 +213,13 @@ app.get('/search-tweets',(req,res) =>{
   });
 })
 
+
 router.route('/auth/me')
 .get(authenticate, getCurrentUser, getOne);
-
 app.use('/api/v1', router);
-
-app.post('/user/addtag',userController.addtag);
-app.delete('/user/deletehashtag',userController.deletehashtag);
-app.get('/user/gethashtag/:email',userController.getHashTag);
-
+app.post('/user/addtag',[hashtagvalidation.addhashtag],userController.addtag);
+app.delete('/user/deletehashtag',[hashtagvalidation.deletehashtag],userController.deletehashtag);
+app.get('/user/gethashtag/:email',[hashtagvalidation.getHashTag],userController.getHashTag);
 app.listen(4000);
 
 module.exports = app;

@@ -5,7 +5,6 @@ import VueAxios from 'vue-axios';
 import axios from 'axios';
 import { Redirect } from 'react-router';
 import { createBrowserHistory } from 'history';
-
 import './signup.css';
 import Home from '../home/home.js';
 import { withStyles } from '@material-ui/core/styles';
@@ -18,8 +17,6 @@ const styles = theme => ({
 	}
 });
 
-
-
 class SignUp extends React.Component {
 
 	constructor(props) {
@@ -27,8 +24,6 @@ class SignUp extends React.Component {
 		this.state = { isAuthenticated: false, user: null, token:'',fireRedirect: false};
 
 	}
-
-	
 	onFailure = (error) => {
 		alert(error);
 	};
@@ -48,33 +43,23 @@ class SignUp extends React.Component {
 					localStorage.setItem('photo',(this.state.user.photo));
 					localStorage.setItem('isAuthenticated', true);
 				}
-			});
-
-			
+			});		
 		}
 		this.setState({ fireRedirect: true })
 	};
 
 	
 	render() {
-
-		
-
 		if(this.state.isAuthenticated && this.state.fireRedirect) {
-
 			window.location.href = '/home'
 		}else{
 			console.log("error");
 		}
-
 		const { classes } = this.props;
-
-
 		return (
 			<div>
 			<div className={classes.root}>
 			<Grid container spacing={12}>
-
 			<Grid item xs={6} md={6}>
 			<div className="twitter-signup">
 			<h3><i className="fas fa-search"></i> Search Tweets</h3>
@@ -83,7 +68,6 @@ class SignUp extends React.Component {
 			</div>
 			</Grid>
 			<Grid item xs={6} md={6}>
-
 			<div className="signup_bg">
 			<div>
 			<div>
@@ -93,22 +77,13 @@ class SignUp extends React.Component {
 			onFailure={this.onFailure} onSuccess={this.twitterResponse}
 			requestTokenUrl="http://132.140.160.62:4000/api/v1/auth/twitter/reverse"/>
 			</div>
-
 			</div>
 			</div>
-
 			</Grid>
-
 			</Grid>
 			</div>
-
 			</div>
-
 			);
-
-
-
-
 		}
 	}
 

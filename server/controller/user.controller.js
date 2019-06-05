@@ -1,8 +1,5 @@
 var userModel = require('../model/user.model');
 var userController = {};
-const mongoose = require('../mongoose');
-
-
 
 userController.addtag = function(req,res){
   var hash = req.body;
@@ -20,7 +17,7 @@ userController.addtag = function(req,res){
 }
 
 userController.deletehashtag = function(req,res){
-  console.log("hashtag============");
+ 
   var hashtag = req.body;
   console.log("hashtag======",hashtag);
   userModel.update({email: req.body.email},{ $pull: { "hashtag" : { hashtag: req.body.hashtag } } },function(err,deletehashtag){

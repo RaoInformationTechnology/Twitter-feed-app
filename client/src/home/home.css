@@ -16,7 +16,7 @@ h4{
     padding: 13.5px 14px!important;
 }
 .MuiButton-text {
-    padding: 2px 2px !important;
+    padding: 3px 3px !important;
 }
 .MuiInputLabel-outlined{
     line-height: 0!important;
@@ -85,25 +85,7 @@ h4{
     justify-content: flex-start;
     text-decoration: none;
 }
-.MuiFab-root {
-    width: 41px !important;
-    color: rgba(0, 0, 0, 0.87);
-    height: 41px !important;
-    padding: 0;
-    font-size: 0.875rem;
-    min-width: 0;
-    box-sizing: border-box;
-    min-height: 36px;
-    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: 500;
-    line-height: 1.75;
-    border-radius: 50%;
-    letter-spacing: 0.02857em;
-    text-transform: uppercase;
-    background-color: #e0e0e0;
-}
+
 fieldset.PrivateNotchedOutline-root-153.MuiOutlinedInput-notchedOutline {
     padding-left: 31.5px;
     width: 320px !important;
@@ -219,7 +201,7 @@ button {
 .logo {
     position: absolute;
     top: 35px;
-    left: 72px;
+    left: 58px;
     font-size: 25px;
     font-family: cursive;
 }
@@ -285,6 +267,7 @@ button {
     margin: auto;
     text-align: center;
     background-color: #3CB371;
+    /*padding: 10px;*/
     
 }
 .search_modals button{
@@ -384,11 +367,24 @@ button {
     margin-left: 4px !important;
     margin-top: -20px !important;
 }
-.menu-bar{
-
-    /*background-color: #1B1B1B;
-    color: #fff;*/
-    /*margin-top: 60px;*/
+.MuiFab-root {
+    width: 36px !important;
+    color: rgba(0, 0, 0, 0.87);
+    height: 36px !important;
+    padding: 0;
+    font-size: 0.875rem;
+    min-width: 0;
+    box-sizing: border-box;
+    min-height: 36px;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    line-height: 1.75;
+    border-radius: 50%;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    background-color: #e0e0e0;
 }
 .MuiInputBase-input {
     color: black!important;
@@ -402,7 +398,7 @@ button {
 .MuiFormControl-marginNormal {
     margin-top: 16px;
     margin-bottom: 8px;
-    /*margin-left: 80px !important;*/
+
 }
 
 .Home-content-7 {
@@ -438,7 +434,7 @@ svg {
     height: 25px;
     margin-top: -26px;
     border-radius: 20px;
-    margin-left: 40px;
+    margin-left: 23px;
 }
 .loader {
   border: 16px solid #f3f3f3; 
@@ -466,4 +462,8 @@ button.btn.btn-primary {
     width: 247px;
     margin-left: 13px !important;
     margin-top: 0px !important;
+}
+
+i.fas.fa-trash {
+    color: #ad6363;
 }

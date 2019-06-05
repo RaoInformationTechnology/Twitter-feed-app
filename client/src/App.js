@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import SignUp from './signup/signup.js';
 import Home from './home/home.js';
-
-
-
-
 import './App.css';
 
 class App extends React.Component {
@@ -13,7 +9,6 @@ class App extends React.Component {
 		super(props);
 		this.state = localStorage.getItem('email');
 	}
-
 	render() {
 		if(!this.state){
 			return (
@@ -27,8 +22,7 @@ class App extends React.Component {
 				<Home />
 				</div>
 				);
-		}
-		
+		}		
 	}
 }
 
