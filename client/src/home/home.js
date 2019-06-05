@@ -41,7 +41,6 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import SignUp from '../signup/signup.js';
 import { withStyles } from '@material-ui/core/styles';
 import Swal from 'sweetalert2';
-import Slider from "react-slick";
 
 const drawerWidth = 240;
 const classes = theme => ({
@@ -149,7 +148,7 @@ class Home extends React.Component {
                 this.state.isSearchTweetDisplay = false;
                 this.setState(prevState =>({
                     tweet: [...prevState.tweet, findresponse],
-                                       
+
                 }))
                 console.log('tweetdata ', this.state.tweet[0]);
             })    
@@ -183,9 +182,9 @@ class Home extends React.Component {
         }else{   
             console.log("name:",this.state.value);
             event.preventDefault() ;
+            this.setState({isLoaded : false});
             this.getData();
             this.setState({value: ''});
-
         }
     }
 
@@ -196,21 +195,21 @@ class Home extends React.Component {
         }else{   
             console.log("hashtag:",this.state.value1);
             event.preventDefault();
+            this.setState({isLoaded : false});
             this.getHashTag();
             this.handleCloseModel();
             this.setState({value1: ''});
         }
     }
 
-    handleClickLogout(){
-        isLoaded: true;
+    handleClickLogout(){      
         console.log("logout=========");
         localStorage.setItem('isAuthenticated', false);
         localStorage.removeItem("email");
         localStorage.removeItem("name");
         localStorage.removeItem("username");
         localStorage.removeItem('photo');
-        this.setState({fireRedirect: true })
+        this.setState({isLoaded: true,fireRedirect: true })
     }
 
 
@@ -228,18 +227,15 @@ class Home extends React.Component {
             console.log("data=========",data.data.length);
             if(data.data.length == 0){
                 Swal.fire('Tweets Not Found....');
-
             }else{
-
+                this.setState({
+                    isLoaded: true,
+                    displaysearchtweets:[data]
+                })
                 console.log("data not found==========");
                 console.log("data======",data);
                 this.state.isTweetDisplay = false;
                 this.state.isSearchTweetDisplay = true;
-                this.setState({
-                    displaysearchtweets:[data],
-                    isLoaded : true
-
-                })
             }
         })
     }
@@ -251,6 +247,10 @@ class Home extends React.Component {
         .then(( data ) => {
             console.log("data",data);
             Swal.fire("Successfully Added!","", "success");
+            this.setState({
+                isLoaded: true,
+
+            })
             this.getHash();
         })
     }
@@ -279,13 +279,11 @@ class Home extends React.Component {
             Swal.fire("Successfully deleted!","", "success");
             this.componentDidMount();
         })
-
     }
 
     handleClick(event) {
         console.log(event.target.outerText);
-
-        this.setState({searchvalue: event.target.outerText});
+        this.setState({searchvalue: event.target.outerText,isLoaded : false});
         console.log("search=======",event.target.outerText);
         this.state.value = event.target.outerText;
         this.getData(event.target.outerText);
@@ -315,6 +313,7 @@ class Home extends React.Component {
                 slidesToScroll: 1
             };
             const { isLoaded } = this.state;
+
             if(this.state.fireRedirect) {
 
                 window.location.href = '/'
@@ -503,9 +502,7 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
     </Grid>
     </Grid>
     </div>
-
     )
-
     if(this.state.hashtag[0] && this.state.hashtag[0].length) displayhashtag = this.state.hashtag.map(hashtagname =>
         <List key={hashtagname}>
         {[hashtagname].map((text, index) => (
@@ -548,7 +545,7 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
                 variant="outlined"
                 />
                 </Typography>
-                <Button id="search" onClick={this.handleClickSearch} color="primary">
+                <Button  onClick={this.handleClickSearch} color="primary" disabled={!this.state.value}>
                 Search
                 </Button>
                 <Button style={{right:10, position:'absolute'}} onClick={this.handleClickLogout} color="primary">
@@ -667,7 +664,7 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions> 
-                <Button onClick={this.handleClickhashtag} color="primary" autoFocus>
+                <Button onClick={this.handleClickhashtag} color="primary" disabled={!this.state.value1}>
                 Add
                 </Button>
                 <Button className="btn-left" onClick={this.handleCloseModel} color="primary">
