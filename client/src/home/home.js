@@ -504,6 +504,8 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
             <ListItemText primary={text} onClick={(e)=>this.handleClick(event)}/>
             <i className="fas fa-trash" onClick={this.deletehash.bind(this,text)} ></i>
             <i className="fas fa-pencil-alt" onClick={this.handleClickOpenHash.bind(this,text)}></i>
+            <p>
+            <div>
             <Dialog
             fullScreen={this.fullScreen}
             open={this.state.openModel}
@@ -533,6 +535,8 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
             </Button>
             </DialogActions>
             </Dialog>
+            </div>
+            </p>
             </ListItem>
             ))}
         </List>
