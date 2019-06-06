@@ -42,6 +42,13 @@ h4{
 .MuiButton-textPrimary {
     color: #3f51b5;
     width: 0px !important;
+    padding: 5px !important
+}
+.MuiButton-textPrimary {
+    color: #fff !important;
+    background-color: #0c2755 !important;
+    margin-left: 15px !important;
+    padding: 5px !important;
 }
 .MuiFormControl-marginNormal {
     margin-bottom: 16px!important;
@@ -73,6 +80,22 @@ h4{
         min-height: 50px !important;
     }
 }
+@media (min-width: 600px){
+
+    .MuiToolbar-gutters {
+        padding-left: 13px!important;
+        padding-right: 24px;
+    }
+}
+@media (min-width: 600px)
+{
+    .MuiGrid-grid-sm-2 {
+        flex-grow: 0;
+        max-width: 9.666667% !important;
+        flex-basis: 16.666667%;
+    }
+}
+
 .MuiListItem-root {
     width: 100%;
     display: flex;
@@ -92,7 +115,7 @@ fieldset.PrivateNotchedOutline-root-153.MuiOutlinedInput-notchedOutline {
     /*background-color: floralwhite;*/
 }
 .main_class_post {
-    margin-top: 30px !important;
+
     margin-left: 132px !important;
     overflow: auto;
 }
@@ -154,11 +177,16 @@ span.MuiTypography-root.MuiTypography-body1.MuiListItemText-primary {
     position: relative;
     width: 718px !important;
 }
+.MuiPaper-root.MuiPaper-elevation0.MuiDrawer-paper.MuiDrawer-paperAnchorLeft.MuiDrawer-paperAnchorDockedLeft {
+    color: #fff;
+    background-color: #0c2755!important;
+    width: 215px;
+}
 
 
 .MuiList-padding {
- padding-top: 0px !important; 
- padding-bottom: 0px !important; 
+   padding-top: 0px !important; 
+   padding-bottom: 0px !important; 
 }
 .btn-primary {
     color: #fff;
@@ -180,7 +208,7 @@ button {
 .profile_main_class {
     background-color: #1fc8db;
     padding: 10px 49px;
-
+    margin-top: 28px;
 }
 
 .profile_img {
@@ -200,19 +228,23 @@ button {
 }
 .logo {
     position: absolute;
-    top: 35px;
-    left: 58px;
+    top: 9px;
+    left: 52px;
     font-size: 25px;
     font-family: cursive;
 }
+.Home-toolbar-5 {
+    margin-top: -27px!important;
+}
 .tweet_class1{
     padding: 10px;
-    width: 700px;
+    width: 660px !important;
     margin-bottom: 10px;
     border-radius: 5px;
     border: 1px solid lightgray;
-    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0,0,0,.12);
+    box-shadow: 0px 10px 10px #0000004d;
     background-color: white;
+    margin-top: 20px !important;
 }
 .profile_image_post{
     width: 60px;
@@ -265,25 +297,25 @@ button {
 }
 .search_modals {
     margin: auto;
-    text-align: center;
-    background-color: #3CB371;
-    /*padding: 10px;*/
+    text-align: left;
+    background-color: #e6ecf0;
+    padding: 10px;
     
 }
 .search_modals button{
- left: 0;
- right: 0;
- margin: auto;
- display: table;
- height: 40px!important;
- z-index: 11;
- background-color: #4EA0E0;
- border-radius: 10px;
- border: none;
- padding: 13px!important;
- color: black;
- width: auto!important;
- font-size: 16px;
+   left: 0;
+   right: 0;
+   margin: auto;
+   display: table;
+   height: 40px!important;
+   z-index: 11;
+   background-color: #4EA0E0;
+   border-radius: 10px;
+   border: none;
+   padding: 13px!important;
+   color: black;
+   width: auto!important;
+   font-size: 16px;
 }
 .PrivateNotchedOutline-legend-154 {
     padding: 0;
@@ -311,7 +343,7 @@ button {
     margin-bottom: 7px;
     border-radius: 5px;
     border: 1px solid #9E9E9E;
-    box-shadow: 3px 6px 4px 4px rgba(0, 0, 0, 0.2), 6px 6px 1px 2px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0,0,0,.12);
+    box-shadow: 0px 10px 10px #0000004d;
     background-color: white;
     margin: auto;
     margin-bottom: 20px !important;
@@ -377,7 +409,7 @@ button {
     box-sizing: border-box;
     min-height: 36px;
     transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
+    box-shadow: 0px 10px 10px #0000004d;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-weight: 500;
     line-height: 1.75;
@@ -388,11 +420,6 @@ button {
 }
 .MuiInputBase-input {
     color: black!important;
-}
-.MuiPaper-root.MuiPaper-elevation0.MuiDrawer-paper.MuiDrawer-paperAnchorLeft.MuiDrawer-paperAnchorDockedLeft {
-    color: #fff;
-    background-color:#213446;
-    width: 215px;
 }
 
 .MuiFormControl-marginNormal {
@@ -406,11 +433,10 @@ button {
 
 }
 .MuiGrid-container {
-    width: 100%;
+    width: 107% !important;
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
-    margin-left: 15px;
 }
 .search-tweets{
 
@@ -421,8 +447,9 @@ svg {
 }
 .font-size {
     font-size: 14px;
-    color: #6e8a88;
+    color: #fff;
     padding: 4px 20px;
+    margin-top: 11px!important;
 }
 .Home-icon-8 {
     margin: 8px;
@@ -430,11 +457,11 @@ svg {
 }
 
 .img-twitter-logo {
-    width: 25px;
-    height: 25px;
-    margin-top: -26px;
+    width: 28px;
+    height: 28px;
+    margin-top: -10px;
     border-radius: 20px;
-    margin-left: 23px;
+    margin-left: 17px;
 }
 .loader {
   border: 16px solid #f3f3f3; 
@@ -465,5 +492,32 @@ button.btn.btn-primary {
 }
 
 i.fas.fa-trash {
-    color: #ad6363;
+    color: lightgray !important;
+}
+.MuiButton-root {
+    color: rgba(0, 0, 0, 0.87);
+    padding: 6px 16px;
+    font-size: 11px !important;
+    min-width: 64px;
+    box-sizing: border-box;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    line-height: 1.75;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    border-radius: 4px;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+}
+
+.swal2-actions {
+    z-index: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 250px !important;
+    margin: 1.25em auto 0;
+    margin-left: 26px !important;
+}
+i.fas.fa-pencil-alt {
+    margin-left: 12px !important;
 }

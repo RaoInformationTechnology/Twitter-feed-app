@@ -219,6 +219,7 @@ router.route('/auth/me')
 app.use('/api/v1', router);
 app.post('/user/addtag',[hashtagvalidation.addhashtag],userController.addtag);
 app.delete('/user/deletehashtag',[hashtagvalidation.deletehashtag],userController.deletehashtag);
+app.put('/user/updatehashtag',userController.updatehashtag);
 app.get('/user/gethashtag/:email',[hashtagvalidation.getHashTag],userController.getHashTag);
 app.listen(4000);
 

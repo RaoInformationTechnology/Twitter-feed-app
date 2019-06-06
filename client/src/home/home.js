@@ -104,7 +104,11 @@ class Home extends React.Component {
             isLoaded: false,
             isAuthenticated: true,
             value1:'',
-            hash:'#'           
+            setOpenModel:false,
+            openModel:false,
+            hash:'#',
+            edithashthag:'' ,
+            newhashtag:''      
         };
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -118,6 +122,9 @@ class Home extends React.Component {
         this.handleClickLogout = this.handleClickLogout.bind(this);
         this.handleCloseModel = this.handleCloseModel.bind(this);
         this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
+        this.handleClickupdatehashtag = this.handleClickupdatehashtag.bind(this);
+        this.handleCloseModelhashtag = this.handleCloseModelhashtag.bind(this);
+        this.handleChangehashEvent = this.handleChangehashEvent.bind(this);
         this.name = localStorage.getItem('name');
         this.username = localStorage.getItem('username');
         this.photo = localStorage.getItem('photo');
@@ -227,6 +234,7 @@ class Home extends React.Component {
             console.log("data=========",data.data.length);
             if(data.data.length == 0){
                 Swal.fire('Tweets Not Found....');
+                this.componentDidMount();
             }else{
                 this.setState({
                     isLoaded: true,
@@ -294,6 +302,52 @@ class Home extends React.Component {
         this.setState({setOpen:true,open:true});
     }
 
+    handleClickOpenHash(id){
+
+        console.log("id=",id);
+        this.setState({setOpenModel:true,openModel:true,edithashthag:id});
+        // this.updatehash(id);
+
+
+    }
+
+    handleChangehashEvent(event){
+
+        console.log("event=========",event);
+        this.setState({newhashtag: event.target.value});
+        console.log("valueeee====",this.state.newhashtag);
+
+    }
+
+    handleClickupdatehashtag(event){
+
+        console.log("hashtag:",this.state.newhashtag);
+        event.preventDefault();
+        this.setState({isLoaded : false});
+        this.updatehash(this.state.newhashtag);
+        this.handleCloseModelhashtag();
+    }
+
+    handleCloseModelhashtag(){
+        this.setState({openModel:false});
+    }
+
+
+
+    updatehash(id){
+        console.log("id=",id);
+        axios.put("http://132.140.160.62:4000/user/updatehashtag",{hashtag: id , email:localStorage.getItem('email')})
+        .then((res) => {
+            console.log("data========",res);
+            Swal.fire("Successfully updated!","", "success");
+            this.setState({
+                isLoaded: true,
+
+            })
+            this.componentDidMount();
+        })
+    }
+
     handleCloseModel() {
         this.setState({open:false});
     }
@@ -351,19 +405,7 @@ class Home extends React.Component {
                     <span className="gray">@{tweet[0].user.screen_name}</span>
                     </a>
                     <p><span>{tweet[0].text}</span></p>
-                    <div className="like_comment">
-                    <Grid container spacing={12}>
-                    <Grid item sm={2}>
-                    <FavoriteBorderIcon className={classes.icon} />
-                    </Grid>
-                    <Grid item sm={2} className="">
-                    <CommentIcon className={classes.icon} />
-                    </Grid>
-                    <Grid item sm={2}>
-                    <MailIcon className={classes.icon} />
-                    </Grid>
-                    </Grid>
-                    </div>
+
                     </Grid>
                     </Grid>
                     </div>
@@ -380,19 +422,7 @@ class Home extends React.Component {
                     <span className="gray">@{tweet[1].user.screen_name}</span>
                     </a>
                     <p><span>{tweet[1].text}</span></p>
-                    <div className="like_comment">
-                    <Grid container spacing={12}>
-                    <Grid item sm={2}>
-                    <FavoriteBorderIcon className={classes.icon} />
-                    </Grid>
-                    <Grid item sm={2} className="">
-                    <CommentIcon className={classes.icon} />
-                    </Grid>
-                    <Grid item sm={2}>
-                    <MailIcon className={classes.icon} />
-                    </Grid>
-                    </Grid>
-                    </div>
+
                     </Grid>
                     </Grid>
                     </div>
@@ -409,19 +439,7 @@ class Home extends React.Component {
                     <span className="gray">@{tweet[2].user.screen_name}</span>
                     </a>
                     <p><span>{tweet[2].text}</span></p>
-                    <div className="like_comment">
-                    <Grid container spacing={12}>
-                    <Grid item sm={2}>
-                    <FavoriteBorderIcon className={classes.icon} />
-                    </Grid>
-                    <Grid item sm={2} className="">
-                    <CommentIcon className={classes.icon} />
-                    </Grid>
-                    <Grid item sm={2}>
-                    <MailIcon className={classes.icon} />
-                    </Grid>
-                    </Grid>
-                    </div>
+                    
                     </Grid>
                     </Grid>
                     </div>
@@ -438,19 +456,7 @@ class Home extends React.Component {
                     <span className="gray">@{tweet[3].user.screen_name}</span>
                     </a>
                     <p><span>{tweet[3].text}</span></p>
-                    <div className="like_comment">
-                    <Grid container spacing={12}>
-                    <Grid item sm={2}>
-                    <FavoriteBorderIcon className={classes.icon} />
-                    </Grid>
-                    <Grid item sm={2} className="">
-                    <CommentIcon className={classes.icon} />
-                    </Grid>
-                    <Grid item sm={2}>
-                    <MailIcon className={classes.icon} />
-                    </Grid>
-                    </Grid>
-                    </div>
+
                     </Grid>
                     </Grid>
                     </div>
@@ -467,19 +473,7 @@ class Home extends React.Component {
                     <span className="gray">@{tweet[4].user.screen_name}</span>
                     </a>
                     <p><span>{tweet[4].text}</span></p>
-                    <div className="like_comment">
-                    <Grid container spacing={12}>
-                    <Grid item sm={2}>
-                    <FavoriteBorderIcon className={classes.icon} />
-                    </Grid>
-                    <Grid item sm={2} className="">
-                    <CommentIcon className={classes.icon} />
-                    </Grid>
-                    <Grid item sm={2}>
-                    <MailIcon className={classes.icon} />
-                    </Grid>
-                    </Grid>
-                    </div>
+
                     </Grid>
                     </Grid>
                     </div>
@@ -509,6 +503,36 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
             <ListItem button key={text}>   
             <ListItemText primary={text} onClick={(e)=>this.handleClick(event)}/>
             <i className="fas fa-trash" onClick={this.deletehash.bind(this,text)} ></i>
+            <i className="fas fa-pencil-alt" onClick={this.handleClickOpenHash.bind(this,text)}></i>
+            <Dialog
+            fullScreen={this.fullScreen}
+            open={this.state.openModel}
+            onClose={this.handleCloseModel}
+            aria-labelledby="responsive-dialog-title"
+            >
+            <DialogTitle id="responsive-dialog-title">{"Edit Hashtag"}</DialogTitle>
+            <DialogContent>
+            <DialogContentText>
+            <TextField
+            id="standard-full-width"
+            label="Edit Hashtag"
+            style={{ margin: 8 , width: 500}}
+            fullWidth
+            margin="normal"
+            defaultValue={this.state.edithashthag}
+            onChange={this.handleChangehashEvent}
+            />
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions> 
+            <Button onClick={this.handleClickupdatehashtag} color="primary">
+            Edit
+            </Button>
+            <Button className="btn-left" onClick={this.handleCloseModelhashtag} color="primary">
+            close
+            </Button>
+            </DialogActions>
+            </Dialog>
             </ListItem>
             ))}
         </List>
@@ -570,7 +594,7 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
                 >
                 <div className="menu-bar .MuiListItem-button">
                 <div className={classes.toolbar} />
-                <img src={require('./twitter-logo.jpg')} />
+                <img src={require('./feed.png')} />
                 <span className="logo">Twitter</span>
                 <List>
                 </List>      
@@ -596,7 +620,7 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
                 >
                 <div className="menu-bar .MuiListItem-button">
                 <div className={classes.toolbar} />
-                <img className="img-twitter-logo" src={require('./twitter.png')} />
+                <img className="img-twitter-logo" src={require('./feed.png')} />
                 <span className="logo">Twitter</span>
                 <List>
                 </List>      
@@ -649,7 +673,7 @@ if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data 
                 onClose={this.handleCloseModel}
                 aria-labelledby="responsive-dialog-title"
                 >
-                <DialogTitle id="responsive-dialog-title">{"Add Tweet"}</DialogTitle>
+                <DialogTitle id="responsive-dialog-title">{"Add Hashtag"}</DialogTitle>
                 <DialogContent>
                 <DialogContentText>
                 <TextField
