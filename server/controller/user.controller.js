@@ -17,7 +17,6 @@ userController.addtag = function(req,res){
 }
 
 userController.deletehashtag = function(req,res){
-
   var hashtag = req.body;
   console.log("hashtag======",hashtag);
   userModel.update({email: req.body.email},{ $pull: { "hashtag" : { hashtag: req.body.hashtag } } },function(err,deletehashtag){
@@ -28,10 +27,9 @@ userController.deletehashtag = function(req,res){
 }
 
 userController.updatehashtag = function(req,res){
-  console.log("hiiiii");
   var hashtag = req.body;
   console.log("hashtag======",hashtag);
-  userModel.findOneAndUpdate({email:req.body.email},{$set:{ "hashtag.0.hashtag" : req.body.hashtag}},{upsert:true, new:true},function(err,updatehashtag){
+  userModel.findOneAndUpdate({email:req.body.email},{$set:{ "hashtag.0.hashtag" : req.body.hashtag}},{upsert: true,new: true},function(err,updatehashtag){
     console.log("updatehashtag-========",updatehashtag);
     console.log(err,updatehashtag);
     res.send(updatehashtag);
@@ -39,10 +37,8 @@ userController.updatehashtag = function(req,res){
 }
 
 userController.getHashTag = function(req,res){
-
   var email = req.params.email;
   console.log("email==========",email);
-
   userModel.find({email:email},function(err,hashtag){
     console.log("hashtag======",hashtag);
     res.send(hashtag);

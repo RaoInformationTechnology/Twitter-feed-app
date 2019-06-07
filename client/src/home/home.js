@@ -332,8 +332,6 @@ class Home extends React.Component {
         this.setState({openModel:false});
     }
 
-
-
     updatehash(id){
         console.log("id=",id);
         axios.put("http://132.140.160.62:4000/user/updatehashtag",{hashtag: id , email:localStorage.getItem('email')})
