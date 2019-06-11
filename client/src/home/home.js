@@ -242,7 +242,6 @@ class Home extends React.Component {
                     isLoaded: true,
                     displaysearchtweets:[data]
                 })
-                console.log("data not found==========");
                 console.log("data======",data);
                 this.state.isTweetDisplay = false;
                 this.state.isSearchTweetDisplay = true;
@@ -412,8 +411,8 @@ class Home extends React.Component {
                 </a>
                 <p><span>{tweet.text}</span></p>
                 <div className="hashtag_flex">{ tweet && tweet.entities  ? (tweet.entities.hashtags.map(hashtag=> 
-                    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+hashtag.text}  aria-current="page"><p className="hash_color">#{hashtag.text}</p></a>)) : ('')}</div>
-                <div>
+                    <p className="hash_color" onClick={(e)=>this.handleClick(event)}>#{hashtag.text}</p>)) : ('')}</div>
+                <div className="video">
                 {tweet.extended_entities ? (<Player className="video_height" src={tweet.extended_entities.media[0].video_info.variants[1].url}></Player>) : ('')}
                 </div>           
                 </Grid>
@@ -446,7 +445,7 @@ class Home extends React.Component {
                             <ListItemText primary={text} onClick={(e)=>this.handleClick(event)}/>
                             <i className="fas fa-trash" onClick={this.deletehash.bind(this,text)} ></i>
                             <i className="fas fa-pencil-alt" onClick={this.handleClickOpenHash.bind(this,text)}></i>
-                            <p>
+
                             <div>
                             <Dialog
                             fullScreen={this.fullScreen}
@@ -478,7 +477,7 @@ class Home extends React.Component {
                             </DialogActions>
                             </Dialog>
                             </div>
-                            </p>
+
                             </ListItem>
                             ))}
                         </List>

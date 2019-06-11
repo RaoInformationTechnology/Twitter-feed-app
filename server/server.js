@@ -173,7 +173,7 @@ const getOne = function (req, res) {
 
 
 app.get('/twitter-trends',trendsvalidation.trends,(req, res) => {
- 
+
   T.get('/trends/place',{name:'#Cricket', id:'1'},function(err,response){
     if (err) {
       console.log('err: ', err);
@@ -187,7 +187,7 @@ app.get('/twitter-trends',trendsvalidation.trends,(req, res) => {
 
 app.get('/twitter-tweets',tweetvalidation.tweets,(req,res) => {
 
-  T.get('/statuses/home_timeline', {count:5},function(err,response){
+  T.get('/statuses/home_timeline',{count:5},function(err,response){
     if (err) {
       console.log('err: ', err);
     } else {

@@ -204,11 +204,20 @@ button {
     border-radius: 41px;
     outline: none;
 }
+button.video-react-big-play-button.video-react-big-play-button-left {
+    margin-top: 105px !important;
+    
+}
 /*custom class*/
 .profile_main_class {
     background-color: #1fc8db;
     padding: 10px 49px;
     margin-top: 28px;
+}
+
+.video{
+
+        width: 500px !important;
 }
 
 .profile_img {
@@ -257,6 +266,7 @@ button {
 
     color: #1DA1F2;
     margin-left: 4px;
+    cursor: pointer;
 }
 .hashtag_flex{
 
