@@ -185,8 +185,8 @@ span.MuiTypography-root.MuiTypography-body1.MuiListItemText-primary {
 
 
 .MuiList-padding {
-   padding-top: 0px !important; 
-   padding-bottom: 0px !important; 
+ padding-top: 0px !important; 
+ padding-bottom: 0px !important; 
 }
 .btn-primary {
     color: #fff;
@@ -253,6 +253,15 @@ button {
     border-radius: 50%;
     margin: auto;
 }
+.hash_color{
+
+    color: #1DA1F2;
+    margin-left: 4px;
+}
+.hashtag_flex{
+
+    display: flex;
+}
 .profile_image_post img{
     object-fit: cover;
     max-height: 100%;
@@ -260,7 +269,10 @@ button {
     min-width: 100%;
     min-height: 100%;
 }
+.video_height{
 
+    height: 200px;
+}
 
 .image_tweet{
     width: 550px;
@@ -303,19 +315,19 @@ button {
     
 }
 .search_modals button{
-   left: 0;
-   right: 0;
-   margin: auto;
-   display: table;
-   height: 40px!important;
-   z-index: 11;
-   background-color: #4EA0E0;
-   border-radius: 10px;
-   border: none;
-   padding: 13px!important;
-   color: black;
-   width: auto!important;
-   font-size: 16px;
+ left: 0;
+ right: 0;
+ margin: auto;
+ display: table;
+ height: 40px!important;
+ z-index: 11;
+ background-color: #4EA0E0;
+ border-radius: 10px;
+ border: none;
+ padding: 13px!important;
+ color: black;
+ width: auto!important;
+ font-size: 16px;
 }
 .PrivateNotchedOutline-legend-154 {
     padding: 0;

@@ -108,7 +108,8 @@ class Home extends React.Component {
             openModel:false,
             hash:'#',
             edithashthag:'' ,
-            newhashtag:''      
+            newhashtag:'' 
+
         };
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -128,6 +129,7 @@ class Home extends React.Component {
         this.name = localStorage.getItem('name');
         this.username = localStorage.getItem('username');
         this.photo = localStorage.getItem('photo');
+
     }
 
     componentDidMount(){
@@ -154,7 +156,7 @@ class Home extends React.Component {
                 this.state.isTweetDisplay = true;
                 this.state.isSearchTweetDisplay = false;
                 this.setState(prevState =>({
-                    tweet: [...prevState.tweet, findresponse],
+                    tweet: [...prevState.tweet, findresponse]
 
                 }))
                 console.log('tweetdata ', this.state.tweet[0]);
@@ -366,6 +368,7 @@ class Home extends React.Component {
             };
             const { isLoaded } = this.state;
 
+
             if(this.state.fireRedirect) {
 
                 window.location.href = '/'
@@ -373,6 +376,8 @@ class Home extends React.Component {
             const { classes } = this.props;
             const temp = {... this.state};
             const {isFetching} = this.state;
+            console.log("tweets=========",this.state.tweet[0]);
+
             let displaydata;
             let displaydate;
             let displayhashtag;
@@ -388,322 +393,261 @@ class Home extends React.Component {
 
                 </List>
                 )
-                if (!isFetching && this.state.displaysearchtweets.length == 0 ) displaydate = this.state.tweet.map(tweet => 
-                    <div key={tweet}>
-                    <div className="tweet_class1">
-                    <Grid container spacing={12}>
-                    <Grid item sm={2}>
-                    <div className="profile_image_post">
-                    <img src={tweet[0].user.profile_image_url} />
-                    </div>
-                    </Grid>
-                    <Grid item sm={10}>
-                    <span className="username_title">{tweet[0].user.name}</span>
-                    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+tweet[0].user.screen_name}  aria-current="page">
-                    <span className="gray">@{tweet[0].user.screen_name}</span>
-                    </a>
-                    <p><span>{tweet[0].text}</span></p>
+                console.log("hash========",this.state.tweet[0]);
 
-                    </Grid>
-                    </Grid>
-                    </div>
-                    <div className="tweet_class1">
-                    <Grid container spacing={12}>
-                    <Grid item sm={2}>
-                    <div className="profile_image_post">
-                    <img src={tweet[1].user.profile_image_url} />
-                    </div>
-                    </Grid>
-                    <Grid item sm={10}>
-                    <span className="username_title">{tweet[1].user.name}</span>
-                    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+tweet[1].user.screen_name}  aria-current="page">
-                    <span className="gray">@{tweet[1].user.screen_name}</span>
-                    </a>
-                    <p><span>{tweet[1].text}</span></p>
+            if (!isFetching && this.state.displaysearchtweets.length == 0 && this.state.tweet[0]) displaydate = this.state.tweet[0].map(tweet => 
 
-                    </Grid>
-                    </Grid>
-                    </div>
-                    <div className="tweet_class1">
+                <div key={tweet}>
+                <div className="tweet_class1">
+                <Grid container spacing={1}>
+                <Grid item sm={2}>
+                <div className="profile_image_post">
+                <img src={tweet.user.profile_image_url} />
+                </div>
+                </Grid>
+                <Grid item sm={10}>
+                <span className="username_title">{tweet.user.name}</span>
+                <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+tweet.user.screen_name}  aria-current="page">
+                <span className="gray">@{tweet.user.screen_name}</span>
+                </a>
+                <p><span>{tweet.text}</span></p>
+                <div className="hashtag_flex">{ tweet && tweet.entities  ? (tweet.entities.hashtags.map(hashtag=> 
+                    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+hashtag.text}  aria-current="page"><p className="hash_color">#{hashtag.text}</p></a>)) : ('')}</div>
+                <div>
+                {tweet.extended_entities ? (<Player className="video_height" src={tweet.extended_entities.media[0].video_info.variants[1].url}></Player>) : ('')}
+                </div>           
+                </Grid>
+                </Grid>
+                </div>    
+                </div>        
+                )
+                if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data && this.state.displaysearchtweets[0].data.length)  displaysearchtweetsview = this.state.displaysearchtweets[0].data.map(searchelement => 
+                    <div className="tweet_class_search">
                     <Grid container spacing={12}>
                     <Grid item sm={2}>
-                    <div className="profile_image_post">
-                    <img src={tweet[2].user.profile_image_url} />
+                    <div className="profile_image_post1">
+                    <img src={searchelement.user.profile_image_url} />
                     </div>
                     </Grid>
                     <Grid item sm={10}>
-                    <span className="username_title">{tweet[2].user.name}</span>
-                    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+tweet[2].user.screen_name}  aria-current="page">
-                    <span className="gray">@{tweet[2].user.screen_name}</span>
+                    <span className="username_title">{searchelement.user.name}</span>
+                    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+searchelement.user.screen_name}  aria-current="page">
+                    <span className="gray">@{searchelement.user.screen_name}</span>
                     </a>
-                    <p><span>{tweet[2].text}</span></p>
-                    
+                    <p><span>{searchelement.text}</span></p>
                     </Grid>
                     </Grid>
-                    </div>
-                    <div className="tweet_class1">
-                    <Grid container spacing={12}>
-                    <Grid item sm={2}>
-                    <div className="profile_image_post">
-                    <img src={tweet[3].user.profile_image_url} />
-                    </div>
-                    </Grid>
-                    <Grid item sm={10}>
-                    <span className="username_title">{tweet[3].user.name}</span>
-                    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+tweet[3].user.screen_name}  aria-current="page">
-                    <span className="gray">@{tweet[3].user.screen_name}</span>
-                    </a>
-                    <p><span>{tweet[3].text}</span></p>
-
-                    </Grid>
-                    </Grid>
-                    </div>
-                    <div className="tweet_class1">
-                    <Grid container spacing={12}>
-                    <Grid item sm={2}>
-                    <div className="profile_image_post">
-                    <img src={tweet[4].user.profile_image_url} />
-                    </div>
-                    </Grid>
-                    <Grid item sm={10}>
-                    <span className="username_title">{tweet[4].user.name}</span>
-                    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+tweet[4].user.screen_name}  aria-current="page">
-                    <span className="gray">@{tweet[4].user.screen_name}</span>
-                    </a>
-                    <p><span>{tweet[4].text}</span></p>
-
-                    </Grid>
-                    </Grid>
-                    </div>
                     </div>
                     )
-if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data && this.state.displaysearchtweets[0].data.length)  displaysearchtweetsview = this.state.displaysearchtweets[0].data.map(searchelement => 
-    <div className="tweet_class_search">
-    <Grid container spacing={12}>
-    <Grid item sm={2}>
-    <div className="profile_image_post1">
-    <img src={searchelement.user.profile_image_url} />
-    </div>
-    </Grid>
-    <Grid item sm={10}>
-    <span className="username_title">{searchelement.user.name}</span>
-    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+searchelement.user.screen_name}  aria-current="page">
-    <span className="gray">@{searchelement.user.screen_name}</span>
-    </a>
-    <p><span>{searchelement.text}</span></p>
-    </Grid>
-    </Grid>
-    </div>
-    )
-    if(this.state.hashtag[0] && this.state.hashtag[0].length) displayhashtag = this.state.hashtag.map(hashtagname =>
-        <List key={hashtagname}>
-        {[hashtagname].map((text, index) => (
-            <ListItem button key={text}>   
-            <ListItemText primary={text} onClick={(e)=>this.handleClick(event)}/>
-            <i className="fas fa-trash" onClick={this.deletehash.bind(this,text)} ></i>
-            <i className="fas fa-pencil-alt" onClick={this.handleClickOpenHash.bind(this,text)}></i>
-            <p>
-            <div>
-            <Dialog
-            fullScreen={this.fullScreen}
-            open={this.state.openModel}
-            onClose={this.handleCloseModel}
-            aria-labelledby="responsive-dialog-title"
-            >
-            <DialogTitle id="responsive-dialog-title">{"Edit Hashtag"}</DialogTitle>
-            <DialogContent>
-            <DialogContentText>
-            <TextField
-            id="standard-full-width"
-            label="Edit Hashtag"
-            style={{ margin: 8 , width: 500}}
-            fullWidth
-            margin="normal"
-            defaultValue={this.state.edithashthag}
-            onChange={this.handleChangehashEvent}
-            />
-            </DialogContentText>
-            </DialogContent>
-            <DialogActions> 
-            <Button onClick={this.handleClickupdatehashtag} color="primary">
-            Edit
-            </Button>
-            <Button className="btn-left" onClick={this.handleCloseModelhashtag} color="primary">
-            close
-            </Button>
-            </DialogActions>
-            </Dialog>
-            </div>
-            </p>
-            </ListItem>
-            ))}
-        </List>
-        )
-        if (!isLoaded) {
-            return (
-                <center>
-                <div className="loader"></div>
-                </center>
-                )
-        } else if(isLoaded){
-            return (
-                <div className={classes.root}>
-                <CssBaseline />
-                <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
-                <IconButton
-                color="inherit"
-                aria-label="Open drawer"
-                edge="start"
-                onClick={this.handleDrawerToggle}
-                className={classes.menuButton}
-                >
-                <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" noWrap>
-                <TextField
-                id="outlined-with-placeholder"
-                label="Search"
-                className={classes.textField}
-                value={this.state.value}
-                onChange={this.handleChange} 
-                margin="normal"
-                variant="outlined"
-                />
-                </Typography>
-                <Button  onClick={this.handleClickSearch} color="primary" disabled={!this.state.value}>
-                Search
-                </Button>
-                <Button style={{right:10, position:'absolute'}} onClick={this.handleClickLogout} color="primary">
-                Logout
-                </Button>
-                </Toolbar>
-                </AppBar>
-                <nav className={classes.drawer}>
-                <Hidden smUp implementation="css">
-                <Drawer
-                container={this.props.container}
-                variant="temporary"
-                anchor={classes.direction === 'rtl' ? 'right' : 'left'}
-                open={this.state.mobileOpen}
-                onClose={this.props.handleDrawerToggle}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-                ModalProps={{
-                    keepMounted: true,
-                }}
-                >
-                <div className="menu-bar .MuiListItem-button">
-                <div className={classes.toolbar} />
-                <img src={require('./feed.png')} />
-                <span className="logo">Twitter</span>
-                <List>
-                </List>      
-                <span className="font-size">Trending Hashtag</span>
-                <List>
-                <div onClick={(e)=>this.handleClick(event)}>
-                {displaydata}
-                </div>
-                </List>
-                <span className="font-size">Your Hashtag</span>
-                <List>
-                <div onClick={(e)=>this.handleClickhashtagdelete(event)} className="hashtag">
-                {displayhashtag}
-                </div>  
-                </List>
-                </div>
-                </Drawer>
-                </Hidden>
-                <Hidden xsDown implementation="css">
-                <Drawer
-                variant="permanent"
-                open
-                >
-                <div className="menu-bar .MuiListItem-button">
-                <div className={classes.toolbar} />
-                <img className="img-twitter-logo" src={require('./feed.png')} />
-                <span className="logo">Twitter</span>
-                <List>
-                </List>      
-                <h5  className="font-size">Trending Hashtag</h5>
-                <List>
-                <div onClick={(e)=>this.handleClick(event)} className="trendshashtag">
-                {displaydata}
-                </div>
-                </List>
-                <h5 className="font-size">My Hashtag</h5>
-                <List>
-                <div  className="hashtag">
-                {displayhashtag}
-                </div>
-                </List>
-                </div>
-                </Drawer>
-                </Hidden>
-                </nav>
-                <main className={classes.content}>
-                <div className={classes.toolbar} />
-                <div className="profile_main_class">
-                <Grid container space ={12}>
-                <Grid item sm={1}>
-                <div className="profile_img">
-                <img src={this.photo} />
-                </div>
-                </Grid>
-                <Grid item sm={11}>
-                <h1>{this.name}</h1>
-                <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+this.username}  aria-current="page">
-                <span className="username-color">@{this.username}</span>
-                </a>
-                </Grid>
-                </Grid>
-                </div>
-                <div className="main_class_post">
-                <div>
-                {displaydate}
-                </div>
-                </div>
-                <div className="add_tweet">
-                <Fab color="primary" aria-label="Add" onClick={this.handleClickOpen} className={classes.margin}>
-                <AddIcon />
-                </Fab>
-                </div>
-                <Dialog
-                fullScreen={this.fullScreen}
-                open={this.state.open}
-                onClose={this.handleCloseModel}
-                aria-labelledby="responsive-dialog-title"
-                >
-                <DialogTitle id="responsive-dialog-title">{"Add Hashtag"}</DialogTitle>
-                <DialogContent>
-                <DialogContentText>
-                <TextField
-                id="standard-full-width"
-                label="Add Hashtag"
-                style={{ margin: 8 , width: 500}}
-                fullWidth
-                margin="normal"
-                defaultValue={this.state.hash}
-                onChange={this.handleChangeEvent}
-                />
-                </DialogContentText>
-                </DialogContent>
-                <DialogActions> 
-                <Button onClick={this.handleClickhashtag} color="primary" disabled={!this.state.value1}>
-                Add
-                </Button>
-                <Button className="btn-left" onClick={this.handleCloseModel} color="primary">
-                close
-                </Button>
-                </DialogActions>
-                </Dialog>
-                <div className="search_modals">
-                {displaysearchtweetsview}
-                </div>
-                </main>
-                </div>
-                );
+                    if(this.state.hashtag[0] && this.state.hashtag[0].length) displayhashtag = this.state.hashtag.map(hashtagname =>
+                        <List key={hashtagname}>
+                        {[hashtagname].map((text, index) => (
+                            <ListItem button key={text}>   
+                            <ListItemText primary={text} onClick={(e)=>this.handleClick(event)}/>
+                            <i className="fas fa-trash" onClick={this.deletehash.bind(this,text)} ></i>
+                            <i className="fas fa-pencil-alt" onClick={this.handleClickOpenHash.bind(this,text)}></i>
+                            <p>
+                            <div>
+                            <Dialog
+                            fullScreen={this.fullScreen}
+                            open={this.state.openModel}
+                            onClose={this.handleCloseModel}
+                            aria-labelledby="responsive-dialog-title"
+                            >
+                            <DialogTitle id="responsive-dialog-title">{"Edit Hashtag"}</DialogTitle>
+                            <DialogContent>
+                            <DialogContentText>
+                            <TextField
+                            id="standard-full-width"
+                            label="Edit Hashtag"
+                            style={{ margin: 8 , width: 500}}
+                            fullWidth
+                            margin="normal"
+                            defaultValue={this.state.edithashthag}
+                            onChange={this.handleChangehashEvent}
+                            />
+                            </DialogContentText>
+                            </DialogContent>
+                            <DialogActions> 
+                            <Button onClick={this.handleClickupdatehashtag} color="primary">
+                            Edit
+                            </Button>
+                            <Button className="btn-left" onClick={this.handleCloseModelhashtag} color="primary">
+                            close
+                            </Button>
+                            </DialogActions>
+                            </Dialog>
+                            </div>
+                            </p>
+                            </ListItem>
+                            ))}
+                        </List>
+                        )
+                        if (!isLoaded) {
+                            return (
+                                <center>
+                                <div className="loader"></div>
+                                </center>
+                                )
+                        } else if(isLoaded){
+                            return (
+                                <div className={classes.root}>
+                                <CssBaseline />
+                                <AppBar position="fixed" className={classes.appBar}>
+                                <Toolbar>
+                                <IconButton
+                                color="inherit"
+                                aria-label="Open drawer"
+                                edge="start"
+                                onClick={this.handleDrawerToggle}
+                                className={classes.menuButton}
+                                >
+                                <MenuIcon />
+                                </IconButton>
+                                <Typography variant="h6" noWrap>
+                                <TextField
+                                id="outlined-with-placeholder"
+                                label="Search"
+                                className={classes.textField}
+                                value={this.state.value}
+                                onChange={this.handleChange} 
+                                margin="normal"
+                                variant="outlined"
+                                />
+                                </Typography>
+                                <Button  onClick={this.handleClickSearch} color="primary" disabled={!this.state.value}>
+                                Search
+                                </Button>
+                                <Button style={{right:10, position:'absolute'}} onClick={this.handleClickLogout} color="primary">
+                                Logout
+                                </Button>
+                                </Toolbar>
+                                </AppBar>
+                                <nav className={classes.drawer}>
+                                <Hidden smUp implementation="css">
+                                <Drawer
+                                container={this.props.container}
+                                variant="temporary"
+                                anchor={classes.direction === 'rtl' ? 'right' : 'left'}
+                                open={this.state.mobileOpen}
+                                onClose={this.props.handleDrawerToggle}
+                                classes={{
+                                    paper: classes.drawerPaper,
+                                }}
+                                ModalProps={{
+                                    keepMounted: true,
+                                }}
+                                >
+                                <div className="menu-bar .MuiListItem-button">
+                                <div className={classes.toolbar} />
+                                <img src={require('./feed.png')} />
+                                <span className="logo">Twitter</span>
+                                <List>
+                                </List>      
+                                <span className="font-size">Trending Hashtag</span>
+                                <List>
+                                <div onClick={(e)=>this.handleClick(event)}>
+                                {displaydata}
+                                </div>
+                                </List>
+                                <span className="font-size">Your Hashtag</span>
+                                <List>
+                                <div onClick={(e)=>this.handleClickhashtagdelete(event)} className="hashtag">
+                                {displayhashtag}
+                                </div>  
+                                </List>
+                                </div>
+                                </Drawer>
+                                </Hidden>
+                                <Hidden xsDown implementation="css">
+                                <Drawer
+                                variant="permanent"
+                                open
+                                >
+                                <div className="menu-bar .MuiListItem-button">
+                                <div className={classes.toolbar} />
+                                <img className="img-twitter-logo" src={require('./feed.png')} />
+                                <span className="logo">Twitter</span>
+                                <List>
+                                </List>      
+                                <h5  className="font-size">Trending Hashtag</h5>
+                                <List>
+                                <div onClick={(e)=>this.handleClick(event)} className="trendshashtag">
+                                {displaydata}
+                                </div>
+                                </List>
+                                <h5 className="font-size">My Hashtag</h5>
+                                <List>
+                                <div  className="hashtag">
+                                {displayhashtag}
+                                </div>
+                                </List>
+                                </div>
+                                </Drawer>
+                                </Hidden>
+                                </nav>
+                                <main className={classes.content}>
+                                <div className={classes.toolbar} />
+                                <div className="profile_main_class">
+                                <Grid container space ={12}>
+                                <Grid item sm={1}>
+                                <div className="profile_img">
+                                <img src={this.photo} />
+                                </div>
+                                </Grid>
+                                <Grid item sm={11}>
+                                <h1>{this.name}</h1>
+                                <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+this.username}  aria-current="page">
+                                <span className="username-color">@{this.username}</span>
+                                </a>
+                                </Grid>
+                                </Grid>
+                                </div>
+                                <div className="main_class_post">
+                                <div>
+                                {displaydate}
+                                </div>
+                                </div>
+                                <div className="add_tweet">
+                                <Fab color="primary" aria-label="Add" onClick={this.handleClickOpen} className={classes.margin}>
+                                <AddIcon />
+                                </Fab>
+                                </div>
+                                <Dialog
+                                fullScreen={this.fullScreen}
+                                open={this.state.open}
+                                onClose={this.handleCloseModel}
+                                aria-labelledby="responsive-dialog-title"
+                                >
+                                <DialogTitle id="responsive-dialog-title">{"Add Hashtag"}</DialogTitle>
+                                <DialogContent>
+                                <DialogContentText>
+                                <TextField
+                                id="standard-full-width"
+                                label="Add Hashtag"
+                                style={{ margin: 8 , width: 500}}
+                                fullWidth
+                                margin="normal"
+                                defaultValue={this.state.hash}
+                                onChange={this.handleChangeEvent}
+                                />
+                                </DialogContentText>
+                                </DialogContent>
+                                <DialogActions> 
+                                <Button onClick={this.handleClickhashtag} color="primary" disabled={!this.state.value1}>
+                                Add
+                                </Button>
+                                <Button className="btn-left" onClick={this.handleCloseModel} color="primary">
+                                close
+                                </Button>
+                                </DialogActions>
+                                </Dialog>
+                                <div className="search_modals">
+                                {displaysearchtweetsview}
+                                </div>
+                                </main>
+                                </div>
+                                );
 }
 }else{
 
