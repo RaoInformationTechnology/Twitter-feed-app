@@ -134,7 +134,7 @@ class Home extends React.Component {
 
     componentDidMount(){
         if(this.state.isAuthenticated == true) {
-            fetch('http://132.140.160.62:4000/twitter-trends').
+            fetch('http://132.140.160.63:4000/twitter-trends').
             then((Response)=>Response.json()).
             then((findresponse,err)=>
             {      
@@ -147,7 +147,7 @@ class Home extends React.Component {
                 console.log('trendsdata: ', this.state.data[0].trends);
             })
 
-            fetch('http://132.140.160.62:4000/twitter-tweets').
+            fetch('http://132.140.160.63:4000/twitter-tweets').
             then((Response)=>Response.json()).
             then((findresponse,err)=>
             {      
@@ -231,7 +231,7 @@ class Home extends React.Component {
     }
 
     getData = () => {
-        axios.get("http://132.140.160.62:4000/search-tweets", {params: {key: this.state.value}})
+        axios.get("http://132.140.160.63:4000/search-tweets", {params: {key: this.state.value}})
         .then(( data ) => {
             console.log("data=========",data.data.length);
             if(data.data.length == 0){
@@ -252,7 +252,7 @@ class Home extends React.Component {
     getHashTag = () =>{
         console.log("msg")
         console.log("localstorage=====",localStorage.getItem('email'));
-        axios.post("http://132.140.160.62:4000/user/addtag",{hashtag: this.state.value1 , email:localStorage.getItem('email')})
+        axios.post("http://132.140.160.63:4000/user/addtag",{hashtag: this.state.value1 , email:localStorage.getItem('email')})
         .then(( data ) => {
             console.log("data",data);
             Swal.fire("Successfully Added!","", "success");
@@ -268,7 +268,7 @@ class Home extends React.Component {
         let hashTagArray = [];
         this.email = localStorage.getItem('email');
         const email = this.email;
-        axios.get("http://132.140.160.62:4000/user/gethashtag/"+email)
+        axios.get("http://132.140.160.63:4000/user/gethashtag/"+email)
         .then((res) => {
             for(let i=0;i<res.data['0'].hashtag.length;i++){
                 hashTagArray.push(res.data['0'].hashtag[i].hashtag);
@@ -282,7 +282,7 @@ class Home extends React.Component {
 
     deletehash(id){
         console.log("hashtagdelete=========",id);
-        axios.delete("http://132.140.160.62:4000/user/deletehashtag",{ data: {hashtag: id , email:localStorage.getItem('email')} })
+        axios.delete("http://132.140.160.63:4000/user/deletehashtag",{ data: {hashtag: id , email:localStorage.getItem('email')} })
         .then((res) => {
             console.log("data========",res);
             Swal.fire("Successfully deleted!","", "success");
@@ -333,7 +333,7 @@ class Home extends React.Component {
 
     updatehash(id){
         console.log("id=",id);
-        axios.put("http://132.140.160.62:4000/user/updatehashtag",{hashtag: id , email:localStorage.getItem('email')})
+        axios.put("http://132.140.160.63:4000/user/updatehashtag",{hashtag: id , email:localStorage.getItem('email')})
         .then((res) => {
             console.log("data========",res);
             Swal.fire("Successfully updated!","", "success");
@@ -393,7 +393,7 @@ class Home extends React.Component {
                     </a>
                     <p><span>{tweet.text}</span></p>
                     <div className="hashtag_flex">{ tweet && tweet.entities  ? (tweet.entities.hashtags.map(hashtag=> 
-                        <p className="hash_color" onClick={(e)=>this.handleClick(event)}>#{hashtag.text}</p>)) : ('')}</div>
+                        <p key={hashtag} className="hash_color" onClick={(e)=>this.handleClick(event)}>#{hashtag.text}</p>)) : ('')}</div>
                     <div className="video">
                     {tweet.extended_entities ? (<Player className="video_height" src={tweet.extended_entities.media[0].video_info.variants[0].url}></Player>) : ('')}
                     </div>           
@@ -417,14 +417,19 @@ class Home extends React.Component {
                         </a>
                         <p><span>{searchelement.text}</span></p>
                         <div className="hashtag_flex">{ searchelement && searchelement.entities  ? (searchelement.entities.hashtags.map(hashtag=> 
-                            <p className="hash_color" onClick={(e)=>this.handleClick(event)}>#{hashtag.text}</p>)) : ('')}</div>
+                            <p className="hash_color" onClick={(e)=>this.handleClick(event)}>#{hashtag.text}</p>)) : ('')}</div>     
                         <div>
-                        {searchelement.extended_entities ? (<img className="search-tweet-imag" src={searchelement.extended_entities.media[0].media_url}/>) : ('')}
-                        </div>        
-                        </Grid>
-                        </Grid>
-                        </div>
-                        )
+                        {searchelement.extended_entities ? ( <div>
+                            {searchelement.extended_entities ? (<img className="search-tweet-imag" src={searchelement.extended_entities.media[0].media_url}/>) : ('')}
+                            </div>) : (<div className="video">
+                            {searchelement.extended_entities ? (<Player className="video_height" src={searchelement.extended_entities.media[0].video_info.variants[1].url}></Player>) : ('')}
+                            </div>)}
+
+                            </div>
+                            </Grid>
+                            </Grid>
+                            </div>
+                            )
                         if(this.state.hashtag[0] && this.state.hashtag[0].length) displayhashtag = this.state.hashtag.map(hashtagname =>
                             <List key={hashtagname}>
                             {[hashtagname].map((text, index) => (
@@ -510,11 +515,11 @@ class Home extends React.Component {
                                     <nav className={classes.drawer}>
                                     <Hidden smUp implementation="css">
                                     <Drawer
-                                    container={this.props.container}
+                                    container={this.container}
                                     variant="temporary"
                                     anchor={classes.direction === 'rtl' ? 'right' : 'left'}
                                     open={this.state.mobileOpen}
-                                    onClose={this.props.handleDrawerToggle}
+                                    onClose={this.handleDrawerToggle}
                                     classes={{
                                         paper: classes.drawerPaper,
                                     }}
@@ -524,21 +529,21 @@ class Home extends React.Component {
                                     >
                                     <div className="menu-bar .MuiListItem-button">
                                     <div className={classes.toolbar} />
-                                    <img src={require('./feed.png')} />
+                                    <img className="img-twitter-logo" src={require('./feed.png')} />
                                     <span className="logo">Twitter</span>
                                     <List>
                                     </List>      
-                                    <span className="font-size">Trending Hashtag</span>
+                                    <h5  className="font-size">Trending Hashtag</h5>
                                     <List>
-                                    <div onClick={(e)=>this.handleClick(event)}>
+                                    <div onClick={(e)=>this.handleClick(event)} className="trendshashtag">
                                     {displaydata}
                                     </div>
                                     </List>
-                                    <span className="font-size">Your Hashtag</span>
+                                    <h5 className="font-size">My Hashtag</h5>
                                     <List>
-                                    <div onClick={(e)=>this.handleClickhashtagdelete(event)} className="hashtag">
+                                    <div  className="hashtag">
                                     {displayhashtag}
-                                    </div>  
+                                    </div>
                                     </List>
                                     </div>
                                     </Drawer>
@@ -580,7 +585,9 @@ class Home extends React.Component {
                                     </div>
                                     </Grid>
                                     <Grid item sm={11}>
+                                    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+this.name}  aria-current="page">
                                     <h1>{this.name}</h1>
+                                    </a>
                                     <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+this.username}  aria-current="page">
                                     <span className="username-color">@{this.username}</span>
                                     </a>
@@ -588,7 +595,7 @@ class Home extends React.Component {
                                     </Grid>
                                     </div>
                                     <div className="main_class_post">
-                                    <div>
+                                    <div className="tweet_bg_color">
                                     {displaydate}
                                     </div>
                                     </div>

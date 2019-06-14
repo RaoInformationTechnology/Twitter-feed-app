@@ -112,12 +112,10 @@ h4{
 fieldset.PrivateNotchedOutline-root-153.MuiOutlinedInput-notchedOutline {
     padding-left: 31.5px;
     width: 320px !important;
-    /*background-color: floralwhite;*/
 }
 .main_class_post {
-
-    margin-left: 132px !important;
     overflow: auto;
+    background-color: #e6ecf0;
 }
 
 
@@ -263,6 +261,7 @@ button.video-react-big-play-button.video-react-big-play-button-left {
     left: 52px;
     font-size: 25px;
     font-family: cursive;
+    color: #fff !important;
 }
 .Home-toolbar-5 {
     margin-top: -27px!important;
@@ -296,6 +295,7 @@ button.video-react-play-control.video-react-control.video-react-button.video-rea
     color: #1DA1F2;
     margin-left: 4px;
     cursor: pointer;
+    margin-top: 0px !important;
 
 }
 .hashtag_flex{
@@ -395,13 +395,20 @@ button.video-react-play-control.video-react-control.video-react-button.video-rea
     width: 738px;
     margin-bottom: 7px;
     border-radius: 5px;
-    border: 1px solid #9E9E9E;
+    border: 1px solid lightgray;
     /*box-shadow: 0px 10px 10px #0000004d;*/
     background-color: white;
     margin: auto;
     margin-bottom: 20px !important;
 }
+.tweet_bg_color{
 
+    margin-left: 132px !important;
+}
+.Home-menuButton-4 {
+    margin-right: 16px;
+    margin-left: -113px !important;
+}
 :not(.mdc-list--non-interactive)>:not(.mdc-list-item--disabled).mdc-list-item {
     --mdc-ripple-fg-size: 0;
     --mdc-ripple-left: 0;
@@ -577,4 +584,8 @@ i.fas.fa-trash {
 }
 i.fas.fa-pencil-alt {
     margin-left: 12px !important;
+}
+.Home-drawerPaper-6{
+
+    background-color: #0c2755!important
 }
