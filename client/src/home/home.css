@@ -161,7 +161,7 @@ span.MuiTypography-root.MuiTypography-body1.MuiListItemText-primary {
 }
 .MuiListItem-button:hover {
     background-color: gray!important;
-    color: black;
+    color: #fff !important;
 }
 .makeStyles-icon-8 {
     color: gray!important;
