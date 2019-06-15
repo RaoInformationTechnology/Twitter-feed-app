@@ -42,6 +42,7 @@ class SignUp extends React.Component {
 					localStorage.setItem('username', (this.state.user.username));
 					localStorage.setItem('photo',(this.state.user.photo));
 					localStorage.setItem('isAuthenticated', true);
+
 				}
 			});		
 		}
@@ -84,7 +85,7 @@ class SignUp extends React.Component {
 			</div>
 			</div>
 			);
-		}
 	}
+}
 
-	export default withStyles(styles)(SignUp);
+export default withStyles(styles)(SignUp);

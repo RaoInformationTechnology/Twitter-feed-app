@@ -16,6 +16,7 @@ import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
+import Tooltip from '@material-ui/core/Tooltip';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -84,7 +85,7 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data:[],tweet:[], query: '',
+            data:[],tweet:5, query: '',
             isFetching:true,
             searchString:[],
             value: '',
@@ -108,8 +109,9 @@ class Home extends React.Component {
             openModel:false,
             hash:'#',
             edithashthag:'' ,
-            newhashtag:'' 
-
+            newhashtag:'' ,
+            visible: 4,
+            limit:3
         };
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -126,14 +128,18 @@ class Home extends React.Component {
         this.handleClickupdatehashtag = this.handleClickupdatehashtag.bind(this);
         this.handleCloseModelhashtag = this.handleCloseModelhashtag.bind(this);
         this.handleChangehashEvent = this.handleChangehashEvent.bind(this);
+        this.loadMore = this.loadMore.bind(this);
+        this.loadMoreSearch = this.loadMoreSearch.bind(this);
         this.name = localStorage.getItem('name');
         this.username = localStorage.getItem('username');
         this.photo = localStorage.getItem('photo');
 
     }
 
+
     componentDidMount(){
         if(this.state.isAuthenticated == true) {
+            var tweet = [];
             fetch('http://132.140.160.63:4000/twitter-trends').
             then((Response)=>Response.json()).
             then((findresponse,err)=>
@@ -155,15 +161,30 @@ class Home extends React.Component {
                 this.state.isFetching = false;
                 this.state.isTweetDisplay = true;
                 this.state.isSearchTweetDisplay = false;
-                this.setState(prevState =>({
-                    tweet: [...prevState.tweet, findresponse]
+                for (var i = 0; i < this.state.tweet; i++) {
+                    this.setState(prevState =>({
+                        tweet: [...prevState.tweet, findresponse]
 
-                }))
-                console.log('tweetdata ', this.state.tweet[0]);
-            })    
+                    }))}
+                    console.log('tweetdata ', this.state.tweet[0]);
+                })    
 
             this.getHash();
         }
+    }
+
+
+    loadMore() {
+        this.setState((prev) => {
+            return {visible: prev.visible + 2};
+        });
+    }
+    loadMoreSearch(){
+
+        this.setState((prev) => {
+            return {limit: prev.limit + 2};
+        });
+
     }
 
     handleChange(event) {
@@ -377,7 +398,8 @@ class Home extends React.Component {
                 </List>
                 
                 )
-                if (!isFetching && this.state.displaysearchtweets.length == 0 && this.state.tweet[0]) displaydate = this.state.tweet[0].map(tweet => 
+                if (!isFetching && this.state.displaysearchtweets.length == 0 && this.state.tweet[0]) displaydate = this.state.tweet[0].slice(0,this.state.visible).map(tweet => 
+                    <div>
                     <div key={tweet}>
                     <div className="tweet_class1">
                     <Grid container spacing={1}>
@@ -399,10 +421,12 @@ class Home extends React.Component {
                     </div>           
                     </Grid>
                     </Grid>
-                    </div>    
+                    </div>   
                     </div>        
+
+                    </div>               
                     )
-                    if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data && this.state.displaysearchtweets[0].data.length)  displaysearchtweetsview = this.state.displaysearchtweets[0].data.map(searchelement => 
+                    if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data && this.state.displaysearchtweets[0].data.length)  displaysearchtweetsview = this.state.displaysearchtweets[0].data.slice(0,this.state.limit).map(searchelement => 
                         <div className="tweet_class_search">
                         <Grid container spacing={12}>
                         <Grid item sm={2}>
@@ -432,11 +456,12 @@ class Home extends React.Component {
                             )
                         if(this.state.hashtag[0] && this.state.hashtag[0].length) displayhashtag = this.state.hashtag.map(hashtagname =>
                             <List key={hashtagname}>
+
                             {[hashtagname].map((text, index) => (
                                 <ListItem button key={text}>   
-                                <ListItemText primary={text} onClick={(e)=>this.handleClick(event)}/>
-                                <i className="fas fa-trash" onClick={this.deletehash.bind(this,text)} ></i>
-                                <i className="fas fa-pencil-alt" onClick={this.handleClickOpenHash.bind(this,text)}></i>
+                                <Tooltip disableFocusListener title="Search"><ListItemText primary={text} onClick={(e)=>this.handleClick(event)}/></Tooltip>
+                                <Tooltip disableFocusListener title="Delete"><i className="fas fa-trash" onClick={this.deletehash.bind(this,text)} ></i></Tooltip>
+                                <Tooltip disableFocusListener title="Edit"><i className="fas fa-pencil-alt" onClick={this.handleClickOpenHash.bind(this,text)}></i></Tooltip>
                                 <div>
                                 <Dialog
                                 fullScreen={this.fullScreen}
@@ -459,12 +484,16 @@ class Home extends React.Component {
                                 </DialogContentText>
                                 </DialogContent>
                                 <DialogActions> 
+                                <Tooltip disableFocusListener title="Edit">
                                 <Button onClick={this.handleClickupdatehashtag} color="primary">
                                 Edit
                                 </Button>
+                                </Tooltip>
+                                <Tooltip disableFocusListener title="Close">
                                 <Button className="btn-left" onClick={this.handleCloseModelhashtag} color="primary">
                                 close
                                 </Button>
+                                </Tooltip>
                                 </DialogActions>
                                 </Dialog>
                                 </div>
@@ -504,12 +533,16 @@ class Home extends React.Component {
                                     variant="outlined"
                                     />
                                     </Typography>
-                                    <Button  onClick={this.handleClickSearch} color="primary" disabled={!this.state.value}>
+                                    <Tooltip disableFocusListener title="Search">
+                                    <Button onClick={this.handleClickSearch} color="primary" disabled={!this.state.value}>
                                     Search
                                     </Button>
+                                    </Tooltip>
+                                    <Tooltip disableFocusListener title="Logout">
                                     <Button style={{right:10, position:'absolute'}} onClick={this.handleClickLogout} color="primary">
                                     Logout
                                     </Button>
+                                    </Tooltip>
                                     </Toolbar>
                                     </AppBar>
                                     <nav className={classes.drawer}>
@@ -598,11 +631,16 @@ class Home extends React.Component {
                                     <div className="tweet_bg_color">
                                     {displaydate}
                                     </div>
+                                    {this.state.tweet[0] ? <div>{this.state.visible < this.state.tweet[0].length &&
+                                       <button onClick={this.loadMore} type="button" className="load-more">Load more</button>
+                                    }  </div> : <div>No data</div>}
                                     </div>
                                     <div className="add_tweet">
+                                    <Tooltip disableFocusListener title="Add-Hashtag">
                                     <Fab color="primary" aria-label="Add" onClick={this.handleClickOpen} className={classes.margin}>
                                     <AddIcon />
                                     </Fab>
+                                    </Tooltip>
                                     </div>
                                     <Dialog
                                     fullScreen={this.fullScreen}
@@ -625,16 +663,22 @@ class Home extends React.Component {
                                     </DialogContentText>
                                     </DialogContent>
                                     <DialogActions> 
+                                    <Tooltip disableFocusListener title="Add">
                                     <Button onClick={this.handleClickhashtag} color="primary" disabled={!this.state.value1}>
                                     Add
                                     </Button>
+                                    </Tooltip>
+                                    <Tooltip disableFocusListener title="Close">
                                     <Button className="btn-left" onClick={this.handleCloseModel} color="primary">
                                     close
                                     </Button>
+                                    </Tooltip>
                                     </DialogActions>
                                     </Dialog>
+                                    <div>
                                     <div className="search_modals">
                                     {displaysearchtweetsview}
+                                    </div>
                                     </div>
                                     </main>
                                     </div>
