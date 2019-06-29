@@ -1,0 +1,48 @@
+const express = require('express');
+const tweetsRoutes = express.Router();
+const Twit = require('twit');
+const trendsvalidation = require('../validation/trendsvalidation.js');
+const tweetvalidation = require('../validation/tweetvalidation.js');
+const searchtweetsvalidation = require('../validation/searchtweetsvalidation.js');
+
+const T = new Twit({
+    consumer_key: 'z8GSoJgB7Zbj05sWcxW87Zi1L',
+    consumer_secret: '6F6quJ491qYCkhs2jG2uZaJWvrkjBaOElKuQ6fBzSYzRGs3bkn',
+    access_token: '1125979094783414272-NeCbbT2Vrc1xLzMOcKEpxWBAUA302f',
+    access_token_secret: 'jIbogQP0R69uQLHxfMKXqoRmjDGViN1NVRjrLXASOwfUz'
+})
+
+tweetsRoutes.get('/twitter-trends', trendsvalidation.trends, (req, res) => {
+    T.get('/trends/place', { name: '#Cricket', id: '1' }, function (err, response) {
+        if (err) {
+            console.log('err: ', err);
+        } else {
+            const trends = response[0].trends.splice(0, 5);
+            res.status(200).json({ message: 'Fetched trends tweets', trends: trends })
+        }
+    })
+});
+
+tweetsRoutes.get('/twitter-tweets', tweetvalidation.tweets, (req, res) => {
+    T.get('/statuses/home_timeline', { count: 6 }, function (err, response) {
+        if (err) {
+            console.log('err: ', err);
+        } else {
+            res.status(200).send(response);
+        }
+    })
+})
+
+tweetsRoutes.get('/search-tweets', searchtweetsvalidation.searchtweets, (req, res) => {
+    const searchvalue = req.query.key;
+    T.get('search/tweets', { q: searchvalue, count: 5 }, function (err, data, response) {
+        if (err) {
+            console.log('err: ', err);
+        } else {
+            const tweets = data.statuses;
+            res.status(200).send(tweets);
+        }
+    });
+})
+
+module.exports = tweetsRoutes;

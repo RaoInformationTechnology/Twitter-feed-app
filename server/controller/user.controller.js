@@ -1,50 +1,64 @@
-var userModel = require('../model/user.model');
-var userController = {};
+const userService = require('../service/user.service.ts');
 
-userController.addtag = function(req,res){
-  var hash = req.body;
-  console.log("hashhhh-----",hash);
-  const hashTag = req.body.hash;
-  userModel.findOneAndUpdate({email: req.body.email}, {$addToSet: {hashtag: req.body}}, {new: true}, (upderr, updres) => {
-    console.log("addhashtag==============");
-    if (upderr) {
-      console.log("errrrrrrrr",upderr);
-    } else {
-      console.log('updres: ', updres);
-      res.status(200).json({message: 'Updated successfully'});
-    }
+/** Add Hashtag */
+AddTag = function (req, res) {
+  const userData = {
+    hash: req.body,
+    hashTag: req.body.hash,
+    email: req.body.email
+  }
+  userService.AddTag(userData).then((response) => {
+    return res.status(200).json({ status: 1, message: response.message, data: response.data });
+  }).catch((error) => {
+    console.log('error:', error);
+    return res.status(error.status ? error.status : 500).json({ message: error.message ? error.message : 'internal server error' });
   });
 }
 
-userController.deletehashtag = function(req,res){
-  var hashtag = req.body;
-  console.log("hashtag======",hashtag);
-  userModel.update({email: req.body.email},{ $pull: { "hashtag" : { hashtag: req.body.hashtag } } },function(err,deletehashtag){
-    console.log("deletehashtag=========",deletehashtag);
-    console.log(err,deletehashtag);
-    res.send(deletehashtag)
-  })
+/** Delete Hashtag */
+DeleteHashtag = function (req, res) {
+  const userDeletetag = {
+    hashtag: req.body.hashtag,
+    email: req.body.email
+  }
+  userService.DeleteHashtag(userDeletetag).then((response) => {
+    return res.status(200).json({ status: 1, message: response.message, data: response.data });
+  }).catch((error) => {
+    console.log('error:', error);
+    return res.status(error.status ? error.status : 500).json({ message: error.message ? error.message : 'internal server error' });
+  });
 }
 
-userController.updatehashtag = function(req,res){
-  var hashtag = req.body;
-  console.log("hashtag======",hashtag);
-  userModel.findOneAndUpdate({email:req.body.email},{$set:{ "hashtag.0.hashtag" : req.body.hashtag}},{upsert: true,new: true},function(err,updatehashtag){
-    console.log("updatehashtag-========",updatehashtag);
-    console.log(err,updatehashtag);
-    res.send(updatehashtag);
-  })
+/** Update Hashtag */
+UpdateHashtag = function (req, res) {
+  const updateHashtag = {
+    hashtag: req.body.hashtag,
+    email: req.body.email
+  }
+  userService.UpdateHashtag(updateHashtag).then((response) => {
+    return res.status(200).json({ status: 1, message: response.message, data: response.data });
+  }).catch((error) => {
+    console.log('error:', error);
+    return res.status(error.status ? error.status : 500).json({ message: error.message ? error.message : 'internal server error' });
+  });
 }
 
-userController.getHashTag = function(req,res){
-  var email = req.params.email;
-  console.log("email==========",email);
-  userModel.find({email:email},function(err,hashtag){
-    console.log("hashtag======",hashtag);
-    res.send(hashtag);
-  })
+/** Get Hashtag */
+GetHashTag = function (req, res) {
+  const userGetHashtag = {
+    email: req.params.email
+  }
+  userService.GetHashTag(userGetHashtag).then((response) => {
+    return res.status(200).json({ status: 1, message: response.message, data: response.data });
+  }).catch((error) => {
+    console.log('error:', error);
+    return res.status(error.status ? error.status : 500).json({ message: error.message ? error.message : 'internal server error' });
+  });
 }
 
-
-
-module.exports = userController;
+module.exports = {
+  AddTag: AddTag,
+  DeleteHashtag: DeleteHashtag,
+  UpdateHashtag: UpdateHashtag,
+  GetHashTag: GetHashTag
+}

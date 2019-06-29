@@ -37,15 +37,16 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import { useTheme } from '@material-ui/core/styles';
-import {Form} from  'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import SignUp from '../signup/signup.js';
 import { withStyles } from '@material-ui/core/styles';
 import Swal from 'sweetalert2';
+import { config } from '../config';
+import history from '../history';
 
 const drawerWidth = 240;
 const classes = theme => ({
-
     root: {
         display: 'flex',
     },
@@ -85,39 +86,38 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data:[],tweet:5, query: '',
-            isFetching:true,
-            searchString:[],
+            data: [], tweet: 5, query: '',
+            isFetching: true,
+            searchString: [],
             value: '',
-            searchvalue:'',
+            searchvalue: '',
             results: [],
             show: false,
             displaysearchtweets: [],
-            setOpen:false,
-            isTweetDisplay:true,
-            isSearchTweetDisplay:false,
-            hashtag:[],
-            email:[],
+            setOpen: false,
+            isTweetDisplay: true,
+            isSearchTweetDisplay: false,
+            hashtag: [],
+            email: [],
             mobileOpen: false,
-            open:false,
-            close:false,
+            open: false,
+            close: false,
             fireRedirect: false,
             isLoaded: false,
             isAuthenticated: true,
-            value1:'',
-            setOpenModel:false,
-            openModel:false,
-            hash:'#',
-            edithashthag:'' ,
-            newhashtag:'' ,
+            value1: '',
+            setOpenModel: false,
+            openModel: false,
+            hash: '#',
+            edithashthag: '',
+            newhashtag: '',
             visible: 4,
-            limit:3
+            limit: 3
         };
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeEvent = this.handleChangeEvent.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleClickhashtag = this.handleClickhashtag.bind(this);
         this.handleClickSearch = this.handleClickSearch.bind(this);
@@ -129,425 +129,431 @@ class Home extends React.Component {
         this.handleCloseModelhashtag = this.handleCloseModelhashtag.bind(this);
         this.handleChangehashEvent = this.handleChangehashEvent.bind(this);
         this.loadMore = this.loadMore.bind(this);
-        this.loadMoreSearch = this.loadMoreSearch.bind(this);
         this.name = localStorage.getItem('name');
         this.username = localStorage.getItem('username');
         this.photo = localStorage.getItem('photo');
-
     }
 
+    /** First Call During App Run */
+    componentDidMount() {
+        if (this.state.isAuthenticated == true) {
+            const tweet = [];
+            fetch(config.baseApiUrl + 'twitter-trends').
+                then((Response) => Response.json()).
+                then((findresponse, err) => {
+                    try {
+                        this.state.isFetching = false;
+                        this.setState(prevState => ({
+                            data: [...prevState.data, findresponse],
+                            isLoaded: true
+                        }))
+                    } catch (err) {
+                        console.log("err====", err);
+                    }
+                })
 
-    componentDidMount(){
-        if(this.state.isAuthenticated == true) {
-            var tweet = [];
-            fetch('http://132.140.160.63:4000/twitter-trends').
-            then((Response)=>Response.json()).
-            then((findresponse,err)=>
-            {      
-                this.state.isFetching = false;
-                this.setState(prevState =>({
-                    data: [...prevState.data, findresponse],
-                    isLoaded: true
-
-                }))
-                console.log('trendsdata: ', this.state.data[0].trends);
-            })
-
-            fetch('http://132.140.160.63:4000/twitter-tweets').
-            then((Response)=>Response.json()).
-            then((findresponse,err)=>
-            {      
-
-                this.state.isFetching = false;
-                this.state.isTweetDisplay = true;
-                this.state.isSearchTweetDisplay = false;
-                for (var i = 0; i < this.state.tweet; i++) {
-                    this.setState(prevState =>({
-                        tweet: [...prevState.tweet, findresponse]
-
-                    }))}
-                    console.log('tweetdata ', this.state.tweet[0]);
-                })    
-
+            fetch(config.baseApiUrl + 'twitter-tweets').
+                then((Response) => Response.json()).
+                then((findresponse, err) => {
+                    try {
+                        this.state.isFetching = false;
+                        this.state.isTweetDisplay = true;
+                        this.state.isSearchTweetDisplay = false;
+                        for (var i = 0; i < this.state.tweet; i++) {
+                            this.setState(prevState => ({
+                                tweet: [...prevState.tweet, findresponse]
+                            }))
+                        }
+                    } catch (err) {
+                        console.log("err=======", err);
+                    }
+                })
             this.getHash();
         }
     }
 
-
+    /** Load More Button Display To More Tweets */
     loadMore() {
         this.setState((prev) => {
-            return {visible: prev.visible + 2};
+            return { visible: prev.visible + 2 };
         });
     }
-    loadMoreSearch(){
 
-        this.setState((prev) => {
-            return {limit: prev.limit + 2};
-        });
-
-    }
-
+    /** Onchange During Search Tweets Text-Field Value  */
     handleChange(event) {
-        console.log("event======",event);
-        this.setState({value: event.target.value});
-        console.log("valueeee====",this.state.value);
+        this.setState({ value: event.target.value });
     }
 
-    handleChangeEvent(event) {
-        console.log("event=========",event);
-        this.setState({value1: event.target.value});
-        console.log("valueeee====",this.state.value1);
-    }
-
-    handleSubmit(event) {
-        console.log("name:",this.state.value);
-        event.preventDefault() ;
-        this.getData();
-    }
-
-    handleClickSearch(event){
-        if(this.state.value.length==0){    
-            Swal.fire("Search Data Missing!","", "warning");
-
-        }else{   
-            console.log("name:",this.state.value);
-            event.preventDefault() ;
-            this.setState({isLoaded : false});
+    /** Search Button Onclick & Gets Tweets or Hashtags */
+    handleClickSearch(event) {
+        if (!this.state.value.length) {
+            Swal.fire("Search Data Missing!", "", "warning");
+        } else {
+            event.preventDefault();
+            this.setState({ isLoaded: false });
             this.getData();
-            this.setState({value: ''});
+            this.setState({ value: '' });
         }
     }
 
-    handleClickhashtag(event){
-        if(this.state.value1.length==0){    
-            Swal.fire("Please AddHashtag First!","", "warning");
+    /** Add Hashtag In Our App  */
+    handleClickhashtag(event) {
+        if (!this.state.value1.length) {
+            Swal.fire("Please AddHashtag First!", "", "warning");
             this.handleCloseModel();
-        }else{   
-            console.log("hashtag:",this.state.value1);
+        } else {
             event.preventDefault();
-            this.setState({isLoaded : false});
+            this.setState({ isLoaded: false });
             this.getHashTag();
             this.handleCloseModel();
-            this.setState({value1: ''});
+            this.setState({ value1: '' });
         }
     }
 
-    handleClickLogout(){      
-        console.log("logout=========");
+    /** User Logout  */
+    handleClickLogout() {
         localStorage.setItem('isAuthenticated', false);
         localStorage.removeItem("email");
         localStorage.removeItem("name");
         localStorage.removeItem("username");
         localStorage.removeItem('photo');
-        this.setState({isLoaded: true,fireRedirect: true })
+        this.setState({ isLoaded: true, fireRedirect: true })
     }
 
-
+    /** ModelClose During Sucess Response & Close Button Click */
     handleClose() {
         this.setState({ show: false });
     }
 
+    /** Onchange Hashtag Text-Field Value */
+    handleChangeEvent(event) {
+        this.setState({ value1: event.target.value });
+    }
+
+    /** ModelShow  */
     handleShow() {
         this.setState({ show: true });
     }
 
+    /** Popular Search-Tweets */
     getData = () => {
-        axios.get("http://132.140.160.63:4000/search-tweets", {params: {key: this.state.value}})
-        .then(( data ) => {
-            console.log("data=========",data.data.length);
-            if(data.data.length == 0){
-                Swal.fire('Tweets Not Found....');
-                this.componentDidMount();
-            }else{
-                this.setState({
-                    isLoaded: true,
-                    displaysearchtweets:[data]
-                })
-                console.log("data======",data);
-                this.state.isTweetDisplay = false;
-                this.state.isSearchTweetDisplay = true;
-            }
-        })
-    }
-
-    getHashTag = () =>{
-        console.log("msg")
-        console.log("localstorage=====",localStorage.getItem('email'));
-        axios.post("http://132.140.160.63:4000/user/addtag",{hashtag: this.state.value1 , email:localStorage.getItem('email')})
-        .then(( data ) => {
-            console.log("data",data);
-            Swal.fire("Successfully Added!","", "success");
-            this.setState({
-                isLoaded: true,
-
+        axios.get(config.baseApiUrl + 'search-tweets', { params: { key: this.state.value } })
+            .then((data) => {
+                try {
+                    if (!data.data.length) {
+                        Swal.fire('Tweets Not Found....');
+                        this.componentDidMount();
+                    } else {
+                        this.setState({
+                            isLoaded: true,
+                            displaysearchtweets: [data]
+                        })
+                        this.state.isTweetDisplay = false;
+                        this.state.isSearchTweetDisplay = true;
+                    }
+                } catch (err) {
+                    console.log("err======", err);
+                }
             })
-            this.getHash();
-        })
     }
 
-    getHash(){
+    /** User Add Hashtag In Our App */
+    getHashTag = () => {
+        axios.post(config.baseApiUrl + 'user/addtag', { hashtag: this.state.value1, email: localStorage.getItem('email') })
+            .then((data) => {
+                try {
+                    Swal.fire("Successfully Added!", "", "success");
+                    this.setState({
+                        isLoaded: true,
+                    })
+                    this.getHash();
+                }
+                catch (err) {
+                    console.log("err======", err);
+                }
+            })
+
+    }
+
+    /** Display Hashtag In Our App */
+    getHash() {
         let hashTagArray = [];
         this.email = localStorage.getItem('email');
         const email = this.email;
-        axios.get("http://132.140.160.63:4000/user/gethashtag/"+email)
-        .then((res) => {
-            for(let i=0;i<res.data['0'].hashtag.length;i++){
-                hashTagArray.push(res.data['0'].hashtag[i].hashtag);
-            }
-            console.log("hashTagArray",hashTagArray);
-            this.setState({hashtag : hashTagArray
+        axios.get(config.baseApiUrl + 'user/gethashtag/' + email)
+            .then((res) => {
+                try {
+                    this.setState({
+                        hashtag: res.data.data[0].hashtag
+                    })
+                } catch (err) {
+                    console.log("err========", err);
+                }
             })
-            
-        })
     }
 
-    deletehash(id){
-        console.log("hashtagdelete=========",id);
-        axios.delete("http://132.140.160.63:4000/user/deletehashtag",{ data: {hashtag: id , email:localStorage.getItem('email')} })
-        .then((res) => {
-            console.log("data========",res);
-            Swal.fire("Successfully deleted!","", "success");
-            this.componentDidMount();
-        })
+    /** @param {*} id
+     * Delete Hashtag In Our App
+     */
+    deletehash(id) {
+        axios.delete(config.baseApiUrl + 'user/deletehashtag', { data: { hashtag: id, email: localStorage.getItem('email') } })
+            .then((res) => {
+                try {
+                    Swal.fire("Successfully deleted!", "", "success");
+                    this.componentDidMount();
+                } catch (err) {
+                    console.log("errr========", err);
+                }
+            })
     }
 
+    /** Onclick Search Tweets Display */
     handleClick(event) {
-        console.log(event.target.outerText);
-        this.setState({searchvalue: event.target.outerText,isLoaded : false});
-        console.log("search=======",event.target.outerText);
+        this.setState({ searchvalue: event.target.outerText, isLoaded: false });
         this.state.value = event.target.outerText;
         this.getData(event.target.outerText);
-
     }
 
+    /** ModelOpen Onclick  */
     handleClickOpen() {
-        this.setState({setOpen:true,open:true});
+        this.setState({ setOpen: true, open: true });
     }
 
-    handleClickOpenHash(id){
-
-        console.log("id=",id);
-        this.setState({setOpenModel:true,openModel:true,edithashthag:id});
-
+    /** @param {*} id
+     *  ModelOpen During Hashtag Add 
+     */
+    handleClickOpenHash(id) {
+        this.setState({ setOpenModel: true, openModel: true, edithashthag: id });
     }
 
-    handleChangehashEvent(event){
-
-        console.log("event=========",event);
-        this.setState({newhashtag: event.target.value});
-        console.log("valueeee====",this.state.newhashtag);
-
+    /** Onchange Hashvalue Change In Text-Field  */
+    handleChangehashEvent(event) {
+        this.setState({ newhashtag: event.target.value });
     }
 
-    handleClickupdatehashtag(event){
-
-        console.log("hashtag:",this.state.newhashtag);
+    /** Updatehashtag In App */
+    handleClickupdatehashtag(event) {
         event.preventDefault();
-        this.setState({isLoaded : false});
+        this.setState({ isLoaded: false });
         this.updatehash(this.state.newhashtag);
         this.handleCloseModelhashtag();
     }
 
-    handleCloseModelhashtag(){
-        this.setState({openModel:false});
+    /** Close Model Hashtag */
+    handleCloseModelhashtag() {
+        this.setState({ openModel: false });
     }
 
-    updatehash(id){
-        console.log("id=",id);
-        axios.put("http://132.140.160.63:4000/user/updatehashtag",{hashtag: id , email:localStorage.getItem('email')})
-        .then((res) => {
-            console.log("data========",res);
-            Swal.fire("Successfully updated!","", "success");
-            this.setState({
-                isLoaded: true,
-
+    /**@param {*} id
+     * Update Hashtag In Our App 
+     */
+    updatehash(id) {
+        axios.put(config.baseApiUrl + 'user/updatehashtag', { hashtag: id, email: localStorage.getItem('email') })
+            .then((res) => {
+                try {
+                    Swal.fire("Successfully updated!", "", "success");
+                    this.setState({
+                        isLoaded: true
+                    })
+                    this.componentDidMount();
+                } catch (err) {
+                    console.log("err=======", err);
+                }
             })
-            this.componentDidMount();
-        })
     }
 
+    /** Close Model */
     handleCloseModel() {
-        this.setState({open:false});
+        this.setState({ open: false });
     }
 
+    /** Open Drawer In SideBar */
     handleDrawerToggle() {
         this.setState({ mobileOpen: !this.state.mobileOpen });
     }
 
-    render(){
-        if(this.state.isAuthenticated == true) {
-            const { isLoaded } = this.state;
-            if(this.state.fireRedirect) {
-
+    render() {
+        /** User Authenticated */
+        if (this.state.isAuthenticated == true) {
+            if (this.state.fireRedirect) {
                 window.location.href = '/'
+                // history.push('/');
             }
+            const { isLoaded } = this.state;
             const { classes } = this.props;
-            const temp = {... this.state};
-            const {isFetching} = this.state;
+            const temp = { ... this.state };
+            const { isFetching } = this.state;
             let displaydata;
             let displaydate;
             let displayhashtag;
             let displaysearchtweetsview;
-            if (!isFetching && this.state.data[0]) displaydata = this.state.data[0].trends.map(trends =>                
+
+            /** Popular Twitter-Trends Display In Our App */
+            if (!isFetching && this.state.data[0]) displaydata = this.state.data[0].trends.map(trends =>
                 <List key={trends.name}>
-                {[trends.name].map((text, index) => (
-                    <ListItem button key={text}>   
-                    <ListItemText primary={text} />
-                    </ListItem>
+                    {[trends.name].map((text, index) => (
+                        <ListItem button key={text}>
+                            <ListItemText primary={text} />
+                        </ListItem>
                     ))}
                 </List>
-                
-                )
-                if (!isFetching && this.state.displaysearchtweets.length == 0 && this.state.tweet[0]) displaydate = this.state.tweet[0].slice(0,this.state.visible).map(tweet => 
-                    <div>
-                    <div key={tweet}>
-                    <div className="tweet_class1">
-                    <Grid container spacing={1}>
-                    <Grid item sm={2}>
-                    <div className="profile_image_post">
-                    <img src={tweet.user.profile_image_url} />
-                    </div>
-                    </Grid>
-                    <Grid item sm={10}>
-                    <span className="username_title">{tweet.user.name}</span>
-                    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+tweet.user.screen_name}  aria-current="page">
-                    <span className="gray">@{tweet.user.screen_name}</span>
-                    </a>
-                    <p><span>{tweet.text}</span></p>
-                    <div className="hashtag_flex">{ tweet && tweet.entities  ? (tweet.entities.hashtags.map(hashtag=> 
-                        <p key={hashtag} className="hash_color" onClick={(e)=>this.handleClick(event)}>#{hashtag.text}</p>)) : ('')}</div>
-                    <div className="video">
-                    {tweet.extended_entities ? (<Player className="video_height" src={tweet.extended_entities.media[0].video_info.variants[0].url}></Player>) : ('')}
-                    </div>           
-                    </Grid>
-                    </Grid>
-                    </div>   
-                    </div>        
+            )
 
-                    </div>               
-                    )
-                    if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data && this.state.displaysearchtweets[0].data.length)  displaysearchtweetsview = this.state.displaysearchtweets[0].data.slice(0,this.state.limit).map(searchelement => 
-                        <div className="tweet_class_search">
-                        <Grid container spacing={12}>
-                        <Grid item sm={2}>
-                        <div className="profile_image_post1">
-                        <img src={searchelement.user.profile_image_url} />
+            /** Popular Twitter-Tweets Display In Our App */
+            if (!isFetching && !this.state.displaysearchtweets.length && this.state.tweet[0]) displaydate = this.state.tweet[0].slice(0, this.state.visible).map(tweet =>
+                <div>
+                    <div key={tweet}>
+                        <div className="tweet_class1">
+                            <Grid container spacing={1}>
+                                <Grid item sm={2}>
+                                    <div className="profile_image_post">
+                                        <img src={tweet.user.profile_image_url} />
+                                    </div>
+                                </Grid>
+                                <Grid item sm={10}>
+                                    <span className="username_title">{tweet.user.name}</span>
+                                    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/" + tweet.user.screen_name} aria-current="page">
+                                        <span className="gray">@{tweet.user.screen_name}</span>
+                                    </a>
+                                    <p><span>{tweet.text}</span></p>
+                                    <div className="hashtag_flex">{tweet && tweet.entities ? (tweet.entities.hashtags.map(hashtag =>
+                                        <p key={hashtag} className="hash_color" onClick={(e) => this.handleClick(event)}>#{hashtag.text}</p>)) : ('')}</div>
+                                    <div className="video">
+                                        {tweet.extended_entities ? (<Player className="video_height" src={tweet.extended_entities.media[0].video_info.variants[0].url}></Player>) : ('')}
+                                    </div>
+                                </Grid>
+                            </Grid>
                         </div>
+                    </div>
+                </div>
+            )
+
+            /** Popular Twitter-Search Tweets */
+            if (this.state.displaysearchtweets[0] && this.state.displaysearchtweets[0].data && this.state.displaysearchtweets[0].data.length) displaysearchtweetsview = this.state.displaysearchtweets[0].data.slice(0, this.state.limit).map(searchelement =>
+                <div className="tweet_class_search">
+                    <Grid container spacing={12}>
+                        <Grid item sm={2}>
+                            <div className="profile_image_post1">
+                                <img src={searchelement.user.profile_image_url} />
+                            </div>
                         </Grid>
                         <Grid item sm={10}>
-                        <span className="username_title">{searchelement.user.name}</span>
-                        <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+searchelement.user.screen_name}  aria-current="page">
-                        <span className="gray">@{searchelement.user.screen_name}</span>
-                        </a>
-                        <p><span>{searchelement.text}</span></p>
-                        <div className="hashtag_flex">{ searchelement && searchelement.entities  ? (searchelement.entities.hashtags.map(hashtag=> 
-                            <p className="hash_color" onClick={(e)=>this.handleClick(event)}>#{hashtag.text}</p>)) : ('')}</div>     
-                        <div>
-                        {searchelement.extended_entities ? ( <div>
-                            {searchelement.extended_entities ? (<img className="search-tweet-imag" src={searchelement.extended_entities.media[0].media_url}/>) : ('')}
-                            </div>) : (<div className="video">
-                            {searchelement.extended_entities ? (<Player className="video_height" src={searchelement.extended_entities.media[0].video_info.variants[1].url}></Player>) : ('')}
-                            </div>)}
+                            <span className="username_title">{searchelement.user.name}</span>
+                            <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/" + searchelement.user.screen_name} aria-current="page">
+                                <span className="gray">@{searchelement.user.screen_name}</span>
+                            </a>
+                            <p><span>{searchelement.text}</span></p>
+                            <div className="hashtag_flex">{searchelement && searchelement.entities ? (searchelement.entities.hashtags.map(hashtag =>
+                                <p className="hash_color" onClick={(e) => this.handleClick(event)}>#{hashtag.text}</p>)) : ('')}</div>
+                            <div>
+                                {searchelement.extended_entities ? (<div>
+                                    {searchelement.extended_entities ? (<img className="search-tweet-imag" src={searchelement.extended_entities.media[0].media_url} />) : ('')}
+                                </div>) : (<div className="video">
+                                    {searchelement.extended_entities ? (<Player className="video_height" src={searchelement.extended_entities.media[0].video_info.variants[1].url}></Player>) : ('')}
+                                </div>)}
 
                             </div>
-                            </Grid>
-                            </Grid>
-                            </div>
-                            )
-                        if(this.state.hashtag[0] && this.state.hashtag[0].length) displayhashtag = this.state.hashtag.map(hashtagname =>
-                            <List key={hashtagname}>
+                        </Grid>
+                    </Grid>
+                </div>
+            )
 
-                            {[hashtagname].map((text, index) => (
-                                <ListItem button key={text}>   
-                                <Tooltip disableFocusListener title="Search"><ListItemText primary={text} onClick={(e)=>this.handleClick(event)}/></Tooltip>
-                                <Tooltip disableFocusListener title="Delete"><i className="fas fa-trash" onClick={this.deletehash.bind(this,text)} ></i></Tooltip>
-                                <Tooltip disableFocusListener title="Edit"><i className="fas fa-pencil-alt" onClick={this.handleClickOpenHash.bind(this,text)}></i></Tooltip>
-                                <div>
+            /** User Add Hashtag In Our App & Display Hashtag */
+            if (this.state.hashtag && this.state.hashtag.length) displayhashtag = this.state.hashtag.map(hashtagname =>
+                <List key={hashtagname}>
+                    {[hashtagname.hashtag].map((text, index) => (
+                        <ListItem button key={text}>
+                            <Tooltip disableFocusListener title="Search"><ListItemText primary={text} onClick={(e) => this.handleClick(event)} /></Tooltip>
+                            <Tooltip disableFocusListener title="Delete"><i className="fas fa-trash" onClick={this.deletehash.bind(this, text)} ></i></Tooltip>
+                            <Tooltip disableFocusListener title="Edit"><i className="fas fa-pencil-alt" onClick={this.handleClickOpenHash.bind(this, text)}></i></Tooltip>
+                            <div>
                                 <Dialog
-                                fullScreen={this.fullScreen}
-                                open={this.state.openModel}
-                                onClose={this.handleCloseModel}
-                                aria-labelledby="responsive-dialog-title"
+                                    fullScreen={this.fullScreen}
+                                    open={this.state.openModel}
+                                    onClose={this.handleCloseModel}
+                                    aria-labelledby="responsive-dialog-title"
                                 >
-                                <DialogTitle id="responsive-dialog-title">{"Edit Hashtag"}</DialogTitle>
-                                <DialogContent>
-                                <DialogContentText>
-                                <TextField
-                                id="standard-full-width"
-                                label="Edit Hashtag"
-                                style={{ margin: 8 , width: 500}}
-                                fullWidth
-                                margin="normal"
-                                defaultValue={this.state.edithashthag}
-                                onChange={this.handleChangehashEvent}
-                                />
-                                </DialogContentText>
-                                </DialogContent>
-                                <DialogActions> 
-                                <Tooltip disableFocusListener title="Edit">
-                                <Button onClick={this.handleClickupdatehashtag} color="primary">
-                                Edit
+                                    <DialogTitle id="responsive-dialog-title">{"Edit Hashtag"}</DialogTitle>
+                                    <DialogContent>
+                                        <DialogContentText>
+                                            <TextField
+                                                id="standard-full-width"
+                                                label="Edit Hashtag"
+                                                style={{ margin: 8, width: 500 }}
+                                                fullWidth
+                                                margin="normal"
+                                                defaultValue={this.state.edithashthag}
+                                                onChange={this.handleChangehashEvent}
+                                            />
+                                        </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Tooltip disableFocusListener title="Edit">
+                                            <Button onClick={this.handleClickupdatehashtag} color="primary">
+                                                Edit
                                 </Button>
-                                </Tooltip>
-                                <Tooltip disableFocusListener title="Close">
-                                <Button className="btn-left" onClick={this.handleCloseModelhashtag} color="primary">
-                                close
+                                        </Tooltip>
+                                        <Tooltip disableFocusListener title="Close">
+                                            <Button className="btn-left" onClick={this.handleCloseModelhashtag} color="primary">
+                                                close
                                 </Button>
-                                </Tooltip>
-                                </DialogActions>
+                                        </Tooltip>
+                                    </DialogActions>
                                 </Dialog>
-                                </div>
-                                </ListItem>
-                                ))}
-                            </List>
-                            )
-                            if (!isLoaded) {
-                                return (
-                                    <center>
-                                    <div className="loader"></div>
-                                    </center>
-                                    )
-                            } else if(isLoaded){
-                                return (
-                                    <div className={classes.root}>
-                                    <CssBaseline />
-                                    <AppBar position="fixed" className={classes.appBar}>
-                                    <Toolbar>
-                                    <IconButton
+                            </div>
+                        </ListItem>
+                    ))}
+                </List>
+            )
+
+            /** During Pending Response Loader Start || Sucess Response Loader Off & Display */
+            if (!isLoaded) {
+                return (
+                    <center>
+                        <div className="loader"></div>
+                    </center>
+                )
+            } else if (isLoaded) {
+                return (
+                    <div className={classes.root}>
+                        <CssBaseline />
+                        <AppBar position="fixed" className={classes.appBar}>
+                            <Toolbar>
+                                <IconButton
                                     color="inherit"
                                     aria-label="Open drawer"
                                     edge="start"
                                     onClick={this.handleDrawerToggle}
                                     className={classes.menuButton}
-                                    >
+                                >
                                     <MenuIcon />
-                                    </IconButton>
-                                    <Typography variant="h6" noWrap>
+                                </IconButton>
+                                <Typography variant="h6" noWrap>
                                     <TextField
-                                    id="outlined-with-placeholder"
-                                    label="Search"
-                                    className={classes.textField}
-                                    value={this.state.value}
-                                    onChange={this.handleChange} 
-                                    margin="normal"
-                                    variant="outlined"
+                                        id="outlined-with-placeholder"
+                                        label="Search"
+                                        className={classes.textField}
+                                        value={this.state.value}
+                                        onChange={this.handleChange}
+                                        margin="normal"
+                                        variant="outlined"
                                     />
-                                    </Typography>
-                                    <Tooltip disableFocusListener title="Search">
+                                </Typography>
+                                <Tooltip disableFocusListener title="Search">
                                     <Button onClick={this.handleClickSearch} color="primary" disabled={!this.state.value}>
-                                    Search
+                                        Search
                                     </Button>
-                                    </Tooltip>
-                                    <Tooltip disableFocusListener title="Logout">
-                                    <Button style={{right:10, position:'absolute'}} onClick={this.handleClickLogout} color="primary">
-                                    Logout
+                                </Tooltip>
+                                <Tooltip disableFocusListener title="Logout">
+                                    <Button style={{ right: 10, position: 'absolute' }} onClick={this.handleClickLogout} color="primary">
+                                        Logout
                                     </Button>
-                                    </Tooltip>
-                                    </Toolbar>
-                                    </AppBar>
-                                    <nav className={classes.drawer}>
-                                    <Hidden smUp implementation="css">
-                                    <Drawer
+                                </Tooltip>
+                            </Toolbar>
+                        </AppBar>
+                        <nav className={classes.drawer}>
+                            <Hidden smUp implementation="css">
+                                <Drawer
                                     container={this.container}
                                     variant="temporary"
                                     anchor={classes.direction === 'rtl' ? 'right' : 'left'}
@@ -559,140 +565,138 @@ class Home extends React.Component {
                                     ModalProps={{
                                         keepMounted: true,
                                     }}
-                                    >
+                                >
                                     <div className="menu-bar .MuiListItem-button">
-                                    <div className={classes.toolbar} />
-                                    <img className="img-twitter-logo" src={require('./feed.png')} />
-                                    <span className="logo">Twitter</span>
-                                    <List>
-                                    </List>      
-                                    <h5  className="font-size">Trending Hashtag</h5>
-                                    <List>
-                                    <div onClick={(e)=>this.handleClick(event)} className="trendshashtag">
-                                    {displaydata}
+                                        <div className={classes.toolbar} />
+                                        <img className="img-twitter-logo" src={require('./feed.png')} />
+                                        <span className="logo">Twitter</span>
+                                        <List>
+                                        </List>
+                                        <h5 className="font-size">Trending Hashtag</h5>
+                                        <List>
+                                            <div onClick={(e) => this.handleClick(event)} className="trendshashtag">
+                                                {displaydata}
+                                            </div>
+                                        </List>
+                                        <h5 className="font-size">My Hashtag</h5>
+                                        <List>
+                                            <div className="hashtag">
+                                                {displayhashtag}
+                                            </div>
+                                        </List>
                                     </div>
-                                    </List>
-                                    <h5 className="font-size">My Hashtag</h5>
-                                    <List>
-                                    <div  className="hashtag">
-                                    {displayhashtag}
-                                    </div>
-                                    </List>
-                                    </div>
-                                    </Drawer>
-                                    </Hidden>
-                                    <Hidden xsDown implementation="css">
-                                    <Drawer
+                                </Drawer>
+                            </Hidden>
+                            <Hidden xsDown implementation="css">
+                                <Drawer
                                     variant="permanent"
                                     open
-                                    >
+                                >
                                     <div className="menu-bar .MuiListItem-button">
-                                    <div className={classes.toolbar} />
-                                    <img className="img-twitter-logo" src={require('./feed.png')} />
-                                    <span className="logo">Twitter</span>
-                                    <List>
-                                    </List>      
-                                    <h5  className="font-size">Trending Hashtag</h5>
-                                    <List>
-                                    <div onClick={(e)=>this.handleClick(event)} className="trendshashtag">
-                                    {displaydata}
+                                        <div className={classes.toolbar} />
+                                        <img className="img-twitter-logo" src={require('./feed.png')} />
+                                        <span className="logo">Twitter</span>
+                                        <List>
+                                        </List>
+                                        <h5 className="font-size">Trending Hashtag</h5>
+                                        <List>
+                                            <div onClick={(e) => this.handleClick(event)} className="trendshashtag">
+                                                {displaydata}
+                                            </div>
+                                        </List>
+                                        <h5 className="font-size">My Hashtag</h5>
+                                        <List>
+                                            <div className="hashtag">
+                                                {displayhashtag}
+                                            </div>
+                                        </List>
                                     </div>
-                                    </List>
-                                    <h5 className="font-size">My Hashtag</h5>
-                                    <List>
-                                    <div  className="hashtag">
-                                    {displayhashtag}
-                                    </div>
-                                    </List>
-                                    </div>
-                                    </Drawer>
-                                    </Hidden>
-                                    </nav>
-                                    <main className={classes.content}>
-                                    <div className={classes.toolbar} />
-                                    <div className="profile_main_class">
-                                    <Grid container space ={12}>
+                                </Drawer>
+                            </Hidden>
+                        </nav>
+                        <main className={classes.content}>
+                            <div className={classes.toolbar} />
+                            <div className="profile_main_class">
+                                <Grid container space={12}>
                                     <Grid item sm={1}>
-                                    <div className="profile_img">
-                                    <img src={this.photo} />
-                                    </div>
+                                        <div className="profile_img">
+                                            <img src={this.photo} />
+                                        </div>
                                     </Grid>
                                     <Grid item sm={11}>
-                                    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+this.name}  aria-current="page">
-                                    <h1>{this.name}</h1>
-                                    </a>
-                                    <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/"+this.username}  aria-current="page">
-                                    <span className="username-color">@{this.username}</span>
-                                    </a>
+                                        <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/" + this.name} aria-current="page">
+                                            <h1>{this.name}</h1>
+                                        </a>
+                                        <a className="mdc-list-item trends-color" target="_blank" href={"http://twitter.com/" + this.username} aria-current="page">
+                                            <span className="username-color">@{this.username}</span>
+                                        </a>
                                     </Grid>
-                                    </Grid>
-                                    </div>
-                                    <div className="main_class_post">
-                                    <div className="tweet_bg_color">
+                                </Grid>
+                            </div>
+                            <div className="main_class_post">
+                                <div className="tweet_bg_color">
                                     {displaydate}
-                                    </div>
-                                    {this.state.tweet[0] ? <div>{this.state.visible < this.state.tweet[0].length &&
-                                       <button onClick={this.loadMore} type="button" className="load-more">Load more</button>
-                                    }  </div> : <div>No data</div>}
-                                    </div>
-                                    <div className="add_tweet">
-                                    <Tooltip disableFocusListener title="Add-Hashtag">
+                                </div>
+                                {this.state.tweet[0] ? <div>{this.state.visible < this.state.tweet[0].length &&
+                                    <button onClick={this.loadMore} type="button" className="load-more">Load more</button>
+                                }  </div> : <div>No data</div>}
+                            </div>
+                            <div className="add_tweet">
+                                <Tooltip disableFocusListener title="Add-Hashtag">
                                     <Fab color="primary" aria-label="Add" onClick={this.handleClickOpen} className={classes.margin}>
-                                    <AddIcon />
+                                        <AddIcon />
                                     </Fab>
-                                    </Tooltip>
-                                    </div>
-                                    <Dialog
-                                    fullScreen={this.fullScreen}
-                                    open={this.state.open}
-                                    onClose={this.handleCloseModel}
-                                    aria-labelledby="responsive-dialog-title"
-                                    >
-                                    <DialogTitle id="responsive-dialog-title">{"Add Hashtag"}</DialogTitle>
-                                    <DialogContent>
+                                </Tooltip>
+                            </div>
+                            <Dialog
+                                fullScreen={this.fullScreen}
+                                open={this.state.open}
+                                onClose={this.handleCloseModel}
+                                aria-labelledby="responsive-dialog-title"
+                            >
+                                <DialogTitle id="responsive-dialog-title">{"Add Hashtag"}</DialogTitle>
+                                <DialogContent>
                                     <DialogContentText>
-                                    <TextField
-                                    id="standard-full-width"
-                                    label="Add Hashtag"
-                                    style={{ margin: 8 , width: 500}}
-                                    fullWidth
-                                    margin="normal"
-                                    defaultValue={this.state.hash}
-                                    onChange={this.handleChangeEvent}
-                                    />
+                                        <TextField
+                                            id="standard-full-width"
+                                            label="Add Hashtag"
+                                            style={{ margin: 8, width: 500 }}
+                                            fullWidth
+                                            margin="normal"
+                                            defaultValue={this.state.hash}
+                                            onChange={this.handleChangeEvent}
+                                        />
                                     </DialogContentText>
-                                    </DialogContent>
-                                    <DialogActions> 
+                                </DialogContent>
+                                <DialogActions>
                                     <Tooltip disableFocusListener title="Add">
-                                    <Button onClick={this.handleClickhashtag} color="primary" disabled={!this.state.value1}>
-                                    Add
+                                        <Button onClick={this.handleClickhashtag} color="primary" disabled={!this.state.value1}>
+                                            Add
                                     </Button>
                                     </Tooltip>
                                     <Tooltip disableFocusListener title="Close">
-                                    <Button className="btn-left" onClick={this.handleCloseModel} color="primary">
-                                    close
+                                        <Button className="btn-left" onClick={this.handleCloseModel} color="primary">
+                                            close
                                     </Button>
                                     </Tooltip>
-                                    </DialogActions>
-                                    </Dialog>
-                                    <div>
-                                    <div className="search_modals">
+                                </DialogActions>
+                            </Dialog>
+                            <div>
+                                <div className="search_modals">
                                     {displaysearchtweetsview}
-                                    </div>
-                                    </div>
-                                    </main>
-                                    </div>
-                                    );
-}
-}else{
-
-    Swal.fire('Data Not Found....');
-}
-
-}
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                );
+            }
+        } else {
+            Swal.fire('Data Not Found....');
+        }
+    }
 }
 Home.propTypes = {
-    container: PropTypes.object, 
+    container: PropTypes.object,
 
 };
 

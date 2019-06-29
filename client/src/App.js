@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import SignUp from './signup/signup.js';
 import Home from './home/home.js';
 import './App.css';
+import history from './history';
 
 class App extends React.Component {
 	constructor(props) {
@@ -10,19 +11,19 @@ class App extends React.Component {
 		this.state = localStorage.getItem('email');
 	}
 	render() {
-		if(!this.state){
+		if (!this.state) {
 			return (
 				<div>
-				<SignUp />
+					<SignUp />
 				</div>
-				);
-		}else{
+			);
+		} else {
 			return (
 				<div>
-				<Home />
+					<Home />
 				</div>
-				);
-		}		
+			);
+		}
 	}
 }
 

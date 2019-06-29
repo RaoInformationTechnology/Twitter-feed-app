@@ -46,33 +46,6 @@ module.exports = function () {
         return done(err, user);
       }
     });
-
-    // User.findOne({
-    //   'twitterProvider.id': profile.id
-    // }).then((user) =>{
-
-    //   if(user){
-
-    //     console.log("user is currentuser=====",user);
-
-    //   } else {
-
-    //     new User({
-    //       username:profile.displayName,
-    //       email: profile.emails[0].value,
-    //       twitterProvider: {
-    //         id: profile.id,
-    //         token: token,
-    //         tokenSecret: tokenSecret,
-
-    //       }
-    //     }).save().then((newUser) =>{
-    //       console.log("newuser is createad="+newUser)
-    //     })
-    //   }
-
-    // })
-
   }));
 
 };                                                                                                     

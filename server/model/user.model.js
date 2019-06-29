@@ -1,15 +1,27 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+/** UserModel Use This UserSchema */
 const UserSchema = new Schema({
   email: {
-    type: String, required: true,
-    trim: true, unique: true,
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
     match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
   },
-  username:{type:String, required: true},
-  name:{type:String, required: true},
-  photo:{type:String, required: true},
+  username: {
+    type: String,
+    required: true
+  },
+  name: { 
+    type: String,
+     required: true 
+    },
+  photo: { 
+    type: String,
+     required: true 
+    },
   twitterProvider: {
     type: {
       id: String,
@@ -17,10 +29,10 @@ const UserSchema = new Schema({
     },
     select: false
   },
-  hashtag:[]
+  hashtag: []
 });
 
-UserSchema.set('toJSON', {getters: true, virtuals: true});
+UserSchema.set('toJSON', { getters: true, virtuals: true });
 
 module.exports = mongoose.model('User', UserSchema);
 
