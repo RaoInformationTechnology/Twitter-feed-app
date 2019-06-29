@@ -1,13 +1,8 @@
 import React from 'react';
 import TwitterLogin from 'react-twitter-auth/lib/react-twitter-auth-component.js';
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
-import VueAxios from 'vue-axios';
-import axios from 'axios';
-import { Redirect } from 'react-router';
 import './signup.css';
 import Home from '../home/home.js';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import history from '../history';
 
@@ -20,7 +15,7 @@ const styles = theme => ({
 class SignUp extends React.Component {
 
 	constructor(props) {
-		console.log("props======",props);
+		console.log("props======", props);
 		super(props);
 		this.state = { isAuthenticated: false, user: null, token: '', fireRedirect: false };
 	}
@@ -42,7 +37,7 @@ class SignUp extends React.Component {
 					localStorage.setItem('name', (this.state.user.name));
 					localStorage.setItem('username', (this.state.user.username));
 					localStorage.setItem('photo', (this.state.user.photo));
-					localStorage.setItem('isAuthenticated', true);					
+					localStorage.setItem('isAuthenticated', true);
 				}
 			});
 		}
@@ -54,9 +49,7 @@ class SignUp extends React.Component {
 		/** User Authenticated */
 		if (this.state.isAuthenticated && this.state.fireRedirect) {
 			window.location.href = '/home'
-			// history.push('/home');
-		} 
-		
+		}
 		return (
 			<div>
 				<div className={classes.root}>

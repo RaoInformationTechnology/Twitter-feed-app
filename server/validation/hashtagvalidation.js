@@ -80,3 +80,28 @@ module.exports.getHashTag = (req,res,next) =>{
         );
 }
 
+module.exports.updateHashTag = (req,res,next) => {
+    const updatehashschema = Joi.object().keys({
+        name: Joi.string().required(),
+        id: Joi.string().required(),
+        count:Joi.number().required(),
+        email:Joi.string().required()
+    })
+
+    Joi.validate(
+        console.log("request===="),
+        req.body,
+        updatehashschema,
+        { convert: true },
+        (err, value) => {
+            if (err) {
+                return res.status(400).json({
+                    message: 'Bad request'
+                });
+            } else {
+                next();
+            }
+        }
+        );
+}
+

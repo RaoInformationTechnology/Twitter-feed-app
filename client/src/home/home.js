@@ -1,30 +1,20 @@
 import React from 'react';
-import { Redirect } from 'react-router';
 import { Player } from 'video-react';
 import './video.css';
-import axios from 'axios';
 import './home.css'
-import * as $ from 'jquery'
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
-import { makeStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import Tooltip from '@material-ui/core/Tooltip';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import AddIcon from '@material-ui/icons/Add';
-import CommentIcon from '@material-ui/icons/Comment';
-import FavoriteBorderIcon from '@material-ui/icons/Favorite';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -35,14 +25,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import withMobileDialog from '@material-ui/core/withMobileDialog';
-import { useTheme } from '@material-ui/core/styles';
-import { Form } from 'react-bootstrap';
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
-import SignUp from '../signup/signup.js';
 import { withStyles } from '@material-ui/core/styles';
 import Swal from 'sweetalert2';
-import { config } from '../config';
+import API from '../service';
 import history from '../history';
 
 const drawerWidth = 240;
@@ -138,8 +123,7 @@ class Home extends React.Component {
     componentDidMount() {
         if (this.state.isAuthenticated == true) {
             const tweet = [];
-            fetch(config.baseApiUrl + 'twitter-trends').
-                then((Response) => Response.json()).
+            API.getTwitterTrends().
                 then((findresponse, err) => {
                     try {
                         this.state.isFetching = false;
@@ -150,10 +134,9 @@ class Home extends React.Component {
                     } catch (err) {
                         console.log("err====", err);
                     }
-                })
+                });
 
-            fetch(config.baseApiUrl + 'twitter-tweets').
-                then((Response) => Response.json()).
+            API.getTwitterTweets().
                 then((findresponse, err) => {
                     try {
                         this.state.isFetching = false;
@@ -237,7 +220,10 @@ class Home extends React.Component {
 
     /** Popular Search-Tweets */
     getData = () => {
-        axios.get(config.baseApiUrl + 'search-tweets', { params: { key: this.state.value } })
+        const searchTweetsObj = {
+            params: { key: this.state.value }
+        }
+        API.getSearchTweets(searchTweetsObj)
             .then((data) => {
                 try {
                     if (!data.data.length) {
@@ -259,8 +245,13 @@ class Home extends React.Component {
 
     /** User Add Hashtag In Our App */
     getHashTag = () => {
-        axios.post(config.baseApiUrl + 'user/addtag', { hashtag: this.state.value1, email: localStorage.getItem('email') })
+        const hashtagObj = {
+            hashtag: this.state.value1,
+            email: localStorage.getItem('email')
+        }
+        API.getHashtags(hashtagObj)
             .then((data) => {
+                console.log("data===", data);
                 try {
                     Swal.fire("Successfully Added!", "", "success");
                     this.setState({
@@ -278,10 +269,9 @@ class Home extends React.Component {
     /** Display Hashtag In Our App */
     getHash() {
         let hashTagArray = [];
-        this.email = localStorage.getItem('email');
-        const email = this.email;
-        axios.get(config.baseApiUrl + 'user/gethashtag/' + email)
+        API.displayHashtag()
             .then((res) => {
+                console.log("res=========", res);
                 try {
                     this.setState({
                         hashtag: res.data.data[0].hashtag
@@ -296,7 +286,10 @@ class Home extends React.Component {
      * Delete Hashtag In Our App
      */
     deletehash(id) {
-        axios.delete(config.baseApiUrl + 'user/deletehashtag', { data: { hashtag: id, email: localStorage.getItem('email') } })
+        const deleteHashtagObj = {
+            data: { hashtag: id, email: localStorage.getItem('email') }
+        }
+        API.deleteHashtag(deleteHashtagObj)
             .then((res) => {
                 try {
                     Swal.fire("Successfully deleted!", "", "success");
@@ -348,7 +341,11 @@ class Home extends React.Component {
      * Update Hashtag In Our App 
      */
     updatehash(id) {
-        axios.put(config.baseApiUrl + 'user/updatehashtag', { hashtag: id, email: localStorage.getItem('email') })
+        const updateHashtagObj = {
+            hashtag: id,
+            email: localStorage.getItem('email')
+        }
+        API.updateHashtag(updateHashtagObj)
             .then((res) => {
                 try {
                     Swal.fire("Successfully updated!", "", "success");

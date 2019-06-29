@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import React from 'react';
 import SignUp from './signup/signup.js';
 import Home from './home/home.js';
 import './App.css';
-import history from './history';
 
 class App extends React.Component {
 	constructor(props) {
