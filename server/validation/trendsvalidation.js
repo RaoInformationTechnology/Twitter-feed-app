@@ -1,15 +1,15 @@
 const Joi = require('joi');
 
-module.exports.trends = (req,res,next) =>{
-	const schema = Joi.object().keys({
-		name: Joi.string().required(),
-		id: Joi.string().required(),
+module.exports.trends = (req, res, next) => {
+    const schema = Joi.object().keys({
+        name: Joi.string().required(),
+        id: Joi.string().required(),
 
-	})
+    })
 
-	 Joi.validate(
-	 	console.log("request===="),
-	 	req.query,
+    Joi.validate(
+        console.log("request===="),
+        req.query,
         schema,
         { convert: true },
         (err, value) => {

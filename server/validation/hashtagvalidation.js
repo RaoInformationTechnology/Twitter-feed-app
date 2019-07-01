@@ -1,11 +1,11 @@
 const Joi = require('joi');
 
-module.exports.addhashtag = (req,res,next) =>{
-	const addhashschema = Joi.object().keys({
-		name: Joi.string().required(),
-		id: Joi.string().required(),
-        count:Joi.number().required(),
-        email:Joi.string().required(),
+module.exports.addhashtag = (req, res, next) => {
+    const addhashschema = Joi.object().keys({
+        name: Joi.string().required(),
+        id: Joi.string().required(),
+        count: Joi.number().required(),
+        email: Joi.string().required(),
 
     })
 
@@ -23,16 +23,16 @@ module.exports.addhashtag = (req,res,next) =>{
                 next();
             }
         }
-        );
+    );
 }
 
 
-module.exports.deletehashtag = (req,res,next) =>{
+module.exports.deletehashtag = (req, res, next) => {
     const deletehashschema = Joi.object().keys({
         name: Joi.string().required(),
         id: Joi.string().required(),
-        count:Joi.number().required(),
-        email:Joi.string().required(),
+        count: Joi.number().required(),
+        email: Joi.string().required(),
 
     })
 
@@ -50,16 +50,16 @@ module.exports.deletehashtag = (req,res,next) =>{
                 next();
             }
         }
-        );
+    );
 }
 
 
-module.exports.getHashTag = (req,res,next) =>{
+module.exports.getHashTag = (req, res, next) => {
     const gethashschema = Joi.object().keys({
         name: Joi.string().required(),
         id: Joi.string().required(),
-        count:Joi.number().required(),
-        email:Joi.string().required(),
+        count: Joi.number().required(),
+        email: Joi.string().required(),
 
     })
 
@@ -77,15 +77,15 @@ module.exports.getHashTag = (req,res,next) =>{
                 next();
             }
         }
-        );
+    );
 }
 
-module.exports.updateHashTag = (req,res,next) => {
+module.exports.updateHashTag = (req, res, next) => {
     const updatehashschema = Joi.object().keys({
         name: Joi.string().required(),
         id: Joi.string().required(),
-        count:Joi.number().required(),
-        email:Joi.string().required()
+        count: Joi.number().required(),
+        email: Joi.string().required()
     })
 
     Joi.validate(
@@ -102,6 +102,6 @@ module.exports.updateHashTag = (req,res,next) => {
                 next();
             }
         }
-        );
+    );
 }
 
