@@ -5,6 +5,8 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser')
 const config = require('./database.js');
+const ENV = require('dotenv');
+ENV.config();
 
 /** Cors */
 const corsOption = {
@@ -39,6 +41,6 @@ app.use('/api/v1', loginrouter);
 app.use('/user', userrouter);
 
 /** Server Run 4000 Port Number */
-app.listen(4000);
+app.listen(process.env.PORT_NUMBER);
 
 module.exports = app;
