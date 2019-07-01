@@ -42,7 +42,7 @@ export default {
             .catch({ status: 500, message: 'Internal Serevr Error' });
     },
     /**
-     * @param deleteHashtagObj
+     * @param {*} deleteHashtagObj
      * Delete Hashtag
      */
     deleteHashtag: (deleteHashtagObj) => {
@@ -52,7 +52,7 @@ export default {
             .catch({ status: 500, message: 'Internal Serevr Error' });
     },
     /**
-     *  @param updateHashtagObj
+     *  @param {*} updateHashtagObj
      *  Update Hashtag
      */
     updateHashtag: (updateHashtagObj) => {

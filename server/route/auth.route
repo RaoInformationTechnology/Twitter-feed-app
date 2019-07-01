@@ -8,6 +8,8 @@ const twitterConfig = require('../config.js');
 const uservalidation = require('../validation/uservalidation.js');
 const passportConfig = require('../passport');
 passportConfig();
+const ENV = require('dotenv');
+ENV.config();
 
 const createToken = function (auth) {
     return jwt.sign({
@@ -31,9 +33,9 @@ const sendToken = function (req, res) {
 router.route('/auth/twitter/reverse')
     .post(uservalidation.reverseuserdata, function (req, res) {
         request.post({
-            url: 'https://api.twitter.com/oauth/request_token',
+            url: process.env.AUTH,
             oauth: {
-                oauth_callback: "http%3A%2F%2Flocalhost%3A3000%2Ftwitter-callback",
+                oauth_callback: process.env.OAUTH_CALLBACK_URL,
                 consumer_key: twitterConfig.consumer_key,
                 consumer_secret: twitterConfig.consumer_secret
             }
@@ -49,7 +51,7 @@ router.route('/auth/twitter/reverse')
 router.route('/auth/twitter')
     .post(uservalidation.userdata, (req, res, next) => {
         request.post({
-            url: `https://api.twitter.com/oauth/access_token?oauth_verifier`,
+            url: process.env.AUTH_URL,
             oauth: {
                 consumer_key: twitterConfig.consumer_key,
                 consumer_secret: twitterConfig.consumer_secret,

@@ -6,5 +6,5 @@ module.exports = {
 	consumer_secret: process.env.CONSUMER_SECRET,
 	access_token: process.env.ACCESS_TOKEN,
 	access_token_secret: process.env.ACCESS_TOKEN_SECRET,
-	callbackURL: 'http://132.140.160.63:4000/auth/twitter/callback',
+	callbackURL: process.env.CALL_BACK_URL,
 }

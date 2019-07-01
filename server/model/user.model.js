@@ -32,7 +32,5 @@ const UserSchema = new Schema({
   hashtag: []
 });
 
-UserSchema.set('toJSON', { getters: true, virtuals: true });
-
 module.exports = mongoose.model('User', UserSchema);
 
