@@ -4,7 +4,6 @@ const userService = require('../service/user.service.ts');
 AddTag = function (req, res) {
   const userData = {
     hash: req.body,
-    hashTag: req.body.hash,
     email: req.body.email
   }
   userService.AddTag(userData).then((response) => {

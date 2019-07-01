@@ -36,7 +36,7 @@ module.exports = function () {
               console.log(savedUser);
               if (error) {
                 console.log(error);
-                reject({ status: 500, message: 'Internal Serevr Error' });
+                reject({ status: 500, message: 'Internal Server Error' });
               }
               resolve({ status: 200, message: 'user data fetched', data: updres });
               return done(error, savedUser);
