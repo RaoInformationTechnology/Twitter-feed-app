@@ -1,3 +1,6 @@
+const ENV = require('dotenv');
+ENV.config();
+
 module.exports = {
-    DB: 'mongodb://localhost:27017/twitter-db'
+    DB: process.env.DATABASE
 }

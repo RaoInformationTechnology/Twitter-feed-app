@@ -43,7 +43,7 @@ UpdateHashtag = function (req, res) {
   });
 }
 
-/** Get Hashtag */
+/** Display Hashtag */
 GetHashTag = function (req, res) {
   const userGetHashtag = {
     email: req.params.email

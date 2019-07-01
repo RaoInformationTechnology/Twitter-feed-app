@@ -4,12 +4,14 @@ const Twit = require('twit');
 const trendsvalidation = require('../validation/trendsvalidation.js');
 const tweetvalidation = require('../validation/tweetvalidation.js');
 const searchtweetsvalidation = require('../validation/searchtweetsvalidation.js');
+const ENV = require('dotenv');
+ENV.config();
 
 const T = new Twit({
-    consumer_key: 'z8GSoJgB7Zbj05sWcxW87Zi1L',
-    consumer_secret: '6F6quJ491qYCkhs2jG2uZaJWvrkjBaOElKuQ6fBzSYzRGs3bkn',
-    access_token: '1125979094783414272-NeCbbT2Vrc1xLzMOcKEpxWBAUA302f',
-    access_token_secret: 'jIbogQP0R69uQLHxfMKXqoRmjDGViN1NVRjrLXASOwfUz'
+    consumer_key: process.env.CONSUMER_KEY,
+    consumer_secret: process.env.CONSUMER_SECRET,
+    access_token: process.env.ACCESS_TOKEN,
+    access_token_secret: process.env.ACCESS_TOKEN_SECRET
 })
 
 /** Popular Twitter-trends */

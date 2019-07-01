@@ -6,8 +6,8 @@ twitterConfig = require('./config.js');
 module.exports = function () {
 
   passport.use(new TwitterTokenStrategy({
-    consumerKey: twitterConfig.consumerKey,
-    consumerSecret: twitterConfig.consumerSecret,
+    consumerKey: twitterConfig.consumer_key,
+    consumerSecret: twitterConfig.consumer_secret,
     includeEmail: true
   },
     (token, tokenSecret, profile, done) => {
