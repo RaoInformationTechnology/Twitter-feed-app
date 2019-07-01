@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const userModel = require('../model/user.model');
 
-/** @param {*} userData
- *  Add Hashtag Service
+/** 
+ * @param {*} userData
+ * Add Hashtag Service
  */
 module.exports.AddTag = (userData) => {
     return new Promise((resolve, reject) => {
@@ -18,8 +19,9 @@ module.exports.AddTag = (userData) => {
     })
 }
 
-/** @param {*} userDeletetag
- *  Delete Hashtag Service
+/** 
+ * @param {*} userDeletetag
+ * Delete Hashtag Service
  */
 module.exports.DeleteHashtag = (userDeletetag) => {
     return new Promise((resolve, reject) => {
@@ -34,8 +36,9 @@ module.exports.DeleteHashtag = (userDeletetag) => {
     })
 }
 
-/** @param {*} updateHashtag
- *  Update Hashtag Service
+/** 
+ * @param {*} updateHashtag
+ * Update Hashtag Service
  */
 module.exports.UpdateHashtag = (updateHashtag) => {
     return new Promise((resolve, reject) => {
@@ -50,8 +53,9 @@ module.exports.UpdateHashtag = (updateHashtag) => {
     })
 }
 
-/** @param {*} GetHashTag
- *  GetHashtag Service
+/** 
+ * @param {*} GetHashTag
+ * GetHashtag Service
  */
 module.exports.GetHashTag = (userGetHashtag) => {
     return new Promise((resolve, reject) => {

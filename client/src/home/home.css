@@ -100,6 +100,11 @@ button.load-more {
     }
 }
 
+@media (min-width: 600px){
+    .Home-appBar-371 {
+        width: calc(100% - 216px) !important;
+    }
+}
 .MuiListItem-root {
     width: 100%;
     display: flex;

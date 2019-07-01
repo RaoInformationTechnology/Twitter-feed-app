@@ -1,7 +1,6 @@
 import React from 'react';
 import TwitterLogin from 'react-twitter-auth/lib/react-twitter-auth-component.js';
 import './signup.css';
-import Home from '../home/home.js';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import history from '../history';
@@ -38,6 +37,7 @@ class SignUp extends React.Component {
 					localStorage.setItem('username', (this.state.user.username));
 					localStorage.setItem('photo', (this.state.user.photo));
 					localStorage.setItem('isAuthenticated', true);
+					history.push('/home');
 				}
 			});
 		}
@@ -47,9 +47,6 @@ class SignUp extends React.Component {
 	render() {
 		const { classes } = this.props;
 		/** User Authenticated */
-		if (this.state.isAuthenticated && this.state.fireRedirect) {
-			window.location.href = '/home'
-		}
 		return (
 			<div>
 				<div className={classes.root}>

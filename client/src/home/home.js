@@ -200,6 +200,7 @@ class Home extends React.Component {
         localStorage.removeItem("name");
         localStorage.removeItem("username");
         localStorage.removeItem('photo');
+        history.push('/');
         this.setState({ isLoaded: true, fireRedirect: true })
     }
 
@@ -251,7 +252,6 @@ class Home extends React.Component {
         }
         API.getHashtags(hashtagObj)
             .then((data) => {
-                console.log("data===", data);
                 try {
                     Swal.fire("Successfully Added!", "", "success");
                     this.setState({
@@ -271,7 +271,6 @@ class Home extends React.Component {
         let hashTagArray = [];
         API.displayHashtag()
             .then((res) => {
-                console.log("res=========", res);
                 try {
                     this.setState({
                         hashtag: res.data.data[0].hashtag
@@ -282,7 +281,8 @@ class Home extends React.Component {
             })
     }
 
-    /** @param {*} id
+    /**
+     * @param {*} id
      * Delete Hashtag In Our App
      */
     deletehash(id) {
@@ -312,8 +312,9 @@ class Home extends React.Component {
         this.setState({ setOpen: true, open: true });
     }
 
-    /** @param {*} id
-     *  ModelOpen During Hashtag Add 
+    /** 
+     * @param {*} id
+     * ModelOpen During Hashtag Add 
      */
     handleClickOpenHash(id) {
         this.setState({ setOpenModel: true, openModel: true, edithashthag: id });
@@ -337,7 +338,8 @@ class Home extends React.Component {
         this.setState({ openModel: false });
     }
 
-    /**@param {*} id
+    /**
+     * @param {*} id
      * Update Hashtag In Our App 
      */
     updatehash(id) {
@@ -372,10 +374,6 @@ class Home extends React.Component {
     render() {
         /** User Authenticated */
         if (this.state.isAuthenticated == true) {
-            if (this.state.fireRedirect) {
-                window.location.href = '/'
-                // history.push('/');
-            }
             const { isLoaded } = this.state;
             const { classes } = this.props;
             const temp = { ... this.state };
