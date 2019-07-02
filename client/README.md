@@ -134,6 +134,8 @@ my-app/
     signup/
     signup.js,
     signup.css
+    service.js
+    config.js
     App.css
     App.js
     App.test.js
