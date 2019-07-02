@@ -31,9 +31,9 @@ mongoose.connect(config.DB, { useNewUrlParser: true }).then(
 );
 
 /** Router */
-const userrouter = require('./route/user.route');
-const loginrouter = require('./route/auth.route');
-const tweetsrouter = require('./route/tweets.route');
+const userrouter = require('./route/user.route.js');
+const loginrouter = require('./route/auth.route.js');
+const tweetsrouter = require('./route/tweets.route.js');
 
 /** Use Router */
 app.use('/', tweetsrouter);

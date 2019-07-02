@@ -55,9 +55,21 @@ GetHashTag = function (req, res) {
   });
 }
 
+authenticateUser = function (req, res) {
+  const userJWTToken = {
+    email: req.body.email
+  }
+  userService.authenticateUser(userJWTToken).then((response) => {
+    return res.status(200).json({ status: 1, message: response.message, data: response.data })
+  }).catch((error) => {
+    return res.status(error.status ? error.status : 500).json({ message: error.message ? error.message : ' server error' });
+  })
+}
+
 module.exports = {
   AddTag: AddTag,
   DeleteHashtag: DeleteHashtag,
   UpdateHashtag: UpdateHashtag,
-  GetHashTag: GetHashTag
+  GetHashTag: GetHashTag,
+  authenticateUser: authenticateUser
 }

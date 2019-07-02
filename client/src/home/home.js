@@ -393,7 +393,7 @@ class Home extends React.Component {
 
             /** Popular Twitter-Tweets Display In Our App */
             if (!isFetching && !this.state.displaysearchtweets.length && this.state.tweet[0]) displaydate = this.state.tweet[0].slice(0, this.state.visible).map(tweet =>
-                <div>
+                <div key={tweet}>
                     <div key={tweet}>
                         <div className="tweet_class1">
                             <Grid container spacing={1}>
@@ -459,6 +459,8 @@ class Home extends React.Component {
                             <Tooltip disableFocusListener title="Delete"><i className="fas fa-trash" onClick={this.deletehash.bind(this, text)} ></i></Tooltip>
                             <Tooltip disableFocusListener title="Edit"><i className="fas fa-pencil-alt" onClick={this.handleClickOpenHash.bind(this, text)}></i></Tooltip>
                             <div>
+
+                                {/** Edit hashtag model */}
                                 <Dialog
                                     fullScreen={this.fullScreen}
                                     open={this.state.openModel}
@@ -509,6 +511,8 @@ class Home extends React.Component {
                 return (
                     <div className={classes.root}>
                         <CssBaseline />
+
+                        {/** App-Bar Code */}
                         <AppBar position="fixed" className={classes.appBar}>
                             <Toolbar>
                                 <IconButton
@@ -543,6 +547,8 @@ class Home extends React.Component {
                                 </Tooltip>
                             </Toolbar>
                         </AppBar>
+
+                        {/** Drawer Code */}
                         <nav className={classes.drawer}>
                             <Hidden smUp implementation="css">
                                 <Drawer
@@ -608,6 +614,8 @@ class Home extends React.Component {
                         </nav>
                         <main className={classes.content}>
                             <div className={classes.toolbar} />
+
+                            {/** User Profile */}
                             <div className="profile_main_class">
                                 <Grid container space={12}>
                                     <Grid item sm={1}>
@@ -625,6 +633,8 @@ class Home extends React.Component {
                                     </Grid>
                                 </Grid>
                             </div>
+
+                            {/** Popular Twitter-Tweets */}
                             <div className="main_class_post">
                                 <div className="tweet_bg_color">
                                     {displaydate}
@@ -633,6 +643,8 @@ class Home extends React.Component {
                                     <button onClick={this.loadMore} type="button" className="load-more">Load more</button>
                                 }  </div> : <div>No data</div>}
                             </div>
+
+                            {/** Add Hashtag Button */}
                             <div className="add_tweet">
                                 <Tooltip disableFocusListener title="Add-Hashtag">
                                     <Fab color="primary" aria-label="Add" onClick={this.handleClickOpen} className={classes.margin}>
@@ -640,6 +652,8 @@ class Home extends React.Component {
                                     </Fab>
                                 </Tooltip>
                             </div>
+
+                            {/** Add Hashtag Model Open */}
                             <Dialog
                                 fullScreen={this.fullScreen}
                                 open={this.state.open}
@@ -673,6 +687,8 @@ class Home extends React.Component {
                                     </Tooltip>
                                 </DialogActions>
                             </Dialog>
+
+                            {/** Search Tweets */}
                             <div>
                                 <div className="search_modals">
                                     {displaysearchtweetsview}
@@ -689,7 +705,6 @@ class Home extends React.Component {
 }
 Home.propTypes = {
     container: PropTypes.object,
-
 };
 
 export default withStyles(classes)(Home);
