@@ -263,12 +263,10 @@ class Home extends React.Component {
                     console.log("err======", err);
                 }
             })
-
     }
 
     /** Display Hashtag In Our App */
     getHash() {
-        let hashTagArray = [];
         API.displayHashtag()
             .then((res) => {
                 try {

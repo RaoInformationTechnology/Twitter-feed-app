@@ -5,6 +5,8 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 ## Table of Contents
 
+- [About-this-project](#About-this-project)
+    - [what is twitter-feed-app?](#what-is-twitter-feed-app?)
 - [Updating to New Releases](#updating-to-new-releases)
 - [Sending Feedback](#sending-feedback)
 - [Folder Structure](#folder-structure)
@@ -82,6 +84,15 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [`npm run build` silently fails](#npm-run-build-silently-fails)
   - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
 - [Something Missing?](#something-missing)
+- [Dependancies](#Dependancies)
+
+## About This Project
+
+### What is twitter-feed-app and how to use?
+
+    * Twitter-feed-app is a social-media application
+
+    * Twiiter-feed-app is in user signin with twitter and display popular tweets,display popular trends,display search-tweets,add hashtag,delete hashtag,update hashtag,search hashtag.
 
 ## Updating to New Releases
 
@@ -117,6 +128,12 @@ my-app/
     index.html
     favicon.ico
   src/
+    home/
+    home.js,
+    home.css
+    signup/
+    signup.js,
+    signup.css
     App.css
     App.js
     App.test.js
@@ -1623,3 +1640,6 @@ Please refer to [this section](#resolving-heroku-deployment-errors).
 If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/packages/react-scripts/template/README.md)
 
 
+## Dependancies
+
+* Open package.json to see all development and production dependencies or run npm ls in the project     root directory for all installed dependencies
