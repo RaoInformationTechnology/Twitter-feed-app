@@ -122,7 +122,6 @@ class Home extends React.Component {
     /** First Call During App Run */
     componentDidMount() {
         if (this.state.isAuthenticated == true) {
-            const tweet = [];
             API.getTwitterTrends().
                 then((findresponse, err) => {
                     try {

@@ -65,9 +65,9 @@ class SignUp extends React.Component {
 									<div>
 									</div>
 									<div>
-										<TwitterLogin loginUrl="http://132.140.160.63:4000/api/v1/auth/twitter"
+										<TwitterLogin loginUrl="http://192.168.1.53:4000/api/v1/auth/twitter"
 											onFailure={this.onFailure} onSuccess={this.twitterResponse}
-											requestTokenUrl="http://132.140.160.63:4000/api/v1/auth/twitter/reverse" />
+											requestTokenUrl="http://192.168.1.53:4000/api/v1/auth/twitter/reverse" />
 									</div>
 								</div>
 							</div>
