@@ -10,7 +10,7 @@
 
 ## About This Project
 
-- What is twitter-feed-app and how to use?
+## What is twitter-feed-app and how to use?
 
     - Twitter-feed-app is a social-media application
 
@@ -98,7 +98,8 @@
 * Node.js can add, delete, modify data in your database.
   
 ### `node server.js`
-Runs the app this sever `node server.js`
+
+* Runs the app this sever `node server.js`
 
 
 ## What is express?
