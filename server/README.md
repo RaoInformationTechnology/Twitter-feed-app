@@ -1,11 +1,11 @@
 ## Table Of Contents
 
--    [About-project](#About this project)
-    - [Twitter-feed-app](#what is twitter-feed-app?)
--   [Directory-Structure](#Directory Structure)
--    [Getting-Started](#Getting Started)
--    [Version-Control](#Version Control)
--    [Running-Project](#Running The Project)
+-    [About-this-project](#About-this-project)
+    - [whatistwitter-feed-app?](#whatistwitter-feed-app?)
+-   [Directory-Structure](#Directory-Structure)
+-    [Getting-Started](#Getting-Started)
+-    [Version-Control](#Version-Control)
+-    [Running-The-Project](#Running-The-Project)
 -    [Dependancies](#Dependancies)
 
 ## About This Project
