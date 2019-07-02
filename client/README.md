@@ -1623,4 +1623,125 @@ Please refer to [this section](#resolving-heroku-deployment-errors).
 If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/packages/react-scripts/template/README.md)
 
 
+## What is Node-Js?
+
+Node.js is an open source server environment
+Node.js is free
+Node.js runs on various platforms (Windows, Linux, Unix, Mac OS X, etc.)
+Node.js uses JavaScript on the server
+
+## Node-Js version
+
+{
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+      }
+}
+
+## What Can Node-js do?
+
+Node.js can generate dynamic page content
+Node.js can create, open, read, write, delete, and close files on the server
+Node.js can collect form data
+Node.js can add, delete, modify data in your database
+  
+### `node server.js`
+Runs the app this sever `node server.js`
+
+## Folder Structure
+
+```
+Server.js/
+  Controller/
+  user.controller
+  Model/
+  user.model
+  node_modules/
+  package.json/
+  Service/
+  user.service
+  Route/
+  auth.route,
+  tweets.route,
+  user.route
+  Config.js/
+  Const.js/
+  Database.js/
+  Passport.js/
+  Validation/
+  hashtagvalidation.js,
+  searchtweetsvalidation.js,
+  trendsvalidation.js,
+  tweetsvalidation.js,
+  uservalidation.js
+  .env/
+
+```
+## What is express?
+
+Express provides a minimal interface to build our applications. It provides us the tools that are required to build our app. It is flexible as there are numerous modules available on npm, which can be directly plugged into Express.
+
+## Express Framework version
+
+{
+   "express": "^4.16.4"
+}
+
+## What is Body-parser?
+
+body-parser extract the entire body portion of an incoming request stream and exposes it on req.body . The middleware was a part of Express.js earlier but now you have to install it separately. This body-parser module parses the JSON, buffer, string and URL encoded data submitted using HTTP POST request.
+
+## Body-Parser version
+
+{
+  "body-parser": "^1.18.3"
+}
+
+## What is cors?
+
+CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
+
+## Cors version Use
+
+{
+   "cors": "^2.8.5"
+}
+
+## What is Mongoose and Mongodb?
+
+MongoDB is an open-source, document database designed for ease of development and scaling. This database is also used to store data.
+
+Mongoose is a client API for node.js which makes it easy to access our database from our Express application.
+
+## Mongoose version Use
+
+{
+   "mongoose": "^5.4.5"
+}
+
+## What is passport?
+
+Passport is authentication middleware for Node.js. Extremely flexible and modular, Passport can be unobtrusively dropped in to any Express-based web application. A comprehensive set of strategies support authentication using a username and password, Facebook, Twitter, and more.
+
+## Passport version Use
+
+{
+   "passport": "^0.4.0"
+}
+
+## What is joi?
+
+joi is use for validation.
+
+## Joi version Use
+
+{
+  "joi": "^14.3.1"
+}
+
+
 
