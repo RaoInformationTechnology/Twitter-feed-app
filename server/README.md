@@ -10,11 +10,11 @@
 
 ## About This Project
 
-## What is twitter-feed-app and how to use?
+### What is twitter-feed-app and how to use?
 
-    - Twitter-feed-app is a social-media application
+    * Twitter-feed-app is a social-media application
 
-    - Twiiter-feed-app is in user signin with twitter and display popular tweets,display popular            trends,display search-tweets,add hashtag,delete hashtag,update hashtag,search hashtag.
+    * Twiiter-feed-app is in user signin with twitter and display popular tweets,display popular        trends,display search-tweets,add hashtag,delete hashtag,update hashtag,search hashtag.
 
 ## Directory Structure
 
