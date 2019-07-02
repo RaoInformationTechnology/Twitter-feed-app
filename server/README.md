@@ -14,7 +14,7 @@
 
     * Twitter-feed-app is a social-media application
 
-    * Twiiter-feed-app is in user signin with twitter and display popular tweets,display popular        trends,display search-tweets,add hashtag,delete hashtag,update hashtag,search hashtag.
+    * Twiiter-feed-app is in user signin with twitter and display popular tweets,display popular  trends,display search-tweets,add hashtag,delete hashtag,update hashtag,search hashtag.
 
 ## Directory Structure
 
