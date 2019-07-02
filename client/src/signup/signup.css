@@ -20,7 +20,7 @@ button {
 	outline: none;
 	width: 247px;
 	margin-left: 180px !important;
-	margin-top: 290px;
+	margin-top: 300px;
 	cursor: pointer;
 }
 .no-margin{
@@ -45,7 +45,7 @@ path {
 
 .signup_bg{
 	background-color: #fff;
-	height: 609px;
+	height: 658px;
 	
 }
 .MuiButton-textPrimary {
