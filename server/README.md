@@ -1,7 +1,7 @@
 ## Table Of Contents
 
--    [About-this-project](#About-this-project)
-    - [whatistwitter-feed-app?](#whatistwitter-feed-app?)
+- [About-this-project](#About-this-project)
+    - [what is twitter-feed-app?](#what-is-twitter-feed-app?)
 -   [Directory-Structure](#Directory-Structure)
 -    [Getting-Started](#Getting-Started)
 -    [Version-Control](#Version-Control)
@@ -10,11 +10,11 @@
 
 ## About This Project
 
-* What is twitter-feed-app and how to use?
+- What is twitter-feed-app and how to use?
 
--    Twitter-feed-app is a social-media application
+    - Twitter-feed-app is a social-media application
 
--    Twiiter-feed-app is in user signin with twitter and display popular tweets,display popular            trends,display search-tweets,add hashtag,delete hashtag,update hashtag,search hashtag.
+    - Twiiter-feed-app is in user signin with twitter and display popular tweets,display popular            trends,display search-tweets,add hashtag,delete hashtag,update hashtag,search hashtag.
 
 ## Directory Structure
 
@@ -58,7 +58,7 @@
 
 ## Version control
 
-we use git for version control
+* we use git for version control
 
 ## Running the project
 
@@ -84,9 +84,11 @@ we use git for version control
 
 ## Node-Js version
 
+```json
 {
-  "version": "8.10.0"
+ "version": "8.10.0"
 }
+```
 
 ## What Can Node-js do?
 
@@ -105,9 +107,11 @@ Runs the app this sever `node server.js`
 
 ## Express Framework version
 
+```json
 {
-   "express": "^4.16.4"
+    "express": "^4.16.4"
 }
+```
 
 ## What is Body-parser?
 
@@ -115,9 +119,11 @@ Runs the app this sever `node server.js`
 
 ## Body-Parser version
 
+```json
 {
-  "body-parser": "^1.18.3"
+     "body-parser": "^1.18.3"
 }
+```
 
 ## What is cors?
 
@@ -125,9 +131,11 @@ Runs the app this sever `node server.js`
 
 ## Cors version Use
 
+```json
 {
-   "cors": "^2.8.5"
+     "cors": "^2.8.5"
 }
+```
 
 ## What is Mongoose and Mongodb?
 
@@ -137,10 +145,12 @@ Runs the app this sever `node server.js`
 
 ## Mongoose version Use
 
+```json
 {
    "mongoose": "^5.4.5",
    "mongod": "^3.6.3"
 }
+```
 
 ## What is passport?
 
@@ -148,9 +158,11 @@ Runs the app this sever `node server.js`
 
 ## Passport version Use
 
+```json
 {
-   "passport": "^0.4.0"
+    "passport": "^0.4.0"
 }
+```
 
 ## What is joi?
 
@@ -158,9 +170,11 @@ Runs the app this sever `node server.js`
 
 ## Joi version Use
 
+```json
 {
   "joi": "^14.3.1"
 }
+```
 
 
 
