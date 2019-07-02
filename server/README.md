@@ -14,7 +14,7 @@
 
     * Twitter-feed-app is a social-media application
 
-    * Twiiter-feed-app is in user signin with twitter and display popular tweets,display popular  trends,display search-tweets,add hashtag,delete hashtag,update hashtag,search hashtag.
+    * Twiiter-feed-app is in user signin with twitter and display popular tweets,display popular trends,display search-tweets,add hashtag,delete hashtag,update hashtag,search hashtag.
 
 ## Directory Structure
 
@@ -35,6 +35,7 @@
   +-- /server.js [The main enrty point where the app is started/intialized]
 
 ```
+
 ## Getting started
 
   1. Install a git client.
@@ -54,7 +55,7 @@
 
   8. Open the project in visual studio code.
 
-  9. The apllication can be accessed locally at localhost:3000.
+  9. The apllication can be accessed locally at http://localhost:3000.
 
 ## Version control
 
