@@ -37,7 +37,7 @@ module.exports = function () {
               if (error) {
                 reject({ status: 500, message: 'Internal Server Error' });
               }
-              resolve({ status: 200, message: 'user data fetched', data: updres });
+              resolve({ status: 200, message: 'user data fetched', data: savedUser });
               return done(error, savedUser);
             });
           } else {

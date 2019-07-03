@@ -31,13 +31,14 @@ const sendToken = function (req, res) {
 };
 
 router.route('/auth/twitter/reverse')
-    .post(uservalidation.reverseuserdata, function (req, res) {
+.post(uservalidation.reverseuserdata, function (req, res) {
+    console.log("---------------------------->>>>>>>>>>>>REVERSE");
         request.post({
             url: process.env.AUTH,
             oauth: {
                 oauth_callback: process.env.OAUTH_CALLBACK_URL,
-                consumer_key: twitterConfig.consumer_key,
-                consumer_secret: twitterConfig.consumer_secret
+                consumer_key: twitterConfig.CONSUMER_KEY,
+                consumer_secret: twitterConfig.CONSUMER_SECRET
             }
         }, function (err, r, body) {
             if (err) {
@@ -50,6 +51,7 @@ router.route('/auth/twitter/reverse')
 
 router.route('/auth/twitter')
     .post(uservalidation.userdata, (req, res, next) => {
+        console.log("---------------------------->>>>>>>>>>>>");
         request.post({
             url: process.env.AUTH_URL,
             oauth: {
