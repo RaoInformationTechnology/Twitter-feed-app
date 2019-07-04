@@ -1,5 +1,6 @@
 const Joi = require('joi');
 
+/** Twitter-trends validation */
 module.exports.trends = (req, res, next) => {
     const schema = Joi.object().keys({
         name: Joi.string().required(),

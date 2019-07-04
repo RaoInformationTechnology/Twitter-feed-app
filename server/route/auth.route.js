@@ -11,6 +11,7 @@ passportConfig();
 const ENV = require('dotenv');
 ENV.config();
 
+/** Create token */
 const createToken = function (auth) {
     return jwt.sign({
         id: auth.id
@@ -20,11 +21,13 @@ const createToken = function (auth) {
         });
 };
 
+/** GenerateToken */
 const generateToken = function (req, res, next) {
     req.token = createToken(req.auth);
     return next();
 };
 
+/** Send token */
 const sendToken = function (req, res) {
     res.setHeader('x-auth-token', req.token);
     return res.status(200).send(JSON.stringify(req.user));
@@ -48,6 +51,7 @@ router.route('/auth/twitter/reverse')
         });
     });
 
+/** Twitter signin api */
 router.route('/auth/twitter')
     .post(uservalidation.userdata, (req, res, next) => {
         request.post({
@@ -75,14 +79,14 @@ router.route('/auth/twitter')
         if (!req.user) {
             return res.send(401, 'User Not Authenticated');
         }
-        // prepare token for API
+        /** prepare token for API */
         req.auth = {
             id: req.user.id
         };
         return next();
     }, generateToken, sendToken);
 
-//token handling middleware
+/** token handling middleware */
 const authenticate = expressJwt({
     secret: 'my-secret',
     requestProperty: 'auth',

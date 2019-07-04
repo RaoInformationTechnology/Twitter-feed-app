@@ -3,6 +3,7 @@ ENV.config();
 const jwt = require('jsonwebtoken');
 const secret = process.env.SECRET;
 
+/** Token verifify and give response */
 const withAuth = function (req, res, next) {
   const token = req.headers.token;
   if (!token) {

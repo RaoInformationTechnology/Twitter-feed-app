@@ -1,5 +1,6 @@
 const Joi = require('joi');
 
+/** User validation */
 module.exports.userdata = (req, res, next) => {
     const userschema = Joi.object().keys({
         name: Joi.string().required(),
@@ -7,8 +8,6 @@ module.exports.userdata = (req, res, next) => {
         photo: Joi.string().required(),
         email: Joi.string().required(),
         hashtag: Joi.string().required()
-
-
     })
 
     Joi.validate(
@@ -35,8 +34,6 @@ module.exports.reverseuserdata = (req, res, next) => {
         photo: Joi.string().required(),
         email: Joi.string().required(),
         hashtag: Joi.string().required()
-
-
     })
 
     Joi.validate(

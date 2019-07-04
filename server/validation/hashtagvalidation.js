@@ -1,5 +1,6 @@
 const Joi = require('joi');
 
+/** Add hashtag validation */
 module.exports.addhashtag = (req, res, next) => {
     const addhashschema = Joi.object().keys({
         name: Joi.string().required(),
@@ -26,7 +27,7 @@ module.exports.addhashtag = (req, res, next) => {
     );
 }
 
-
+/** delete hashtag validation */
 module.exports.deletehashtag = (req, res, next) => {
     const deletehashschema = Joi.object().keys({
         name: Joi.string().required(),
@@ -53,7 +54,7 @@ module.exports.deletehashtag = (req, res, next) => {
     );
 }
 
-
+/** Get hashtag validation */
 module.exports.getHashTag = (req, res, next) => {
     const gethashschema = Joi.object().keys({
         name: Joi.string().required(),
@@ -80,6 +81,7 @@ module.exports.getHashTag = (req, res, next) => {
     );
 }
 
+/** Update hashtag validation */
 module.exports.updateHashTag = (req, res, next) => {
     const updatehashschema = Joi.object().keys({
         name: Joi.string().required(),

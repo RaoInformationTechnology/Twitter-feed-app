@@ -7,7 +7,7 @@ ENV.config();
 const jwt = require('jsonwebtoken');
 const secret = process.env.SECRET;
 
-
+/** Passport with authenticate & login */
 module.exports = function () {
 
   passport.use(new TwitterTokenStrategy({
@@ -24,7 +24,7 @@ module.exports = function () {
         if (user) {
           const email = profile.emails[0].value;
           const payload = { email };
-          const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+          const token = jwt.sign(payload, secret, { expiresIn: '50h' });
           const userData = {
             user: user,
             token: token

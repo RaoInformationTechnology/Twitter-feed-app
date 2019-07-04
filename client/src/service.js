@@ -6,14 +6,14 @@ export default {
     getTwitterTrends: () => {
         return fetch(config.baseApiUrl + 'twitter-trends').
             then((Response) => Response.json())
-            .catch({ status: 500, message: 'Internal Serevr Error' });
+            .catch({ status: 500, message: 'Internal Server Error' });
     },
 
     /** Popular Twitter-tweets */
     getTwitterTweets: () => {
         return fetch(config.baseApiUrl + 'twitter-tweets').
             then((Response) => Response.json())
-            .catch({ status: 500, message: 'Internal Serevr Error' });
+            .catch({ status: 500, message: 'Internal Server Error' });
     },
 
     /** 
@@ -24,7 +24,7 @@ export default {
         return axios.get(config.baseApiUrl + 'search-tweets', searchTweetsObj).then(response => {
             return response;
         })
-            .catch({ status: 500, message: 'Internal Serevr Error' });
+            .catch({ status: 500, message: 'Internal Server Error' });
     },
 
     /** 
@@ -35,7 +35,7 @@ export default {
         return axios.post(config.baseApiUrl + 'user/addtag', hashtagObj).then(response => {
             return response;
         })
-            .catch({ status: 500, message: 'Internal Serevr Error' });
+            .catch({ status: 500, message: 'Internal Server Error' });
     },
 
     /** Display Hashtag */
@@ -43,7 +43,7 @@ export default {
         return axios.get(config.baseApiUrl + 'user/gethashtag/' + localStorage.getItem('email')).then((response) => {
             return response;
         })
-            .catch({ status: 500, message: 'Internal Serevr Error' });
+            .catch({ status: 500, message: 'Internal Server Error' });
     },
 
     /**
@@ -54,7 +54,7 @@ export default {
         return axios.delete(config.baseApiUrl + 'user/deletehashtag', deleteHashtagObj).then((response) => {
             return response;
         })
-            .catch({ status: 500, message: 'Internal Serevr Error' });
+            .catch({ status: 500, message: 'Internal Server Error' });
     },
 
     /**
@@ -65,7 +65,7 @@ export default {
         return axios.put(config.baseApiUrl + 'user/updatehashtag', updateHashtagObj).then((response) => {
             return response;
         })
-            .catch({ status: 500, message: 'Internal Serevr Error' });
+            .catch({ status: 500, message: 'Internal Server Error' });
     },
 
     /**
@@ -82,6 +82,6 @@ export default {
         return axios.get('http://localhost:4000/user/checkToken', { headers: headers }).then((response) => {
             return response;
         })
-            .catch({ status: 500, message: 'Internal Serevr Error' });
+            .catch({ status: 500, message: 'Internal Server Error' });
     }
 }

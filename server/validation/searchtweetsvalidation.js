@@ -1,11 +1,11 @@
 const Joi = require('joi');
 
+/** Search tweets validation */
 module.exports.searchtweets = (req, res, next) => {
     const searchtweetschema = Joi.object().keys({
         name: Joi.string().required(),
         id: Joi.string().required(),
         count: Joi.number().required()
-
     })
 
     Joi.validate(

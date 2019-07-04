@@ -12,8 +12,10 @@ export default function withAuth(ComponentToProtect) {
       };
     }
 
+    /** first call this function during app run */
     componentDidMount() {
 
+      /** Get token from localstorage & pass token in header */
       const Token = localStorage.getItem('token');
       const headers = {
         'Content-Type': 'application/json',
@@ -21,6 +23,10 @@ export default function withAuth(ComponentToProtect) {
         'token': Token
       }
 
+      /** 
+       * @param {string} token
+       * user get token and check token 
+       * */
       if (Token) {
         API.authenticate()
           .then(res => {
@@ -41,11 +47,14 @@ export default function withAuth(ComponentToProtect) {
       }
     }
 
+    /** Render app using token */
     render() {
       const { loading, redirect } = this.state;
       if (loading) {
         return null;
       }
+
+      /** Token not get then redirect in signup page */
       if (redirect) {
         return <Redirect to="/signup" />;
       }
