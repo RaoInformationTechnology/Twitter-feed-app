@@ -2,6 +2,11 @@ const passport = require('passport');
 TwitterTokenStrategy = require('passport-twitter-token');
 const User = require('./model/user.model');
 twitterConfig = require('./config.js');
+const ENV = require('dotenv');
+ENV.config();
+const jwt = require('jsonwebtoken');
+const secret = process.env.SECRET;
+
 
 module.exports = function () {
 
@@ -10,40 +15,53 @@ module.exports = function () {
     consumerSecret: twitterConfig.consumer_secret,
     includeEmail: true
   },
-    (token, tokenSecret, profile, done) => {
-      return new Promise((resolve, reject) => {
-        User.findOne({
-          'twitterProvider.id': profile.id
-        }, function (err, user) {
-          if (user) {
-            return done(err, user);
+    (token, tokenSecret, profile, res) => {
+      User.findOne({
+        'twitterProvider.id': profile.id,
+        'email': profile.emails[0].value
+      }, function (err, user) {
+        //user already found
+        if (user) {
+          const email = profile.emails[0].value;
+          const payload = { email };
+          const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+          const userData = {
+            user: user,
+            token: token
           }
-          // no user was found, lets create a new one
-          else if (!user) {
-            const newUser = new User({
-              email: profile.emails[0].value,
-              username: profile.username,
-              name: profile.displayName,
-              photo: profile.photos[0].value,
+          return res(err, userData);
+        }
+        // no user was found, lets create a new one
+        else if (!user) {
+          const newUser = new User({
+            email: profile.emails[0].value,
+            username: profile.username,
+            name: profile.displayName,
+            photo: profile.photos[0].value,
 
-              twitterProvider: {
-                id: profile.id,
-                token: token,
-                tokenSecret: tokenSecret
-              }
-            });
-            newUser.save(function (error, savedUser) {
-              console.log(savedUser);
-              if (error) {
-                reject({ status: 500, message: 'Internal Server Error' });
-              }
-              resolve({ status: 200, message: 'user data fetched', data: updres });
-              return done(error, savedUser);
-            });
-          } else {
-            return done(err, user);
-          }
-        });
-      })
+            twitterProvider: {
+              id: profile.id,
+              token: token,
+              tokenSecret: tokenSecret
+            }
+          });
+          newUser.save(function (error, savedUser) {
+            console.log("saveuser-=======", savedUser);
+            if (error) {
+              console.log("err==", err);
+            }
+            const email = profile.emails[0].value;
+            const payload = { email };
+            const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+            const userData = {
+              user: savedUser,
+              token: token
+            }
+            return res(error, userData);
+          });
+        } else {
+          return res(err, user);
+        }
+      });
     }));
 };                                                                                                     

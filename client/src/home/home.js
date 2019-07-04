@@ -123,7 +123,7 @@ class Home extends React.Component {
     componentDidMount() {
         if (this.state.isAuthenticated == true) {
             API.getTwitterTrends().
-                then((findresponse, err) => {
+                then((findresponse) => {
                     try {
                         this.state.isFetching = false;
                         this.setState(prevState => ({
@@ -131,9 +131,12 @@ class Home extends React.Component {
                             isLoaded: true
                         }))
                     } catch (err) {
-                        console.log("err====", err);
+                        console.log(err);
                     }
-                });
+                })
+                .catch((err) => {
+                    console.log({ status: 500, message: 'Internal Server Error', err });
+                })
 
             API.getTwitterTweets().
                 then((findresponse, err) => {
@@ -147,8 +150,11 @@ class Home extends React.Component {
                             }))
                         }
                     } catch (err) {
-                        console.log("err=======", err);
+                        console.log(err);
                     }
+                })
+                .catch((err) => {
+                    console.log({ status: 500, message: 'Internal Server Error', err });
                 })
             this.getHash();
         }
@@ -199,6 +205,7 @@ class Home extends React.Component {
         localStorage.removeItem("name");
         localStorage.removeItem("username");
         localStorage.removeItem('photo');
+        localStorage.removeItem('token');
         history.push('/');
         this.setState({ isLoaded: true, fireRedirect: true })
     }
@@ -238,8 +245,11 @@ class Home extends React.Component {
                         this.state.isSearchTweetDisplay = true;
                     }
                 } catch (err) {
-                    console.log("err======", err);
+                    console.log(err);
                 }
+            })
+            .catch((err) => {
+                console.log({ status: 500, message: 'Internal Server Error', err });
             })
     }
 
@@ -259,8 +269,11 @@ class Home extends React.Component {
                     this.getHash();
                 }
                 catch (err) {
-                    console.log("err======", err);
+                    console.log(err);
                 }
+            })
+            .catch((err) => {
+                console.log({ status: 500, message: 'Internal Server Error', err });
             })
     }
 
@@ -273,13 +286,16 @@ class Home extends React.Component {
                         hashtag: res.data.data[0].hashtag
                     })
                 } catch (err) {
-                    console.log("err========", err);
+                    console.log(err);
                 }
+            })
+            .catch((err) => {
+                console.log({ status: 500, message: 'Internal Server Error', err });
             })
     }
 
     /**
-     * @param {*} id
+     * @param {string} id
      * Delete Hashtag In Our App
      */
     deletehash(id) {
@@ -292,8 +308,11 @@ class Home extends React.Component {
                     Swal.fire("Successfully deleted!", "", "success");
                     this.componentDidMount();
                 } catch (err) {
-                    console.log("errr========", err);
+                    console.log(err);
                 }
+            })
+            .catch((err) => {
+                console.log({ status: 500, message: 'Internal Server Error', err });
             })
     }
 
@@ -310,7 +329,7 @@ class Home extends React.Component {
     }
 
     /** 
-     * @param {*} id
+     * @param {string} id
      * ModelOpen During Hashtag Add 
      */
     handleClickOpenHash(id) {
@@ -336,7 +355,7 @@ class Home extends React.Component {
     }
 
     /**
-     * @param {*} id
+     * @param {string} id
      * Update Hashtag In Our App 
      */
     updatehash(id) {
@@ -353,8 +372,11 @@ class Home extends React.Component {
                     })
                     this.componentDidMount();
                 } catch (err) {
-                    console.log("err=======", err);
+                    console.log(err);
                 }
+            })
+            .catch((err) => {
+                console.log({ status: 500, message: 'Internal Server Error', err });
             })
     }
 
@@ -409,10 +431,11 @@ class Home extends React.Component {
                                     </a>
                                     <p><span>{tweet.text}</span></p>
                                     <div className="hashtag_flex">{tweet && tweet.entities ? (tweet.entities.hashtags.map(hashtag =>
-                                        <p key={hashtag} className="hash_color" onClick={(e) => this.handleClick(event)}>#{hashtag.text}</p>)) : ('')}</div>
-                                    <div className="video">
-                                        {tweet.extended_entities ? (<Player className="video_height" src={tweet.extended_entities.media[0].video_info.variants[0].url}></Player>) : ('')}
-                                    </div>
+                                        <p className="hash_color" onClick={(e) => this.handleClick(event)}>#{hashtag.text}</p>)) : ('')}</div>
+                                    {(tweet.extended_entities) ?
+                                        (<div className="video">
+                                            {tweet.extended_entities ? (<Player className="video_height" src={tweet.extended_entities.media[0].video_info.variants[0].url}></Player>) : ('')}
+                                        </div>) : ('')}
                                 </Grid>
                             </Grid>
                         </div>

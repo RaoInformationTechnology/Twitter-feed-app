@@ -14,14 +14,14 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  name: { 
+  name: {
     type: String,
-     required: true 
-    },
-  photo: { 
+    required: true
+  },
+  photo: {
     type: String,
-     required: true 
-    },
+    required: true
+  },
   twitterProvider: {
     type: {
       id: String,

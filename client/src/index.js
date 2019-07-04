@@ -6,15 +6,16 @@ import Home from './home/home.js';
 import App from './App';
 import './index.css';
 import history from './history';
+import WithAuth from './auth.js'
 
 
 ReactDOM.render(
 	/** Path & Routing */
 	<Router history={history}>
 		<Route exact path='/' component={App} />
-		<Route path="/signup" component={SignUp} />
-		<Route path="/home" render={() => (
-			localStorage.getItem('email') ? (<Route component={Home} />)
+		<Route exact path="/signup" component={SignUp} />
+		<Route exact path="/home" render={() => (
+			localStorage.getItem('email') ? (<Route component={WithAuth(Home)} />)
 				: (<Route component={SignUp} />)
 		)} />
 	</Router>,

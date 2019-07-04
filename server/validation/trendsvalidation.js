@@ -4,7 +4,6 @@ module.exports.trends = (req, res, next) => {
     const schema = Joi.object().keys({
         name: Joi.string().required(),
         id: Joi.string().required(),
-
     })
 
     Joi.validate(

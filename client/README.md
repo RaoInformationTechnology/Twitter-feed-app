@@ -119,31 +119,28 @@ We are always open to [your feedback](https://github.com/facebookincubator/creat
 
 After creation, your project should look like this:
 
+
 ```
-my-app/
-  README.md
-  node_modules/
-  package.json
-  public/
-    index.html
-    favicon.ico
-  src/
-    home/
-    home.js,
-    home.css
-    signup/
-    signup.js,
-    signup.css
-    service.js
-    config.js
-    history.js
-    App.css
-    App.js
-    App.test.js
-    index.css
-    index.js
-    logo.svg
++-- /app [React Js Frontend]
++-- /build [npm run build]
++-- /node-modules [node_modules use in this react app]
++-- /public
+    +-- [main index.html file render or js file or css file]
++-- /src
+    +-- /config
+      +-- [config files to intialize this API,e.g environment variable,router]
+    +-- /route
+      +-- [routing in component]
+    +-- /import
+      +-- [Database contents that are to be imported into the database using an import script ]
+    +-- /service
+      +-- [Diffrent general-purpose services/utils that can be used in component or other parts of the API]
+    +-- /app.js [The main enrty point where the app is started/intialized]
+    +-- /app.css [Style sheet use of component app]
+    +-- /index.js [Main file in app & call route in this file]
+ 
 ```
+
 
 For the project to build, **these files must exist with exact filenames**:
 
@@ -1646,3 +1643,86 @@ If you have ideas for more “How To” recipes that should be on this page, [le
 ## Dependancies
 
 * Open package.json to see all development and production dependencies or run npm ls in the project     root directory for all installed dependencies
+
+
+## What is material-ui?
+
+* Material-UI is an MIT-licensed open source project. It's an independent project with ongoing development made possible entirely thanks to the support of these awesome backers.
+
+## Material-Ui version Use
+
+```json
+{
+  "material-ui": "^1.0.0-beta.47"
+}
+```
+
+## What is sweetaleart?
+
+* We can display aleart during success or unsuccess response in our app
+
+## Material-Ui version Use
+
+```json
+{
+  "sweetalert2": "^8.13.0"
+}
+```
+
+## what is axios?
+
+* Axios is a promise-based HTTP client that works both in the browser and in a node.js environment. It basically provides a single API for dealing with XMLHttpRequest s and node's http interface. Besides that, it wraps the requests using a polyfill for ES6 new's promise syntax.
+
+## Axios version use
+
+```json
+{
+  "axios": "^0.18.0"
+}
+```
+
+## What is react router?
+
+* React Router is the standard routing library for React. From the docs: “React Router keeps your UI in sync with the URL. It has a simple API with powerful features like lazy code loading, dynamic route matching, and location transition handling built right in.
+
+
+## React-router version use
+
+```json
+{
+   "react-router": "^5.0.1"
+}
+```
+
+### `signup.js`
+
+* In this component login with twitter successfully 
+
+```js
+import React, { Component } from 'react';
+import './signup.css'; // Tell Webpack that signup.js uses these styles
+
+class SignUp extends Component {
+  render() {
+    // You can use them as regular CSS styles
+    return <div />;
+  }
+}
+```
+
+### `Home.js`
+
+* In this component we display popular twitter-tweets,popular twitter-trends,popular search-tweets,add hashtag,delete hashtag,update hashtag,search hashtag
+
+
+```js
+import React, { Component } from 'react';
+import './home.css'; // Tell Webpack that home.js uses these styles
+
+class Home extends Component {
+  render() {
+    // You can use them as regular CSS styles
+    return <div  />;
+  }
+}
+```

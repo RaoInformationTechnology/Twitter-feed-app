@@ -4,6 +4,7 @@ import './signup.css';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import history from '../history';
+import { config } from '../config';
 
 const styles = theme => ({
 	root: {
@@ -25,19 +26,24 @@ class SignUp extends React.Component {
 		alert(error);
 	};
 
-	/** Sucess Response Login Then Store Value In Localstorage  */
+	/**
+	 * @param {JSON} response 
+	 * Sucess Response Login Then Store Value In Localstorage  
+	 */
 	twitterResponse = (response) => {
+		console.log("response of login====", response);
 		if (response) {
 			const token = response.headers.get('x-auth-token');
 			response.json().then(user => {
 				if (token) {
 					this.setState({ isAuthenticated: true, user, token });
 					console.log("msg==", this.state.user);
-					localStorage.setItem('email', (this.state.user.email));
-					localStorage.setItem('name', (this.state.user.name));
-					localStorage.setItem('username', (this.state.user.username));
-					localStorage.setItem('photo', (this.state.user.photo));
+					localStorage.setItem('email', (this.state.user.user.email));
+					localStorage.setItem('name', (this.state.user.user.name));
+					localStorage.setItem('username', (this.state.user.user.username));
+					localStorage.setItem('photo', (this.state.user.user.photo));
 					localStorage.setItem('isAuthenticated', true);
+					localStorage.setItem('token', this.state.user.token);
 					history.push('/home');
 				}
 			});
@@ -65,9 +71,9 @@ class SignUp extends React.Component {
 									<div>
 									</div>
 									<div>
-										<TwitterLogin loginUrl="http://192.168.1.53:4000/api/v1/auth/twitter"
+										<TwitterLogin loginUrl={config.baseApiUrl + "api/v1/auth/twitter"}
 											onFailure={this.onFailure} onSuccess={this.twitterResponse}
-											requestTokenUrl="http://192.168.1.53:4000/api/v1/auth/twitter/reverse" />
+											requestTokenUrl={config.baseApiUrl + "api/v1/auth/twitter/reverse"} />
 									</div>
 								</div>
 							</div>

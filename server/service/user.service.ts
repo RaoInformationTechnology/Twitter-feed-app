@@ -1,9 +1,7 @@
 const userModel = require('../model/user.model');
-const jwt = require('jsonwebtoken');
-const secret = 'mysecretsshhh';
 
 /** 
- * @param {*} userData
+ * @param {string} userData
  * Add Hashtag Service
  */
 module.exports.AddTag = (userData) => {
@@ -21,7 +19,7 @@ module.exports.AddTag = (userData) => {
 }
 
 /** 
- * @param {*} userDeletetag
+ * @param {string} userDeletetag
  * Delete Hashtag Service
  */
 module.exports.DeleteHashtag = (userDeletetag) => {
@@ -38,7 +36,7 @@ module.exports.DeleteHashtag = (userDeletetag) => {
 }
 
 /** 
- * @param {*} updateHashtag
+ * @param {string} updateHashtag
  * Update Hashtag Service
  */
 module.exports.UpdateHashtag = (updateHashtag) => {
@@ -55,37 +53,17 @@ module.exports.UpdateHashtag = (updateHashtag) => {
 }
 
 /** 
- * @param {*} GetHashTag
+ * @param {string} GetHashTag
  * GetHashtag Service
  */
-module.exports.GetHashTag = (userGetHashtag) => {
+module.exports.GetHashTag = (email) => {
     return new Promise((resolve, reject) => {
-        userModel.find({ email: userGetHashtag.email }, function (err, hashtag) {
+        userModel.find({ email: email }, function (err, hashtag) {
             if (err) {
                 reject({ status: 500, message: 'Internal Server Error' });
             } else {
                 resolve({ status: 200, message: 'user data fetched', data: hashtag });
             }
         })
-    })
-}
-
-module.exports.authenticateUser = (userJWTToken) => {
-    return new Promise((resolve, reject) => {
-        userModel.findOne({ email: userJWTToken.email },
-            (userError, userResponse) => {
-                if (userError) {
-                    console.log('userError', userError);
-                    reject({ status: 500, message: 'Internal Serevr Error' });
-                } else if (!userResponse) {
-                    reject({ status: 401, message: 'Incorrect email or password' });
-                } else {
-                    const email = userJWTToken.email;
-                    const payload = { email };
-                    const token = jwt.sign(payload, secret, { expiresIn: '1h' });
-                    resolve({ status: 200, message: 'JWT token', data: token });
-                }
-            }
-        )
     })
 }
