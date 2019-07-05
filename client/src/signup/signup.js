@@ -4,6 +4,7 @@ import './signup.css';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import history from '../history';
+import {config} from '../config'
 
 const styles = theme => ({
 	root: {
@@ -65,9 +66,9 @@ class SignUp extends React.Component {
 									<div>
 									</div>
 									<div>
-										<TwitterLogin loginUrl="http://192.168.1.53:4000/api/v1/auth/twitter"
+										<TwitterLogin loginUrl={config.baseApiUrl+"api/v1/auth/twitter"}
 											onFailure={this.onFailure} onSuccess={this.twitterResponse}
-											requestTokenUrl="http://192.168.1.53:4000/api/v1/auth/twitter/reverse" />
+											requestTokenUrl={config.baseApiUrl+"api/v1/auth/twitter/reverse"} />
 									</div>
 								</div>
 							</div>
