@@ -20,7 +20,7 @@
     "react-slick": "^0.24.0",
     "react-social-login": "^3.4.4",
     "react-styleguidist": "^9.0.9",
-    "react-twitter-auth": "0.0.13",
+    "react-twitter-auth": "0.0.7",
     "redux": "^4.0.1",
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^8.13.0",
