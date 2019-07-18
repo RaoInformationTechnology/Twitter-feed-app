@@ -50,6 +50,6 @@ app.use('/api/v1', loginrouter);
 app.use('/api/user', userrouter);
 
 /** Server Run 4000 Port Number */
-// app.listen(4000);
+app.listen(process.env.PORT || 4000);
 
 module.exports = app;
