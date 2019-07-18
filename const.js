@@ -1,4 +1,4 @@
 /** Twitter Callback URL */
 module.exports = {
-    DB: 'http://localhost:4000/'
+    DB: 'https://ancient-forest-72508.herokuapp.com/'
 }

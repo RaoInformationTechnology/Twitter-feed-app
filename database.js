@@ -3,5 +3,5 @@ ENV.config();
 
 /** Mongoose Database */
 module.exports = {
-    DB:'mongodb://localhost:27017/twitter-db'
+    DB:'mongodb://54.185.16.135:27017/twitter-db'
 }
