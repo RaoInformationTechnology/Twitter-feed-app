@@ -7,6 +7,7 @@ ENV.config();
 const jwt = require('jsonwebtoken');
 const secret = process.env.SECRET;
 
+
 /** Passport with authenticate & login */
 module.exports = function () {
 
