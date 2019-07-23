@@ -44,7 +44,8 @@ class SignUp extends React.Component {
 					localStorage.setItem('photo', (this.state.user.user.photo));
 					localStorage.setItem('isAuthenticated', true);
 					localStorage.setItem('token', this.state.user.token);
-					history.push('/home');
+					// history.push('/home');
+					window.location.href = '/home';
 				}
 			});
 		}

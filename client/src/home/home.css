@@ -50,10 +50,7 @@ h4{
     margin-left: 15px !important;
     padding: 5px !important;
 }
-button.load-more {
-    margin-top: 15px !important;
-    margin-left: 325px !important;
-}
+
 .MuiFormControl-marginNormal {
     margin-bottom: 16px!important;
 }
@@ -71,7 +68,23 @@ button.load-more {
         width: calc(100% - 165px) !important;
     } 
 }
-
+@media screen and (max-width: 600px){
+    .tweet_bg_color {
+        margin-left: unset !important;
+    }
+}
+@media screen and (max-width: 600px){
+    button.load-more {
+    margin-top: 15px !important;
+    margin-left: 203px !important;
+}
+}
+@media screen and (min-width: 600px){
+  button.load-more {
+    margin-top: 15px !important;
+    margin-left: 325px !important;
+}
+}
 @media (min-width: 600px){
     .MuiToolbar-regular {
         min-height: 64px;
@@ -192,8 +205,8 @@ span.MuiTypography-root.MuiTypography-body1.MuiListItemText-primary {
 
 
 .MuiList-padding {
- padding-top: 0px !important; 
- padding-bottom: 0px !important; 
+   padding-top: 0px !important; 
+   padding-bottom: 0px !important; 
 }
 .btn-primary {
     color: #fff;
@@ -362,22 +375,23 @@ button.video-react-play-control.video-react-control.video-react-button.video-rea
     text-align: left;
     background-color: #e6ecf0;
     padding: 10px;
+    /*min-height: 74vh;*/
     
 }
 .search_modals button{
- left: 0;
- right: 0;
- margin: auto;
- display: table;
- height: 40px!important;
- z-index: 11;
- background-color: #4EA0E0;
- border-radius: 10px;
- border: none;
- padding: 13px!important;
- color: black;
- width: auto!important;
- font-size: 16px;
+   left: 0;
+   right: 0;
+   margin: auto;
+   display: table;
+   height: 40px!important;
+   z-index: 11;
+   background-color: #4EA0E0;
+   border-radius: 10px;
+   border: none;
+   padding: 13px!important;
+   color: black;
+   width: auto!important;
+   font-size: 16px;
 }
 .PrivateNotchedOutline-legend-154 {
     padding: 0;
@@ -409,10 +423,11 @@ button.video-react-play-control.video-react-control.video-react-button.video-rea
     background-color: white;
     margin: auto;
     margin-bottom: 20px !important;
+    margin-top: 12px !important;
 }
 .tweet_bg_color{
 
-    margin-left: 132px !important;
+    margin-left: 132px;
 }
 .Home-menuButton-4 {
     margin-right: 16px;
@@ -502,11 +517,10 @@ button.video-react-play-control.video-react-control.video-react-button.video-rea
 }
 
 .Home-content-7 {
-    padding: 14px 0px!important;
+    padding: 14px 0px 0px!important;
 
 }
 .MuiGrid-container {
-    width: 107% !important;
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
@@ -597,4 +611,7 @@ i.fas.fa-pencil-alt {
 .Home-drawerPaper-6{
 
     background-color: #0c2755!important
+}
+a.mdc-list-item.trends-color:after, a.mdc-list-item.trends-color:before {
+    display: none;
 }

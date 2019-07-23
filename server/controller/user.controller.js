@@ -53,7 +53,6 @@ GetHashTag = function (req, res) {
   });
 }
 
-
 module.exports = {
   AddTag: AddTag,
   DeleteHashtag: DeleteHashtag,
