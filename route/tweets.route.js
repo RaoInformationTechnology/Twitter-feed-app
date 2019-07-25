@@ -14,6 +14,18 @@ const T = new Twit({
     access_token_secret: process.env.ACCESS_TOKEN_SECRET
 })
 
+/** location Twitter-trends */
+tweetsRoutes.get('/twitter-trends/:latitudeobj/:longitudeobj', trendsvalidation.trends, (req, res) => {
+    T.get('/trends/closest',{lat:req.params.latitudeobj,long:req.params.longitudeobj},function (err, response) {
+        if (err) {
+            console.log('err: ', err);
+        } else {
+            console.log('response=========>',response)
+            res.status(200).json({ message: 'Fetched trends tweets', trends: response })
+        }
+    })
+});
+
 /** Popular Twitter-trends */
 tweetsRoutes.get('/twitter-trends', trendsvalidation.trends, (req, res) => {
     T.get('/trends/place', { name: '#Cricket', id: '1' }, function (err, response) {
